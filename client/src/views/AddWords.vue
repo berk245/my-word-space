@@ -15,7 +15,9 @@
       </div>
       <h2 class="box-title">Add Words</h2>
       <div class="exercise exercise-pre">
-        <p class="exercise-text">Add a new word to one of your notebooks to practice them later!</p>
+        <p class="exercise-text">
+          Add a new word to one of your notebooks to practice them later!
+        </p>
         <div class="input-boxxes">
           <select
             class="inputBox"
@@ -24,12 +26,12 @@
             v-model="newWord.notebook"
           >
             <option value disabled>Choose your Notebook</option>
-            <option value="all">All Noteboks</option>
             <option
-              v-for="(book , bookName) in user.notebooks"
+              v-for="(book, bookName) in user.notebooks"
               :key="bookName"
               :value="bookName"
-            >{{bookName}}</option>
+              >{{ bookName }}</option
+            >
           </select>
           <input
             class="inputBox"
@@ -54,7 +56,7 @@
             <option value="other">Other</option>
           </select>
         </div>
-        <p class="feedbackMessage">{{feedbackMessage}}</p>
+        <p class="feedbackMessage">{{ feedbackMessage }}</p>
       </div>
 
       <button class="main-button" @click="addNewWord">Add Word</button>
@@ -98,6 +100,7 @@ export default {
         setTimeout(() => {
           self.feedbackMessage =
             self.newWord.original + " is added to " + this.newWord.notebook;
+          this.resetFields();
         }, 1000);
         setTimeout(() => {
           self.feedbackMessage = "";
@@ -107,14 +110,12 @@ export default {
       }
     },
     resetFields() {
-      this.onExercise = false;
-      this.resultBox = false;
-      this.reqExercise.notebook = "";
-      this.reqExercise.amount = "";
-      this.reqExercise.type = "";
-      this.currentExercise.exerciseWords = [];
-      this.currentExercise.userAnswers = [];
-      this.currentExercise.wrongAnswers = [];
+      this.newWord = {
+        notebook: "",
+        original: "",
+        translation: "",
+        type: ""
+      };
     },
     takeMeOut() {
       this.$router.push("/dashboard");
@@ -125,7 +126,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped lang="scss">
 .bg {
