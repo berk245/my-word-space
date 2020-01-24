@@ -15,16 +15,16 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 @import url("https://fonts.googleapis.com/css?family=Dosis|Raleway&display=swap");
 * {
   margin: 0;
-  &:focus {
+  /* *:focus {
     outline: none;
-  }
+  } */
 }
 #app {
-  //position: relative;
+  /* position: relative; */
   overflow: hidden;
   width: 100vw;
   min-height: 100vh;
