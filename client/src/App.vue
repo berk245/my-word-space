@@ -6,7 +6,6 @@
 <script>
 import store from "./store";
 import { mapState, mapActions } from "vuex";
-import * as d3 from "d3";
 
 export default {
   computed: {
