@@ -258,21 +258,21 @@ export default {
       }
       //Specific Notebook
       else {
-        let userNotebook = this.user.notebooks[chosenBook];
+        let userNotebook = this.user.notebooks[chosenBook].words;
         //random Words
         if (chosenType == "random") {
           wordPool.push(
-            ...userNotebook.words.noun,
-            ...userNotebook.words.verb,
-            ...userNotebook.words.adjective,
-            ...userNotebook.words.sentence,
-            ...userNotebook.words.preposition,
-            ...userNotebook.words.other
+            ...userNotebook.noun,
+            ...userNotebook.verb,
+            ...userNotebook.adjective,
+            ...userNotebook.sentence,
+            ...userNotebook.preposition,
+            ...userNotebook.other
           );
         }
         //Specific Word Type Selected
         else {
-          wordPool.push(...userNotebook.words[chosenType]);
+          wordPool.push(...userNotebook[chosenType]);
         }
       }
 

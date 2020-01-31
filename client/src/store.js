@@ -124,21 +124,21 @@ export default new Vuex.Store({
             if (resp.status == 200) {
               const user = resp.data;
               const header = resp.headers;
-              console.log(resp.data);
+
               commit("auth_success", { header, user });
               router.push("/dashboard");
               resolve(resp);
             } else {
               commit("incorrect_info", resp.data);
-              console.log(resp);
+
               resolve();
             }
           })
           .catch(err => {
             commit("auth_error");
             sessionStorage.removeItem("auth-token");
-            console.log(err);
-            reject();
+
+            reject(err);
           });
       });
     },
@@ -151,24 +151,22 @@ export default new Vuex.Store({
             commit("signup_request");
             if (resp.status == 200) {
               commit("signup_success");
-              console.log(resp);
-              console.log(resp.data.name + " registered sucesfully");
+
               dispatch("login", {
                 email: user2.email,
                 password: user2.password
               }).then(res => {
-                console.log(res);
                 resolve();
               });
             } else {
               commit("incorrect_values", resp.data);
-              console.log(resp);
+
               resolve();
             }
           })
           .catch(err => {
             commit("signup_error");
-            console.log();
+
             reject(err);
           });
       });
@@ -183,11 +181,10 @@ export default new Vuex.Store({
     addNotebook({ commit, state }, newNotebook) {
       return new Promise((resolve, reject) => {
         const user = state.user.email;
-        console.log(newNotebook);
+
         axios
           .post("/add-notebook", { newNotebook, user })
           .then(resp => {
-            console.log(resp);
             commit("add_notebook_success", resp); //response is updated user object
             resolve();
           })
@@ -200,7 +197,6 @@ export default new Vuex.Store({
         axios
           .post("/api", { newWord, user })
           .then(resp => {
-            console.log(resp); //response is the updated user
             commit("add_word_success", resp);
             resolve();
           })
@@ -214,7 +210,6 @@ export default new Vuex.Store({
         axios
           .post(`/delete`, { user, data })
           .then(resp => {
-            console.log(resp);
             commit("delete_success", resp); //updated user
             res();
           })
@@ -227,7 +222,6 @@ export default new Vuex.Store({
         axios
           .post("/edit", { user, updateData })
           .then(resp => {
-            console.log(resp);
             commit("update_success", resp); //updated user
             res();
           })
@@ -240,7 +234,6 @@ export default new Vuex.Store({
         axios
           .post("/exercise/start", { user, wordAmount: parseInt(wordAmount) })
           .then(resp => {
-            //console.log(resp);
             commit("exercise_started", resp);
             res();
           })

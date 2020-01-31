@@ -183,7 +183,6 @@ export default {
     editReq(wordToUpd) {
       this.toEdit = true;
       this.wordToUpdate = wordToUpd;
-      console.log(this.wordToUpdate);
     },
     updateMe() {
       for (let key in this.updatedWord) {
