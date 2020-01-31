@@ -12,9 +12,10 @@
     <div class="box box-left">
       <h2 class="box-title">Notebooks</h2>
       <div class="exercise exercise-pre">
-        <p
-          class="exercise-text"
-        >Choose a notebook to practice from (or choose all), choose the amount and type of the words you want to practice.</p>
+        <p class="exercise-text">
+          Choose a notebook to practice from (or choose all), choose the amount
+          and type of the words you want to practice.
+        </p>
         <div class="input-boxes">
           <input
             class="inputBox"
@@ -38,27 +39,45 @@
           >
             <option value disabled>Choose your Notebook</option>
             <option
-              v-for="(book , bookName) in user.notebooks"
+              v-for="(book, bookName) in user.notebooks"
               :key="bookName"
               :value="bookName"
-            >{{bookName}}</option>
+              >{{ bookName }}</option
+            >
           </select>
           <button @click="notebookSelected = true">Get Words</button>
         </div>
         <div v-if="notebookSelected">
-          <div v-for="(wordData, type) in user.notebooks[chosenNotebook]" :key="wordData._id">
-            <div class="wordAndInput" v-for="(word,index) in wordData" :key="index">
-              <p>{{word.original}}</p>
-              <p>{{word.translation}}</p>
-              <p>{{type}}</p>
+          <div
+            v-for="(wordData, type) in user.notebooks[chosenNotebook].words"
+            :key="wordData._id"
+          >
+            <div
+              class="wordAndInput"
+              v-for="(word, index) in wordData"
+              :key="word.translation"
+            >
+              <p>{{ word.original }}</p>
+              <p>{{ word.translation }}</p>
+              <p>{{ type }}</p>
 
               <div class="editAndDelete">
-                <button v-if="!toEdit" @click="editReq(index, word)">Edit</button>
+                <button v-if="!toEdit" @click="editReq(word)">
+                  Edit
+                </button>
                 <button v-if="toEdit" @click="toEdit = !toEdit">Cancel</button>
 
-                <button v-if="!toEdit" @click="deleteMe({chosenNotebook, type, index, word})">Delete</button>
+                <button
+                  v-if="!toEdit"
+                  @click="deleteMe({ chosenNotebook, type, index, word })"
+                >
+                  Delete
+                </button>
               </div>
-              <div class="updateForm" v-if="toEdit && index == editIndex">
+              <div
+                class="updateForm"
+                v-if="toEdit && wordToUpdate.original == word.original"
+              >
                 <input
                   class="updateBox"
                   type="text"
@@ -71,8 +90,14 @@
                   v-model="updatedWord.translation"
                   :placeholder="wordToUpdate.translation"
                 />
-                <select class="updateSelect" name="updateTypeSelector" v-model="updatedWord.type">
-                  <option value disabled selected hidden>{{wordToUpdate.type}}</option>
+                <select
+                  class="updateSelect"
+                  name="updateTypeSelector"
+                  v-model="updatedWord.type"
+                >
+                  <option value disabled selected hidden>{{
+                    wordToUpdate.type
+                  }}</option>
                   <option value="noun">Noun</option>
                   <option value="verb">Verb</option>
                   <option value="sentence">Sentence or Phrase</option>
@@ -124,7 +149,6 @@ export default {
       newNotebook: "",
       notebookSelected: false,
       toEdit: false,
-      editIndex: "",
       wordToUpdate: {},
       updatedWord: {
         original: "",
@@ -156,10 +180,10 @@ export default {
         this.deleteWord(deleteData);
       }
     },
-    editReq(ind, wordToUpd) {
+    editReq(wordToUpd) {
       this.toEdit = true;
-      this.editIndex = ind;
       this.wordToUpdate = wordToUpd;
+      console.log(this.wordToUpdate);
     },
     updateMe() {
       for (let key in this.updatedWord) {
@@ -173,6 +197,11 @@ export default {
         notebook: this.chosenNotebook
       });
       this.toEdit = false;
+      this.updatedWord = {
+        original: "",
+        translation: "",
+        type: ""
+      };
     }
   },
   computed: {
@@ -497,19 +526,19 @@ export default {
       width: 70vw;
       display: grid;
       grid-template-areas: "edit1 edit2 option button";
-      grid-template-columns: 35% 35% 20% 10%;
+      grid-template-columns: 30% 30% 20% 10%;
       grid-gap: 0rem;
       text-align: left;
       .updateBox {
         height: 2.2rem !important;
+        width: 40%;
         text-align: center;
       }
       .updateSelect {
         height: 2.2rem;
         border: 2px solid #ffde09;
         border-radius: 10px;
-
-        justify-self: left;
+        justify-self: center;
         font-family: Raleway;
         font-size: 0.9rem;
         font-weight: 600;

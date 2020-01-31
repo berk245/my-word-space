@@ -3,9 +3,10 @@
     <div class="box box-left">
       <h2 class="box-title">Exercise</h2>
       <div class="exercise exercise-pre" v-if="!onExercise">
-        <p
-          class="exercise-text"
-        >Choose a notebook to practice from (or choose all), choose the amount and type of the words you want to practice.</p>
+        <p class="exercise-text">
+          Choose a notebook to practice from (or choose all), choose the amount
+          and type of the words you want to practice.
+        </p>
         <div class="input-boxes">
           <select
             class="inputBox"
@@ -16,10 +17,11 @@
             <option value disabled>Choose your Notebook</option>
             <option value="all">All Noteboks</option>
             <option
-              v-for="(book , bookName) in user.notebooks"
+              v-for="(book, bookName) in user.notebooks"
               :key="bookName"
               :value="bookName"
-            >{{bookName}}</option>
+              >{{ bookName }}</option
+            >
           </select>
           <input
             class="inputBox"
@@ -27,7 +29,11 @@
             placeholder="How many words?"
             v-model="reqExercise.amount"
           />
-          <select class="inputBox" name="typeSelector" v-model="reqExercise.type">
+          <select
+            class="inputBox"
+            name="typeSelector"
+            v-model="reqExercise.type"
+          >
             <option value disabled selected hidden>Choose your Type</option>
             <option value="random">Random</option>
             <option value="noun">Noun</option>
@@ -47,22 +53,24 @@
           to see your results.
         </p>
         <ul>
-          <li>Notebook: {{reqExercise.notebook}}</li>
-          <li>Amount: {{reqExercise.amount}}</li>
-          <li>Type: {{reqExercise.type}}</li>
+          <li>Notebook: {{ reqExercise.notebook }}</li>
+          <li>Amount: {{ reqExercise.amount }}</li>
+          <li>Type: {{ reqExercise.type }}</li>
         </ul>
       </div>
 
-      <button v-if="!onExercise" class="main-button" @click="beginExercise">Start</button>
+      <button v-if="!onExercise" class="main-button" @click="beginExercise">
+        Start
+      </button>
     </div>
     <div class="box box-right" v-if="onExercise">
       <div class="questionBox">
         <div
           class="wordAndInput"
-          v-for="(word,index) in currentExercise.exerciseWords"
+          v-for="(word, index) in currentExercise.exerciseWords"
           :key="index"
         >
-          <p>{{word.original}}</p>
+          <p>{{ word.original }}</p>
           <input
             type="text"
             placeholder="Translation here"
@@ -73,7 +81,7 @@
       <button class="endButton" @click="checkResults">Check Results</button>
     </div>
     <div class="box box-results" v-if="resultBox">
-      <div v-if="!currentExercise.allCorrect " class="questionBox">
+      <div v-if="!currentExercise.allCorrect" class="questionBox">
         <div class="resultTriplets">
           <p>Question</p>
           <p>Your Answer</p>
@@ -81,17 +89,17 @@
         </div>
         <div
           class="resultTriplets"
-          v-for="(wrong,index) in currentExercise.wrongAnswers"
+          v-for="(wrong, index) in currentExercise.wrongAnswers"
           :key="index"
         >
-          <p>{{wrong.original}}</p>
-          <p>{{wrong.wrongAnswer}}</p>
-          <p>{{wrong.translation}}</p>
+          <p>{{ wrong.original }}</p>
+          <p>{{ wrong.wrongAnswer }}</p>
+          <p>{{ wrong.translation }}</p>
         </div>
       </div>
       <div class="noWrongs" v-else>
         <img src alt="All Correct Image" />
-        <p>You got all the answers right {{user.name}}!</p>
+        <p>You got all the answers right {{ user.name }}!</p>
       </div>
       <button class="endButton" @click="exerciseCompleted">Completed</button>
     </div>
@@ -168,7 +176,7 @@ export default {
         else {
           if (
             this.reqExercise.amount >=
-            this.user.notebooks[chosenBook][chosenType].length
+            this.user.notebooks[chosenBook].words[chosenType].length
           ) {
             this.errorMessage =
               "You don't have enough " +
@@ -176,7 +184,7 @@ export default {
               "s in " +
               chosenBook +
               ". You can choose up to " +
-              this.user.notebooks[chosenBook][chosenType].length +
+              this.user.notebooks[chosenBook].words[chosenType].length +
               ".";
             alert(this.errorMessage);
             return;
@@ -196,9 +204,9 @@ export default {
           let totalChosenType = 0;
           let userNotebooks = this.user.notebooks;
           for (var key in userNotebooks) {
-            totalChosenType += userNotebooks[key][chosenType].length;
+            totalChosenType += userNotebooks[key].words[chosenType].length;
           }
-          if (this.reqExercise.amount >= totalChosenType) {
+          if (this.reqExercise.amount > totalChosenType) {
             this.errorMessage =
               "You don't have enough " +
               chosenType +
@@ -217,7 +225,6 @@ export default {
       for (let j = 0; j < this.reqExercise.amount; j++) {
         this.currentExercise.userAnswers.push("");
       }
-      console.log(this.currentExercise.userAnswers);
 
       //create a pool of words to randomly choose from
       let wordPool = [];
@@ -225,25 +232,27 @@ export default {
       //Notebook is all
       if (chosenBook == "all") {
         //Create an array with notebook keys to iterate on object with notebooks[keys[i]]
-        let keys = Object.keys(this.user.notebooks);
+        let notebookNames = Object.keys(this.user.notebooks);
 
         //Words are random
         if (chosenType == "random") {
-          for (let i = 0; i < keys.length; i++) {
+          for (let i = 0; i < notebookNames.length; i++) {
             wordPool.push(
-              ...this.user.notebooks[keys[i]].noun,
-              ...this.user.notebooks[keys[i]].verb,
-              ...this.user.notebooks[keys[i]].adjective,
-              ...this.user.notebooks[keys[i]].sentence,
-              ...this.user.notebooks[keys[i]].preposition,
-              ...this.user.notebooks[keys[i]].other
+              ...this.user.notebooks[notebookNames[i]].words.noun,
+              ...this.user.notebooks[notebookNames[i]].words.verb,
+              ...this.user.notebooks[notebookNames[i]].words.adjective,
+              ...this.user.notebooks[notebookNames[i]].words.sentence,
+              ...this.user.notebooks[notebookNames[i]].words.preposition,
+              ...this.user.notebooks[notebookNames[i]].words.other
             );
           }
         }
         //Specific Word Type Selected
         else {
-          for (let i = 0; i < keys.length; i++) {
-            wordPool.push(...this.user.notebooks[keys[i]][chosenType]);
+          for (let i = 0; i < notebookNames.length; i++) {
+            wordPool.push(
+              ...this.user.notebooks[notebookNames[i]].words[chosenType]
+            );
           }
         }
       }
@@ -253,17 +262,17 @@ export default {
         //random Words
         if (chosenType == "random") {
           wordPool.push(
-            ...userNotebook.noun,
-            ...userNotebook.verb,
-            ...userNotebook.adjective,
-            ...userNotebook.sentence,
-            ...userNotebook.preposition,
-            ...userNotebook.other
+            ...userNotebook.words.noun,
+            ...userNotebook.words.verb,
+            ...userNotebook.words.adjective,
+            ...userNotebook.words.sentence,
+            ...userNotebook.words.preposition,
+            ...userNotebook.words.other
           );
         }
         //Specific Word Type Selected
         else {
-          wordPool.push(...userNotebook[chosenType]);
+          wordPool.push(...userNotebook.words[chosenType]);
         }
       }
 
@@ -305,7 +314,7 @@ export default {
     },
     exerciseCompleted() {
       //Functions for data tracking
-      console.log(this.currentExercise.userAnswers);
+
       let wrongs = this.currentExercise.wrongAnswers.length;
       let corrects = this.reqExercise.amount - wrongs;
       this.exerciseDone(corrects);

@@ -21,7 +21,9 @@ router.post("/", async (req, res) => {
     translation: req.body.newWord.translation,
     type: wordType
   };
-  currentUser.notebooks[userNotebook][wordType].unshift(wordData);
+  currentUser.notebooks[userNotebook].words[wordType].unshift(wordData);
+  //update the notebook wordcount
+  currentUser.notebooks[userNotebook].wordCount += 1;
 
   currentUser.recentWords.unshift(wordData);
   //If the recent words list is longer than 20 words, take out the last one

@@ -11,7 +11,8 @@ router.post("/", async (req, res) => {
   const wordType = req.body.data.type;
   const wordIndex = req.body.data.index;
 
-  currentUser.notebooks[notebook][wordType].splice(wordIndex, 1);
+  currentUser.notebooks[notebook].words[wordType].splice(wordIndex, 1);
+  currentUser.notebooks[notebook].wordCount -= 1;
   //Check if the word is in recentWords, if yes remove it
   for (let i = 0; i < currentUser.recentWords.length; i++) {
     if (currentUser.recentWords[i].original == req.body.data.word.original) {

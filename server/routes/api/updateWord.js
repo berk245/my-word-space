@@ -8,17 +8,32 @@ const User = require("../../models/userModel");
 router.post("/", async (req, res) => {
   //req body {updateWord, oldWord, notebook}
   const currentUser = await User.findOne({ email: req.body.user });
-  console.log(req.body);
+
   const notebook = req.body.updateData.notebook;
   const updateWord = req.body.updateData.updateWord;
   const oldWord = req.body.updateData.oldWord;
   const wordType = req.body.updateData.updateWord.type;
 
-  const editNotebook = currentUser.notebooks[notebook][wordType];
+  const editNotebook = currentUser.notebooks[notebook].words[wordType];
 
+  //changes on fields other than type
   for (let i = 0; i < editNotebook.length; i++) {
     if (editNotebook[i].original == oldWord.original) {
       editNotebook[i] = updateWord;
+    }
+  }
+
+  //if type has changed
+  if (oldWord.type != updateWord.type) {
+    //place it in front of the appropriate typebook
+    editNotebook.unshift(updateWord);
+
+    let oldTypeBook = currentUser.notebooks[notebook].words[oldWord.type];
+    //remove it from the other typebook
+    for (let i = 0; i < oldTypeBook.length; i++) {
+      if (oldTypeBook[i].original == oldWord.original) {
+        oldTypeBook.splice(i, 1);
+      }
     }
   }
 

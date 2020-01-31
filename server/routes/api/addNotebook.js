@@ -15,12 +15,15 @@ router.post("/", async (req, res) => {
   const notebookName = req.body.newNotebook;
 
   let notebookSchema = {
-    noun: [],
-    verb: [],
-    adjective: [],
-    sentence: [],
-    preposition: [],
-    other: []
+    words: {
+      noun: [],
+      verb: [],
+      adjective: [],
+      sentence: [],
+      preposition: [],
+      other: []
+    },
+    wordCount: 0
   };
   if (!currentUser.notebooks[notebookName]) {
     currentUser.notebooks[notebookName] = notebookSchema;
