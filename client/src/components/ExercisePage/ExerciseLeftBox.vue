@@ -7,6 +7,11 @@
           Choose a notebook to practice from (or choose all), choose the amount
           and type of the words you want to practice.
         </p>
+        <br />
+        <p
+          class="guest-text"
+          v-if="user.name == 'Guest'"
+        >Hello Guest User, the correct answer is the number next to the word. (noun6 = 6). Thank you for testing :)</p>
         <div class="input-boxes">
           <select
             class="inputBox"
@@ -20,8 +25,7 @@
               v-for="(book, bookName) in user.notebooks"
               :key="bookName"
               :value="bookName"
-              >{{ bookName }}</option
-            >
+            >{{ bookName }}</option>
           </select>
           <input
             class="inputBox"
@@ -29,11 +33,7 @@
             placeholder="How many words?"
             v-model="reqExercise.amount"
           />
-          <select
-            class="inputBox"
-            name="typeSelector"
-            v-model="reqExercise.type"
-          >
+          <select class="inputBox" name="typeSelector" v-model="reqExercise.type">
             <option value disabled selected hidden>Choose your Type</option>
             <option value="random">Random</option>
             <option value="noun">Noun</option>
@@ -59,9 +59,7 @@
         </ul>
       </div>
 
-      <button v-if="!onExercise" class="main-button" @click="beginExercise">
-        Start
-      </button>
+      <button v-if="!onExercise" class="main-button" @click="beginExercise">Start</button>
     </div>
     <div class="box box-right" v-if="onExercise">
       <div class="questionBox">
@@ -300,8 +298,14 @@ export default {
       let questions = this.currentExercise.exerciseWords;
       let answers = this.currentExercise.userAnswers;
       let wrongs = this.currentExercise.wrongAnswers;
+
       for (let i = 0; i < questions.length; i++) {
-        if (questions[i].original != answers[i]) {
+        if (questions[i].translation != answers[i]) {
+          console.log(
+            questions[i].original,
+            answers[i],
+            questions[i].original != answers[i]
+          );
           this.currentExercise.allCorrect = false;
           let newWrong = {
             original: questions[i].original,
@@ -396,6 +400,11 @@ export default {
       font-family: Raleway;
       font-size: 1.1rem;
 
+      .guest-text {
+        font-size: 0.8rem;
+        font-weight: bolder;
+        text-align: left;
+      }
       &-text {
         text-align: justify;
       }
