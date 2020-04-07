@@ -9,7 +9,6 @@ dotenv.config();
 const app = express();
 
 //Connect to Auth DB
-
 mongoose.connect(
   "mongodb+srv://newUser:123new@cluster0-oixaf.gcp.mongodb.net/deutschApp?retryWrites=true&w=majority",
   { useNewUrlParser: true, useUnifiedTopology: true },
@@ -19,6 +18,14 @@ mongoose.connect(
 //midware
 app.use(bodyParser.json());
 app.use(cors());
+app.use((req, res, next) => {
+  const rawheader = req.get('Authorization');
+  // remove Bearer part of string
+  // validate token using 'jsonwebtoken' npm lib verify()
+  // receive back payload
+  req.user = User.findOne({ _id: payload.sub });
+  return next();
+});
 
 const addWords = require("./routes/api/addWords");
 app.use("/api", addWords);

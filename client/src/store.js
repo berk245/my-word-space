@@ -6,6 +6,10 @@ import router from "./router";
 
 Vue.use(Vuex);
 
+// read token from session storage and insert it into header config
+// import { createInstance } from "axios";
+// const axios = createInstance({ headers: {}  })
+
 export default new Vuex.Store({
   state: {
     status: sessionStorage.getItem("user-status") || "not logged in",
@@ -34,15 +38,15 @@ export default new Vuex.Store({
       state.status = "Logging you in...";
     },
     auth_success(state, { header, user }) {
-      (state.status = "Logged In"),
-        (state.token = header.token),
-        (state.user.name = user.name),
-        (state.user.email = user.email),
-        (state.user.notebooks = user.notebooks),
-        (state.user.totalWordCount = user.totalWordCount),
-        (state.user.recentWords = user.recentWords),
-        (state.user.logins = user.logins),
-        (state.user.performanceData = user.performanceData);
+      state.status = "Logged In";
+      state.token = header.token;
+      state.user.name = user.name;
+      state.user.email = user.email;
+      state.user.notebooks = user.notebooks;
+      state.user.totalWordCount = user.totalWordCount;
+      state.user.recentWords = user.recentWords;
+      state.user.logins = user.logins;
+      state.user.performanceData = user.performanceData;
       sessionStorage.setItem("auth-token", header.token);
       sessionStorage.setItem("user", JSON.stringify(user));
       sessionStorage.setItem("user-status", state.status);

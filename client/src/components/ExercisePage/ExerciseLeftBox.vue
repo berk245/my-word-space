@@ -68,7 +68,7 @@
           v-for="(word, index) in currentExercise.exerciseWords"
           :key="index"
         >
-          <p>{{ word.original }}</p>
+          <p>{{ word.translation }}</p>
           <input
             type="text"
             placeholder="Translation here"
