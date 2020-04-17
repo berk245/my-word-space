@@ -90,9 +90,9 @@
           v-for="(wrong, index) in currentExercise.wrongAnswers"
           :key="index"
         >
-          <p>{{ wrong.original }}</p>
-          <p>{{ wrong.wrongAnswer }}</p>
           <p>{{ wrong.translation }}</p>
+          <p>{{ wrong.wrongAnswer }}</p>
+          <p>{{ wrong.original }}</p>
         </div>
       </div>
       <div class="noWrongs" v-else>
@@ -300,12 +300,7 @@ export default {
       let wrongs = this.currentExercise.wrongAnswers;
 
       for (let i = 0; i < questions.length; i++) {
-        if (questions[i].translation != answers[i]) {
-          console.log(
-            questions[i].original,
-            answers[i],
-            questions[i].original != answers[i]
-          );
+        if (questions[i].original != answers[i]) {
           this.currentExercise.allCorrect = false;
           let newWrong = {
             original: questions[i].original,
