@@ -57,7 +57,7 @@ router.post("/", async (req, res) => {
   //   lastLogin: lastActive
   // };
   res.send(registeredUser);
-  console.log(registeredUser);
+  // console.log(registeredUser);
 });
 
 module.exports = router;

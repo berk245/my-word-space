@@ -5,7 +5,7 @@ const User = require("../../models/userModel");
 
 //Delete the Words
 router.post("/", async (req, res) => {
-  const currentUser = await User.findOne({ email: req.body.user });
+  const currentUser = await User.findOne({ _id: req.body.user["_id"] });
   console.log(req.body);
   const notebook = req.body.data.chosenNotebook;
   const wordType = req.body.data.type;

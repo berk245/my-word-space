@@ -184,10 +184,12 @@ export default new Vuex.Store({
     },
     addNotebook({ commit, state }, newNotebook) {
       return new Promise((resolve, reject) => {
-        const user = state.user.email;
-
-        axios
-          .post("/add-notebook", { newNotebook, user })
+        axios({
+          method: "post",
+          url: "/add-notebook",
+          headers: { Authorization: sessionStorage["auth-token"] },
+          data: { newNotebook }
+        })
           .then(resp => {
             commit("add_notebook_success", resp); //response is updated user object
             resolve();
@@ -197,9 +199,12 @@ export default new Vuex.Store({
     },
     addWords({ commit, state }, newWord) {
       return new Promise((resolve, reject) => {
-        const user = state.user.email;
-        axios
-          .post("/api", { newWord, user })
+        axios({
+          method: "post",
+          url: "/api",
+          headers: { Authorization: sessionStorage["auth-token"] },
+          data: { newWord }
+        })
           .then(resp => {
             commit("add_word_success", resp);
             resolve();
@@ -210,9 +215,12 @@ export default new Vuex.Store({
     deleteWord({ commit, state }, data) {
       //data = notebook, type, index
       return new Promise((res, rej) => {
-        const user = state.user.email;
-        axios
-          .post(`/delete`, { user, data })
+        axios({
+          method: "post",
+          url: "/delete",
+          headers: { Authorization: sessionStorage["auth-token"] },
+          data: { data }
+        })
           .then(resp => {
             commit("delete_success", resp); //updated user
             res();
@@ -223,8 +231,12 @@ export default new Vuex.Store({
     updateWord({ commit, state }, updateData) {
       return new Promise((res, rej) => {
         const user = state.user.email;
-        axios
-          .post("/edit", { user, updateData })
+        axios({
+          method: "post",
+          url: "/edit",
+          headers: { Authorization: sessionStorage["auth-token"] },
+          data: { updateData }
+        })
           .then(resp => {
             commit("update_success", resp); //updated user
             res();
@@ -234,9 +246,12 @@ export default new Vuex.Store({
     },
     exerciseStart({ commit, state }, wordAmount) {
       return new Promise((res, rej) => {
-        const user = state.user.email;
-        axios
-          .post("/exercise/start", { user, wordAmount: parseInt(wordAmount) })
+        axios({
+          method: "post",
+          url: "/exercise/start",
+          headers: { Authorization: sessionStorage["auth-token"] },
+          data: { wordAmount: parseInt(wordAmount) }
+        })
           .then(resp => {
             commit("exercise_started", resp);
             res();
@@ -246,9 +261,12 @@ export default new Vuex.Store({
     },
     exerciseDone({ commit, state }, corrects) {
       return new Promise((res, rej) => {
-        const user = state.user.email;
-        axios
-          .post("/exercise/complete", { user, corrects: parseInt(corrects) })
+        axios({
+          method: "post",
+          url: "/exercise/complete",
+          headers: { Authorization: sessionStorage["auth-token"] },
+          data: { corrects: parseInt(corrects) }
+        })
           .then(resp => {
             commit("exercise_done", resp);
             res();

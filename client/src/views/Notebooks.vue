@@ -42,42 +42,27 @@
               v-for="(book, bookName) in user.notebooks"
               :key="bookName"
               :value="bookName"
-              >{{ bookName }}</option
-            >
+            >{{ bookName }}</option>
           </select>
           <button @click="notebookSelected = true">Get Words</button>
         </div>
         <div v-if="notebookSelected">
-          <div
-            v-for="(wordData, type) in user.notebooks[chosenNotebook].words"
-            :key="wordData._id"
-          >
-            <div
-              class="wordAndInput"
-              v-for="(word, index) in wordData"
-              :key="word.translation"
-            >
+          <div v-for="(wordData, type) in user.notebooks[chosenNotebook].words" :key="wordData._id">
+            <div class="wordAndInput" v-for="(word, index) in wordData" :key="word.translation">
               <p>{{ word.original }}</p>
               <p>{{ word.translation }}</p>
               <p>{{ type }}</p>
 
               <div class="editAndDelete">
-                <button v-if="!toEdit" @click="editReq(word)">
-                  Edit
-                </button>
+                <button v-if="!toEdit" @click="editReq(word)">Edit</button>
                 <button v-if="toEdit" @click="toEdit = !toEdit">Cancel</button>
 
                 <button
                   v-if="!toEdit"
                   @click="deleteMe({ chosenNotebook, type, index, word })"
-                >
-                  Delete
-                </button>
+                >Delete</button>
               </div>
-              <div
-                class="updateForm"
-                v-if="toEdit && wordToUpdate.original == word.original"
-              >
+              <div class="updateForm" v-if="toEdit && wordToUpdate.original == word.original">
                 <input
                   class="updateBox"
                   type="text"
@@ -90,14 +75,12 @@
                   v-model="updatedWord.translation"
                   :placeholder="wordToUpdate.translation"
                 />
-                <select
-                  class="updateSelect"
-                  name="updateTypeSelector"
-                  v-model="updatedWord.type"
-                >
-                  <option value disabled selected hidden>{{
+                <select class="updateSelect" name="updateTypeSelector" v-model="updatedWord.type">
+                  <option value disabled selected hidden>
+                    {{
                     wordToUpdate.type
-                  }}</option>
+                    }}
+                  </option>
                   <option value="noun">Noun</option>
                   <option value="verb">Verb</option>
                   <option value="sentence">Sentence or Phrase</option>
@@ -169,6 +152,7 @@ export default {
     addNewNotebook() {
       if (this.newNotebook) {
         this.addNotebook(this.newNotebook);
+        this.newNotebook = "";
       } else {
         alert("Please give a name to your notebook.");
         return;

@@ -99,7 +99,7 @@
         <img src alt="All Correct Image" />
         <p>You got all the answers right {{ user.name }}!</p>
       </div>
-      <button class="endButton" @click="exerciseCompleted">Completed</button>
+      <button class="endButton" @click="resetAll">Completed</button>
     </div>
   </div>
 </template>
@@ -310,14 +310,8 @@ export default {
           wrongs.push(newWrong);
         }
       }
-    },
-    exerciseCompleted() {
-      //Functions for data tracking
-
-      let wrongs = this.currentExercise.wrongAnswers.length;
       let corrects = this.reqExercise.amount - wrongs;
       this.exerciseDone(corrects);
-      this.resetAll();
     },
     takeMeOut() {
       let isSure = confirm(

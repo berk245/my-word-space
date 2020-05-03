@@ -15,9 +15,7 @@
       </div>
       <h2 class="box-title">Add Words</h2>
       <div class="exercise exercise-pre">
-        <p class="exercise-text">
-          Add a new word to one of your notebooks to practice them later!
-        </p>
+        <p class="exercise-text">Add a new word to one of your notebooks to practice them later!</p>
         <div class="input-boxxes">
           <select
             class="inputBox"
@@ -30,8 +28,7 @@
               v-for="(book, bookName) in user.notebooks"
               :key="bookName"
               :value="bookName"
-              >{{ bookName }}</option
-            >
+            >{{ bookName }}</option>
           </select>
           <input
             class="inputBox"
@@ -111,7 +108,7 @@ export default {
     },
     resetFields() {
       this.newWord = {
-        notebook: "",
+        notebook: this.newWord.notebook,
         original: "",
         translation: "",
         type: ""

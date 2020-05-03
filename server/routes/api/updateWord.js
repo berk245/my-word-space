@@ -7,7 +7,7 @@ const User = require("../../models/userModel");
 
 router.post("/", async (req, res) => {
   //req body {updateWord, oldWord, notebook}
-  const currentUser = await User.findOne({ email: req.body.user });
+  const currentUser = await User.findOne({ _id: req.body.user["_id"] });
 
   const notebook = req.body.updateData.notebook;
   const updateWord = req.body.updateData.updateWord;

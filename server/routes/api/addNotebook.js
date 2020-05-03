@@ -6,7 +6,7 @@ const User = require("../../models/userModel");
 //Add New notebook
 
 router.post("/", async (req, res) => {
-  const currentUser = await User.findOne({ email: req.body.user });
+  const currentUser = await User.findOne({ _id: req.body.user["_id"] });
 
   //Check if the user has a notebook object already
   if (!currentUser.notebooks) {
@@ -21,9 +21,9 @@ router.post("/", async (req, res) => {
       adjective: [],
       sentence: [],
       preposition: [],
-      other: []
+      other: [],
     },
-    wordCount: 0
+    wordCount: 0,
   };
   if (!currentUser.notebooks[notebookName]) {
     currentUser.notebooks[notebookName] = notebookSchema;

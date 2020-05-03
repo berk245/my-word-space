@@ -12,14 +12,14 @@ router.get("/", async (req, res) => {
 //Add New Words
 
 router.post("/", async (req, res) => {
-  const currentUser = await User.findOne({ email: req.body.user });
+  const currentUser = await User.findOne({ _id: req.body.user["_id"] });
   const userNotebook = req.body.newWord.notebook;
   const wordType = req.body.newWord.type;
 
   const wordData = {
     original: req.body.newWord.original,
     translation: req.body.newWord.translation,
-    type: wordType
+    type: wordType,
   };
   currentUser.notebooks[userNotebook].words[wordType].unshift(wordData);
   //update the notebook wordcount
@@ -41,7 +41,7 @@ async function loadUserData() {
     "mongodb+srv://newUser:123new@cluster0-oixaf.gcp.mongodb.net/admin?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     }
   );
 

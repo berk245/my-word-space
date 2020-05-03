@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const User = require("./models/userModel");
 
 dotenv.config();
 
@@ -18,14 +20,13 @@ mongoose.connect(
 //midware
 app.use(bodyParser.json());
 app.use(cors());
-// app.use((req, res, next) => {
-//   const rawheader = req.get('Authorization');
-//   // remove Bearer part of string
-//   // validate token using 'jsonwebtoken' npm lib verify()
-//   // receive back payload
-//   req.user = User.findOne({ _id: payload.sub });
-//   return next();
-// });
+app.use((req, res, next) => {
+  const rawheader = req.get("Authorization");
+  var decoded = jwt.decode(rawheader);
+
+  req.body.user = decoded;
+  return next();
+});
 
 const addWords = require("./routes/api/addWords");
 app.use("/api", addWords);
