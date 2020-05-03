@@ -21,11 +21,18 @@ mongoose.connect(
 app.use(bodyParser.json());
 app.use(cors());
 app.use((req, res, next) => {
-  const rawheader = req.get("Authorization");
-  var decoded = jwt.decode(rawheader);
-
-  req.body.user = decoded;
-  return next();
+  if (req.url == "/login" || req.url == "/signup") {
+    return next();
+  } else {
+    const rawheader = req.get("Authorization");
+    var decoded = jwt.decode(rawheader);
+    if (decoded != null) {
+      req.body.user = decoded;
+      return next();
+    } else {
+      res.status(205).send("Please sign in again!");
+    }
+  }
 });
 
 const addWords = require("./routes/api/addWords");

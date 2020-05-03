@@ -191,6 +191,13 @@ export default new Vuex.Store({
           data: { newNotebook }
         })
           .then(resp => {
+            if (resp.status == 205) {
+              sessionStorage.removeItem("auth-token");
+              sessionStorage.removeItem("user");
+              sessionStorage.removeItem("user-status");
+              router.push("/");
+              commit("logout_success");
+            }
             commit("add_notebook_success", resp); //response is updated user object
             resolve();
           })
@@ -206,6 +213,13 @@ export default new Vuex.Store({
           data: { newWord }
         })
           .then(resp => {
+            if (resp.status == 205) {
+              sessionStorage.removeItem("auth-token");
+              sessionStorage.removeItem("user");
+              sessionStorage.removeItem("user-status");
+              router.push("/");
+              commit("logout_success");
+            }
             commit("add_word_success", resp);
             resolve();
           })
@@ -222,6 +236,13 @@ export default new Vuex.Store({
           data: { data }
         })
           .then(resp => {
+            if (resp.status == 205) {
+              sessionStorage.removeItem("auth-token");
+              sessionStorage.removeItem("user");
+              sessionStorage.removeItem("user-status");
+              router.push("/");
+              commit("logout_success");
+            }
             commit("delete_success", resp); //updated user
             res();
           })
@@ -230,7 +251,6 @@ export default new Vuex.Store({
     },
     updateWord({ commit, state }, updateData) {
       return new Promise((res, rej) => {
-        const user = state.user.email;
         axios({
           method: "post",
           url: "/edit",
@@ -238,6 +258,13 @@ export default new Vuex.Store({
           data: { updateData }
         })
           .then(resp => {
+            if (resp.status == 205) {
+              sessionStorage.removeItem("auth-token");
+              sessionStorage.removeItem("user");
+              sessionStorage.removeItem("user-status");
+              router.push("/");
+              commit("logout_success");
+            }
             commit("update_success", resp); //updated user
             res();
           })
@@ -253,6 +280,13 @@ export default new Vuex.Store({
           data: { wordAmount: parseInt(wordAmount) }
         })
           .then(resp => {
+            if (resp.status == 205) {
+              sessionStorage.removeItem("auth-token");
+              sessionStorage.removeItem("user");
+              sessionStorage.removeItem("user-status");
+              router.push("/");
+              commit("logout_success");
+            }
             commit("exercise_started", resp);
             res();
           })
@@ -268,6 +302,13 @@ export default new Vuex.Store({
           data: { corrects: parseInt(corrects) }
         })
           .then(resp => {
+            if (resp.status == 205) {
+              sessionStorage.removeItem("auth-token");
+              sessionStorage.removeItem("user");
+              sessionStorage.removeItem("user-status");
+              router.push("/");
+              commit("logout_success");
+            }
             commit("exercise_done", resp);
             res();
           })
