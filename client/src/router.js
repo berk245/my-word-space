@@ -60,16 +60,16 @@ const router = new Router({
   ]
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) {
-    if (!store.getters.isLoggedIn) {
-      next("/get-started");
-      return;
-    }
-    next();
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.requiresAuth) {
+//     if (!store.getters.isLoggedIn) {
+//       next("/get-started");
+//       return;
+//     }
+//     next();
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;
