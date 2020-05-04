@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use((req, res, next) => {
   if (req.url == "/" || req.url == "/login" || req.url == "/signup") {
+    console.log(req);
     return next();
   } else {
     const rawheader = req.get("Authorization");
