@@ -4,7 +4,6 @@ const router = express.Router();
 const User = require("../../models/userModel");
 
 router.post("/start", async (req, res) => {
-  console.log(req.body);
   const currentUser = await User.findOne({ _id: req.body.user["_id"] });
   //req => word amount
 

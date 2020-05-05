@@ -4,7 +4,6 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const User = require("./models/userModel");
 
 dotenv.config();
 
@@ -22,8 +21,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use((req, res, next) => {
-  if (req.url != "/login" && req.url != "/signup") {
-    const rawheader = req.get("Authorization");
+  const rawheader = req.get("Authorization");
+  if (rawheader != undefined) {
     var decoded = jwt.decode(rawheader);
     if (decoded != null) {
       req.body.user = decoded;
@@ -32,7 +31,6 @@ app.use((req, res, next) => {
       res.status(205).send("Please sign in again!");
     }
   } else {
-    console.log("We're here!");
     return next();
   }
 });
@@ -69,3 +67,4 @@ if (process.env.NODE_ENV === "production") {
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server started on port: ${port}`));
+console.log(process.env.NODE_ENV);
