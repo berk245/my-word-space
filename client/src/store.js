@@ -141,7 +141,6 @@ export default new Vuex.Store({
           .catch(err => {
             commit("auth_error");
             sessionStorage.removeItem("auth-token");
-
             reject(err);
           });
       });

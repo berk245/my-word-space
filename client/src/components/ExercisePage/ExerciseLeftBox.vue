@@ -310,7 +310,7 @@ export default {
           wrongs.push(newWrong);
         }
       }
-      let corrects = this.reqExercise.amount - wrongs;
+      let corrects = this.reqExercise.amount - wrongs.length;
       this.exerciseDone(corrects);
     },
     takeMeOut() {
