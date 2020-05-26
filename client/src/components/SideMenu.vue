@@ -41,12 +41,13 @@ export default {
 
 <style lang="scss">
 .menu {
-  width: 35vh;
+  position: absolute;
+  width: 25vh;
   height: 33vh;
-  float: right;
-  margin-top: 2rem;
+  right: 0;
+  top: 2.5rem;
   background-color: #000103;
-  border-radius: 10px;
+  border-radius: 0 0 0 10px;
   display: flex;
   flex-direction: column;
 
@@ -80,4 +81,5 @@ export default {
     }
   }
 }
+@import "../SCSS/mobile";
 </style>

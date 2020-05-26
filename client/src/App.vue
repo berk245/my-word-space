@@ -18,6 +18,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Dosis|Raleway&display=swap");
 * {
   margin: 0;
+
   /* *:focus {
     outline: none;
   } */
@@ -25,7 +26,7 @@ export default {
 #app {
   /* position: relative; */
   overflow: hidden;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
 
   background: radial-gradient(

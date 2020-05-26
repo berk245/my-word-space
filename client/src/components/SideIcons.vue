@@ -72,4 +72,5 @@ export default {};
     }
   }
 }
+@import "../SCSS/mobile";
 </style>

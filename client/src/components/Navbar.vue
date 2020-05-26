@@ -1,10 +1,14 @@
 <template>
   <div class="navbar">
-    <p class="title-right">my word space</p>
-    <p class="user-icon" @click="showSidemenu">
-      <!-- <span class="initial">{{user.name[0]}}</span> -->
-      <img class="menuImage" src="../assets/images/BackButton.png" alt="Back Button" />
-    </p>
+    <div class="title-icon-duo">
+      <p class="title-right">my word space</p>
+      <img
+        class="user-icon"
+        @click="showSidemenu"
+        src="../assets/images/BackButton.png"
+        alt="Back Button"
+      />
+    </div>
     <sideMenu v-bind:class="{showIt: !closing, hideIt: closing}" v-if="showSide"></sideMenu>
   </div>
 </template>
@@ -59,27 +63,41 @@ export default {
   background-color: #000103;
   width: 100%;
   z-index: 8;
-  .user-icon {
-    position: absolute;
-    left: 97%;
-    top: 2.5%;
-    transform: rotate(-90deg);
-    cursor: pointer;
-    &:hover {
-      opacity: 0.8;
+
+  .title-icon-duo {
+    display: flex;
+    float: right;
+    .user-icon {
+      margin-left: 1rem;
+      transform: rotate(-90deg);
+      cursor: pointer;
+      position: relative;
+      &:hover {
+        opacity: 0.8;
+      }
+      img {
+        width: 1.9rem;
+        height: 1.9rem;
+      }
     }
-    img {
-      width: 1.9rem;
-      height: 1.9rem;
+    .title-right {
+      color: #ffce00;
+      font-family: Dosis;
+      font-size: 1.7rem;
     }
   }
-  .title-right {
-    color: #ffce00;
-    font-family: Dosis;
-    font-size: 1.7rem;
-    position: absolute;
-    left: 86%;
-  }
+  // .user-icon {
+  //   position: absolute;
+  //   left: 97%;
+  //   top: 2.5%;
+  // }
+  // .title-right {
+  //   color: #ffce00;
+  //   font-family: Dosis;
+  //   font-size: 1.7rem;
+  //   position: absolute;
+  //   left: 86%;
+  // }
   // .user-icon {
   //   text-align: center;
   //   font-weight: bolder;
@@ -125,19 +143,19 @@ export default {
   }
 
   &.hideIt {
-    z-index: 0;
+    z-index: -10;
     pointer-events: none;
     animation: easeOut 1s;
   }
 
   &.showIt {
-    z-index: 10;
     animation: easeIn 2s;
   }
 }
 
 @keyframes easeIn {
   0% {
+    z-index: -10;
     margin-top: -50vh;
     pointer-events: none;
   }
@@ -147,6 +165,7 @@ export default {
   }
   100% {
     pointer-events: all;
+    z-index: 10;
   }
 }
 @keyframes easeOut {
@@ -157,4 +176,5 @@ export default {
     margin-top: -60vh;
   }
 }
+@import "../SCSS/mobile";
 </style>
