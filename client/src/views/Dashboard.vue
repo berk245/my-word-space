@@ -113,10 +113,11 @@ export default {
   position: relative;
   left: 15vw;
   display: grid;
-  grid-template-columns: 40% 60%;
+  grid-template-columns: 35% 65%;
   grid-template-rows: 20% 80%;
   grid-gap: 1rem;
   .box {
+    overflow: auto;
     background: rgba(255, 255, 255, 0.95);
     border: 2px solid #00e7ff;
     box-sizing: border-box;
@@ -149,12 +150,13 @@ export default {
 .text {
   font-family: Raleway;
   margin-left: 1rem;
+  margin-top: 0.5rem;
 }
 .title-text {
   font-family: Dosis;
   margin-top: 0.5rem;
   margin-left: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 .box-text {
   font-size: 1rem;
