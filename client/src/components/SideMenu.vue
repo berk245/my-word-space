@@ -42,7 +42,7 @@ export default {
 <style lang="scss">
 .menu {
   position: absolute;
-  width: 25vh;
+  width: 15rem;
   height: 33vh;
   right: 0;
   top: 2.5rem;

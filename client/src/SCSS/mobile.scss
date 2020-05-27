@@ -8,7 +8,8 @@
     &-planet {
       left: 65vw;
     }
-    &-moon {
+    &-earth {
+      z-index: 0;
     }
   }
   .container {
@@ -19,7 +20,7 @@
         font-size: 1.5em;
       }
       .user-icon {
-        left: 93%;
+        left: 0%;
         height: 1.5rem;
         width: 1.5rem;
         top: 23%;
@@ -124,6 +125,182 @@
       width: 25rem;
     }
   }
+  //Notebooks Page
+  .container {
+    .box-left {
+      top: 7vh;
+      grid-template-areas:
+        "title title title"
+        "ex ex ex";
+
+      grid-template-rows: 20% 40% 40%;
+      width: 95%;
+      left: 2.5%;
+      height: 27.5vh;
+      .box-title {
+        top: 0.5rem;
+        left: 2.5%;
+        font-size: 1.5rem;
+      }
+      .exercise {
+        padding: 0 1rem 0 1rem;
+        &-pre {
+          margin-top: 0.5rem;
+          .input-boxes {
+            margin-top: 0rem;
+            width: 100%;
+            .inputBox {
+              height: 2.5rem;
+            }
+          }
+          .exercise-text {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
+      .main-button {
+        font-size: 1rem;
+        bottom: 0;
+        width: 95%;
+        left: 2.5%;
+        height: 2.5rem;
+      }
+    }
+    .box-right {
+      width: 95%;
+      height: 50%;
+      left: 2.5%;
+      top: 36%;
+
+      .questionBox {
+        text-align: center;
+        .inputBox {
+          z-index: 6;
+          width: 50%;
+          height: 2.5rem;
+          background: #ffffff;
+          border: 2px solid #ffce00;
+          box-sizing: border-box;
+          border-radius: 10px;
+          font-family: Raleway;
+          color: black;
+          font-weight: bold;
+          font-size: 0.9rem;
+          padding: 0.3rem;
+          &:focus {
+            outline: none;
+            &::placeholder {
+              color: white;
+            }
+          }
+        }
+        button {
+          height: 2.5rem;
+          width: 30%;
+          background: #ffffff;
+          border: 2px solid #ffce00;
+          box-sizing: border-box;
+          border-radius: 10px;
+          font-family: Raleway;
+          font-size: 0.9rem;
+          font-weight: 600;
+          &:hover {
+            border: 3px solid #ffce00;
+            cursor: pointer;
+          }
+        }
+        overflow: auto;
+        width: 100%;
+        height: 90%;
+        position: relative;
+        margin-top: 1rem;
+        grid-area: questionBox;
+        font-family: Raleway;
+        font-size: 1rem;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: repeat(20, min-content);
+        grid-gap: 1.5rem;
+        // align-items: center;
+
+        .wordAndInput {
+          border-bottom: 0.3px solid rgba(0, 0, 0, 0.5);
+          display: grid;
+          grid-template-columns: 30% 30% 15% 20%;
+          text-align: center;
+          .editAndDelete {
+            button {
+              height: 1.5rem;
+            }
+          }
+          p {
+            font-size: 0.75rem;
+          }
+          input {
+            height: 1.5rem;
+          }
+        }
+      }
+      .endButton {
+        grid-area: endButton;
+        border-radius: 10px;
+        bottom: 1vh;
+        left: 30%;
+        cursor: pointer;
+        z-index: 6;
+        position: absolute;
+        width: 40%;
+        height: 2.5rem;
+        background-color: #000c36;
+        border: 2px solid #d9edf6;
+        box-sizing: border-box;
+        border-radius: 10px;
+        font-family: Raleway;
+        color: #d9edf6;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 1.4rem;
+        padding: 0.2rem;
+        text-align: center;
+        &:hover {
+          border: #ffce00 solid 2px;
+        }
+      }
+      .updateForm {
+        position: relative;
+        top: 0%;
+        left: -5%;
+        width: 95vw;
+        height: 15vh;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 30% 30% 30% 10%;
+        grid-gap: 0rem;
+        text-align: left;
+        .updateBox {
+          height: 1.5rem !important;
+          text-align: center;
+        }
+        .updateSelect {
+          height: 1.5rem;
+          border: 2px solid #ffde09;
+          border-radius: 10px;
+          justify-self: center;
+          font-family: Raleway;
+          font-size: 0.8rem;
+          font-weight: 600;
+        }
+        button {
+          width: 3rem;
+          height: 1.5rem;
+          margin-top: 0.1rem;
+          font-size: 0.8rem;
+          justify-self: left;
+        }
+      }
+    }
+  }
 }
 
 @include small-sizes {
@@ -136,11 +313,6 @@
         .r-link {
           margin-left: 2rem;
         }
-      }
-    }
-    .navbar {
-      .user-icon {
-        left: 90%;
       }
     }
   }
@@ -218,8 +390,8 @@
       width: 100%;
       .first,
       .second {
-        line-height: 2.5rem;
-        font-size: 3.5vw;
+        line-height: 2rem;
+        font-size: 0.85rem;
       }
       .get-started {
         button {
@@ -231,6 +403,9 @@
     }
   }
   .bg {
+    &-earth {
+      z-index: 0;
+    }
     &-spaceship {
       display: none;
     }
@@ -260,6 +435,48 @@
     .test {
       top: 15%;
       line-height: 125%;
+    }
+  }
+  //Notebooks Page
+  .container {
+    .box-left {
+      height: 28.5vh;
+      width: 95%;
+      left: 2.5%;
+      grid-template-rows: 20% 30% 30%;
+      .box-title {
+        font-size: 1.5rem;
+        left: 1rem;
+        margin-bottom: 0.75rem;
+      }
+      .exercise {
+        padding: 0 1rem 0 1rem;
+        &-pre {
+          margin-top: 0.25rem;
+          .input-boxes {
+            width: 100%;
+            .inputBox {
+              height: 2rem;
+            }
+          }
+          .exercise-text {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
+      .main-button {
+        font-size: 1rem;
+        bottom: 0;
+        width: 90%;
+        left: 5%;
+        height: 2rem;
+      }
+    }
+    .box-right {
+      width: 95%;
+      left: 2.5%;
+      height: 52.5%;
     }
   }
 }

@@ -67,6 +67,7 @@ export default {
   .title-icon-duo {
     display: flex;
     float: right;
+    margin-right: 0.75rem;
     .user-icon {
       margin-left: 1rem;
       transform: rotate(-90deg);
@@ -75,10 +76,9 @@ export default {
       &:hover {
         opacity: 0.8;
       }
-      img {
-        width: 1.9rem;
-        height: 1.9rem;
-      }
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-top: 0.5rem;
     }
     .title-right {
       color: #ffce00;

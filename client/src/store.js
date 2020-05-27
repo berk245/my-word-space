@@ -181,7 +181,7 @@ export default new Vuex.Store({
       router.push("/");
       commit("logout_success");
     },
-    addNotebook({ commit, state }, newNotebook) {
+    addNotebook({ commit }, newNotebook) {
       return new Promise((resolve, reject) => {
         axios({
           method: "post",
@@ -203,7 +203,7 @@ export default new Vuex.Store({
           .catch(err => reject(err));
       });
     },
-    addWords({ commit, state }, newWord) {
+    addWords({ commit }, newWord) {
       return new Promise((resolve, reject) => {
         axios({
           method: "post",
@@ -225,7 +225,7 @@ export default new Vuex.Store({
           .catch(err => reject());
       });
     },
-    deleteWord({ commit, state }, data) {
+    deleteWord({ commit }, data) {
       //data = notebook, type, index
       return new Promise((res, rej) => {
         axios({
@@ -248,7 +248,7 @@ export default new Vuex.Store({
           .catch(err => rej(err));
       });
     },
-    updateWord({ commit, state }, updateData) {
+    updateWord({ commit }, updateData) {
       return new Promise((res, rej) => {
         axios({
           method: "post",
@@ -270,7 +270,7 @@ export default new Vuex.Store({
           .catch(err => rej(err));
       });
     },
-    exerciseStart({ commit, state }, wordAmount) {
+    exerciseStart({ commit }, wordAmount) {
       return new Promise((res, rej) => {
         axios({
           method: "post",
@@ -292,7 +292,7 @@ export default new Vuex.Store({
           .catch(err => rej(err));
       });
     },
-    exerciseDone({ commit, state }, corrects) {
+    exerciseDone({ commit }, corrects) {
       return new Promise((res, rej) => {
         axios({
           method: "post",

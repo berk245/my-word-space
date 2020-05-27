@@ -254,10 +254,10 @@ export default {
   border-radius: 10px;
   &-left {
     position: absolute;
-    left: 10vw;
+    left: 15vw;
     top: 10%;
     height: 85vh;
-    width: 20vw;
+    width: 22.5vw;
     display: grid;
     grid-template-areas:
       "title title title"
@@ -355,7 +355,7 @@ export default {
       color: #d9edf6;
       font-style: normal;
       font-weight: bold;
-      font-size: 1.4rem;
+      font-size: 2vw;
       padding: 0.2rem;
       text-align: center;
       &:hover {
@@ -368,9 +368,9 @@ export default {
     position: absolute;
     z-index: 7;
     top: 10vh;
-    left: 33%;
+    left: 38%;
     height: 85vh;
-    width: 65vw;
+    width: 60vw;
     display: grid;
     grid-template-areas:
       "questionBox"
@@ -400,7 +400,7 @@ export default {
       }
       button {
         height: 2.5rem;
-        width: 15%;
+        width: 30%;
         background: #ffffff;
         border: 2px solid #ffce00;
         box-sizing: border-box;
@@ -628,4 +628,5 @@ export default {
     }
   }
 }
+@import "../SCSS/mobile";
 </style>

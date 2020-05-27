@@ -108,7 +108,7 @@ export default {
     background-image: url("../assets/images/backgrounds/EarthBigg.png");
     background-repeat: no-repeat;
     background-size: 100%;
-    z-index: 5;
+    z-index: 0;
   }
 
   &-planet {
