@@ -129,7 +129,7 @@ export default {
     font-family: Dosis;
     font-style: normal;
     font-weight: bold;
-    font-size: 7vw;
+    font-size: 4.5rem;
     line-height: 190px;
     float: right;
     color: #ffce00;
@@ -145,14 +145,14 @@ export default {
       font-family: Raleway;
       font-style: normal;
       font-weight: 400;
-      font-size: 1.75vw;
+      font-size: 1.2rem;
       line-height: 2.7rem;
       text-align: right;
 
       color: #d9edf6;
     }
     .second {
-      font-size: 1.7vw;
+      font-size: 1.1rem;
       margin-top: 0.4rem;
       line-height: 2.1rem;
     }
