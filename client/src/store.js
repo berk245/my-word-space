@@ -12,12 +12,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    status: sessionStorage.getItem("user-status") || "not logged in",
+    status: localStorage.getItem("user-status") || "not logged in",
     signUpError: false,
     loginError: false,
     componentSignup: false,
-    token: sessionStorage.getItem("auth-token") || "",
-    user: JSON.parse(sessionStorage.getItem("user")) || {
+    token: localStorage.getItem("auth-token") || "",
+    user: JSON.parse(localStorage.getItem("user")) || {
       name: "",
       email: "",
       firstTime: false,
@@ -47,9 +47,9 @@ export default new Vuex.Store({
       state.user.recentWords = user.recentWords;
       state.user.logins = user.logins;
       state.user.performanceData = user.performanceData;
-      sessionStorage.setItem("auth-token", header.token);
-      sessionStorage.setItem("user", JSON.stringify(user));
-      sessionStorage.setItem("user-status", state.status);
+      localStorage.setItem("auth-token", header.token);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("user-status", state.status);
     },
     auth_error(state) {
       state.status = "Error";
@@ -84,18 +84,18 @@ export default new Vuex.Store({
       state.user.notebooks = updatedUser.data.notebooks;
       state.user.recentWords = updatedUser.data.recentWords;
       state.user.totalWordCount = updatedUser.data.totalWordCount;
-      sessionStorage.setItem("user", JSON.stringify(updatedUser.data));
+      localStorage.setItem("user", JSON.stringify(updatedUser.data));
     },
     delete_success(state, updatedUser) {
       state.user.notebooks = updatedUser.data.notebooks;
       state.user.totalWordCount = updatedUser.data.totalWordCount;
       state.user.recentWords = updatedUser.data.recentWords;
-      sessionStorage.setItem("user", JSON.stringify(updatedUser.data));
+      localStorage.setItem("user", JSON.stringify(updatedUser.data));
     },
     update_success(state, updatedUser) {
       state.user.notebooks = updatedUser.data.notebooks;
       state.user.recentWords = updatedUser.data.recentWords;
-      sessionStorage.setItem("user", JSON.stringify(updatedUser.data));
+      localStorage.setItem("user", JSON.stringify(updatedUser.data));
     },
     component_signup(state) {
       state.componentSignup = !state.componentSignup;
@@ -104,15 +104,15 @@ export default new Vuex.Store({
     },
     add_notebook_success(state, updatedUser) {
       state.user.notebooks = updatedUser.data.notebooks;
-      sessionStorage.setItem("user", JSON.stringify(updatedUser.data));
+      localStorage.setItem("user", JSON.stringify(updatedUser.data));
     },
     exercise_started(state, updatedUser) {
       state.user.performanceData = updatedUser.data.performanceData;
-      sessionStorage.setItem("user", JSON.stringify(updatedUser.data));
+      localStorage.setItem("user", JSON.stringify(updatedUser.data));
     },
     exercise_done(state, updatedUser) {
       state.user.performanceData = updatedUser.data.performanceData;
-      sessionStorage.setItem("user", JSON.stringify(updatedUser.data));
+      localStorage.setItem("user", JSON.stringify(updatedUser.data));
     }
   },
   actions: {
@@ -140,7 +140,7 @@ export default new Vuex.Store({
           })
           .catch(err => {
             commit("auth_error");
-            sessionStorage.removeItem("auth-token");
+            localStorage.removeItem("auth-token");
             reject(err);
           });
       });
@@ -175,9 +175,9 @@ export default new Vuex.Store({
       });
     },
     logOut({ commit }) {
-      sessionStorage.removeItem("auth-token");
-      sessionStorage.removeItem("user");
-      sessionStorage.removeItem("user-status");
+      localStorage.removeItem("auth-token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("user-status");
       router.push("/");
       commit("logout_success");
     },
@@ -186,14 +186,14 @@ export default new Vuex.Store({
         axios({
           method: "post",
           url: "/add-notebook",
-          headers: { Authorization: sessionStorage["auth-token"] },
+          headers: { Authorization: localStorage["auth-token"] },
           data: { newNotebook }
         })
           .then(resp => {
             if (resp.status == 205) {
-              sessionStorage.removeItem("auth-token");
-              sessionStorage.removeItem("user");
-              sessionStorage.removeItem("user-status");
+              localStorage.removeItem("auth-token");
+              localStorage.removeItem("user");
+              localStorage.removeItem("user-status");
               router.push("/");
               commit("logout_success");
             }
@@ -208,14 +208,14 @@ export default new Vuex.Store({
         axios({
           method: "post",
           url: "/api",
-          headers: { Authorization: sessionStorage["auth-token"] },
+          headers: { Authorization: localStorage["auth-token"] },
           data: { newWord }
         })
           .then(resp => {
             if (resp.status == 205) {
-              sessionStorage.removeItem("auth-token");
-              sessionStorage.removeItem("user");
-              sessionStorage.removeItem("user-status");
+              localStorage.removeItem("auth-token");
+              localStorage.removeItem("user");
+              localStorage.removeItem("user-status");
               router.push("/");
               commit("logout_success");
             }
@@ -231,14 +231,14 @@ export default new Vuex.Store({
         axios({
           method: "post",
           url: "/delete",
-          headers: { Authorization: sessionStorage["auth-token"] },
+          headers: { Authorization: localStorage["auth-token"] },
           data: { data }
         })
           .then(resp => {
             if (resp.status == 205) {
-              sessionStorage.removeItem("auth-token");
-              sessionStorage.removeItem("user");
-              sessionStorage.removeItem("user-status");
+              localStorage.removeItem("auth-token");
+              localStorage.removeItem("user");
+              localStorage.removeItem("user-status");
               router.push("/");
               commit("logout_success");
             }
@@ -253,14 +253,14 @@ export default new Vuex.Store({
         axios({
           method: "post",
           url: "/edit",
-          headers: { Authorization: sessionStorage["auth-token"] },
+          headers: { Authorization: localStorage["auth-token"] },
           data: { updateData }
         })
           .then(resp => {
             if (resp.status == 205) {
-              sessionStorage.removeItem("auth-token");
-              sessionStorage.removeItem("user");
-              sessionStorage.removeItem("user-status");
+              localStorage.removeItem("auth-token");
+              localStorage.removeItem("user");
+              localStorage.removeItem("user-status");
               router.push("/");
               commit("logout_success");
             }
@@ -275,14 +275,14 @@ export default new Vuex.Store({
         axios({
           method: "post",
           url: "/exercise/start",
-          headers: { Authorization: sessionStorage["auth-token"] },
+          headers: { Authorization: localStorage["auth-token"] },
           data: { wordAmount: parseInt(wordAmount) }
         })
           .then(resp => {
             if (resp.status == 205) {
-              sessionStorage.removeItem("auth-token");
-              sessionStorage.removeItem("user");
-              sessionStorage.removeItem("user-status");
+              localStorage.removeItem("auth-token");
+              localStorage.removeItem("user");
+              localStorage.removeItem("user-status");
               router.push("/");
               commit("logout_success");
             }
@@ -297,14 +297,14 @@ export default new Vuex.Store({
         axios({
           method: "post",
           url: "/exercise/complete",
-          headers: { Authorization: sessionStorage["auth-token"] },
+          headers: { Authorization: localStorage["auth-token"] },
           data: { corrects: parseInt(corrects) }
         })
           .then(resp => {
             if (resp.status == 205) {
-              sessionStorage.removeItem("auth-token");
-              sessionStorage.removeItem("user");
-              sessionStorage.removeItem("user-status");
+              localStorage.removeItem("auth-token");
+              localStorage.removeItem("user");
+              localStorage.removeItem("user-status");
               router.push("/");
               commit("logout_success");
             }

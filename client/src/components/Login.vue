@@ -62,11 +62,11 @@ export default {
 
 <style lang="scss">
 .loginBox {
-  width: 50vw;
+  width: 30rem;
   height: 300px;
   position: absolute;
   right: 0;
-  margin-right: -10vw;
+  margin-right: -5rem;
   display: flex;
   flex-direction: column;
   // align-content: center;

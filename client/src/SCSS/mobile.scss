@@ -100,7 +100,7 @@
   //First Screen
   .title {
     .main-title {
-      font-size: 8.5vw;
+      font-size: 3.5rem;
     }
     .about-product {
       width: 100%;
@@ -121,8 +121,7 @@
   //Login
   .logOrSign {
     .loginBox {
-      width: 70vw;
-      margin-right: -15vw;
+      width: 25rem;
     }
   }
 }
@@ -213,7 +212,6 @@
   .title {
     width: 90%;
     .main-title {
-      line-height: 150px;
       font-size: 12vw;
     }
     .about-product {
@@ -239,9 +237,8 @@
   }
   .loginBox {
     width: 85vw !important;
-    top: -7vw;
     margin-right: -15vw;
-
+    top: -5vh;
     .message {
       font-size: 1rem;
     }
