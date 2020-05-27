@@ -8,6 +8,8 @@
     &-planet {
       left: 65vw;
     }
+    &-moon {
+    }
   }
   .container {
     width: 100%;
@@ -95,7 +97,34 @@
       }
     }
   }
-  //Dashboard
+  //First Screen
+  .title {
+    .main-title {
+      font-size: 8.5vw;
+    }
+    .about-product {
+      width: 100%;
+      .first,
+      .second {
+        line-height: 2.5rem;
+        font-size: 2.75vw;
+      }
+      .get-started {
+        button {
+          width: 30vw;
+          font-size: 3vw;
+        }
+      }
+    }
+  }
+
+  //Login
+  .logOrSign {
+    .loginBox {
+      width: 70vw;
+      margin-right: -15vw;
+    }
+  }
 }
 
 @include small-sizes {
@@ -178,6 +207,62 @@
       p {
         top: 2rem;
       }
+    }
+  }
+  //First Screen
+  .title {
+    width: 90%;
+    .main-title {
+      line-height: 140px;
+      font-size: 12vw;
+    }
+    .about-product {
+      width: 100%;
+      .first,
+      .second {
+        line-height: 2.5rem;
+        font-size: 3.5vw;
+      }
+      .get-started {
+        button {
+          width: 40vw;
+          font-size: 5vw;
+          top: 120%;
+        }
+      }
+    }
+  }
+  .bg {
+    &-spaceship {
+      display: none;
+    }
+  }
+  .loginBox {
+    width: 85vw !important;
+    top: -7vw;
+    margin-right: -15vw;
+
+    .message {
+      font-size: 1rem;
+    }
+    .inputBox {
+      height: 10vw;
+      font-size: 2.5vw;
+    }
+    .loginButton {
+      font-size: 5vw;
+    }
+    .m2 {
+      top: 75%;
+      font-size: 0.8rem;
+    }
+    .signup {
+      top: 10%;
+      font-size: 4vw;
+    }
+    .test {
+      top: 15%;
+      line-height: 125%;
     }
   }
 }
@@ -279,6 +364,29 @@
       }
       &:hover {
         background: rgba(#003296, 0.8);
+      }
+    }
+  }
+  .title {
+    width: 75%;
+    .main-title {
+      font-size: 6vw;
+      line-height: 10vw;
+    }
+    .about-product {
+      width: 100%;
+      .first,
+      .second {
+        line-height: 2rem;
+        font-size: 1.5vw;
+      }
+      .get-started {
+        button {
+          width: 30vw;
+          height: auto;
+          font-size: 3vw;
+          top: 120%;
+        }
       }
     }
   }

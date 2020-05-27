@@ -85,7 +85,8 @@ export default {
     width: 135px;
     height: 120px;
     top: 5vh;
-    left: 5vw;
+    right: 85vw;
+
     background-image: url("../assets/images/backgrounds/Moon.png");
   }
   &-spaceship {
@@ -100,10 +101,10 @@ export default {
   }
   &-earth {
     position: absolute;
-    width: 100vw;
-    height: 300vh;
-    left: -50vw;
-    top: 43vh;
+    width: 80vw;
+    height: 259vh;
+    left: -30vw;
+    top: 60vh;
     background-image: url("../assets/images/backgrounds/EarthBigg.png");
     background-repeat: no-repeat;
     background-size: 100%;
@@ -123,12 +124,12 @@ export default {
   position: absolute;
   width: 70%;
   height: 90px;
-  left: 20vw;
+  right: 5vw;
   .main-title {
     font-family: Dosis;
     font-style: normal;
     font-weight: bold;
-    font-size: 6rem;
+    font-size: 7vw;
     line-height: 190px;
     float: right;
     color: #ffce00;
@@ -136,7 +137,7 @@ export default {
   .about-product {
     position: absolute;
     top: 25vh;
-    left: 15%;
+    right: 0;
     width: 85%;
 
     .first,
@@ -144,25 +145,24 @@ export default {
       font-family: Raleway;
       font-style: normal;
       font-weight: 400;
-      font-size: 1.2rem;
+      font-size: 1.75vw;
       line-height: 2.7rem;
       text-align: right;
 
       color: #d9edf6;
     }
     .second {
-      font-size: 1.1rem;
-
+      font-size: 1.7vw;
       margin-top: 0.4rem;
       line-height: 2.1rem;
     }
     .get-started {
       button {
-        left: 75%;
+        right: 0;
         top: 130%;
         position: absolute;
-        width: 15vw;
-        height: 6vh;
+        width: 20vw;
+        height: 7.5vh;
         background: #000c36;
         border: 3px solid #ffce00;
         box-sizing: border-box;
@@ -170,8 +170,7 @@ export default {
         font-family: Raleway;
         font-style: normal;
         font-weight: 400;
-        font-size: 1.3rem;
-
+        font-size: 2vw;
         color: #d9edf6;
         z-index: 6;
         &:hover {
@@ -191,4 +190,5 @@ export default {
     }
   }
 }
+@import "../SCSS/mobile";
 </style>

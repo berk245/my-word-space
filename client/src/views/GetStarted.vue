@@ -48,7 +48,7 @@ export default {
   .logOrSign {
     position: absolute;
     top: 25vh;
-    left: 67%;
+    right: 0;
   }
 }
 </style>

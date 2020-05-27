@@ -71,8 +71,6 @@ export default {
 
 <style lang="scss">
 .loginBox {
-  width: 400px;
-  height: 300px;
   margin-left: 0%;
   display: flex;
   flex-direction: column;

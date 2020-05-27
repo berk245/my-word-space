@@ -62,12 +62,14 @@ export default {
 
 <style lang="scss">
 .loginBox {
-  width: 400px;
+  width: 50vw;
   height: 300px;
-  margin-left: 0%;
+  position: absolute;
+  right: 0;
+  margin-right: -10vw;
   display: flex;
   flex-direction: column;
-  align-content: center;
+  // align-content: center;
 
   .message {
     width: 80%;
@@ -154,7 +156,7 @@ export default {
     width: 90%;
     text-align: center;
     font-family: Raleway;
-    font-size: 0.75rem;
+    font-size: 2vw;
     color: #d9edf6;
     position: relative;
     top: 25%;
