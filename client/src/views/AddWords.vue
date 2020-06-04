@@ -10,9 +10,6 @@
     <side-icons></side-icons>
     <navbar class="navbar"></navbar>
     <div class="box box-left add-words">
-      <div class="goo-back" @click="takeMeOut">
-        <img src="../assets/images/BackButton.png" alt="Back Button" />
-      </div>
       <h2 class="box-title">Add Words</h2>
       <div class="exercise exercise-pre">
         <p class="exercise-text">Add a new word to one of your notebooks to practice them later!</p>
@@ -194,24 +191,8 @@ export default {
     grid-template-areas:
       "title title title"
       "ex ex ex"
-      "ex ex ex"
-      "ex ex ex"
-      "ex ex ex"
       "but but but";
-    .goo-back {
-      position: fixed;
-      top: 0.5%;
-      left: 2.5%;
-      z-index: 30;
-
-      &:hover {
-        opacity: 0.8;
-      }
-      img {
-        width: 1.8rem;
-        height: 1.8rem;
-      }
-    }
+    grid-template-columns: 10% 60% 30%;
     .box-title {
       grid-area: title;
       position: relative;
@@ -221,6 +202,7 @@ export default {
       left: 7.5%;
     }
     .exercise {
+      overflow: auto;
       position: relative;
       top: 0rem;
       padding: 1.5rem;

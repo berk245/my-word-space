@@ -329,6 +329,9 @@
           .exercise-text {
             font-size: 0.9rem;
           }
+          .input-boxes {
+            margin-top: 0 !important;
+          }
         }
       }
 
@@ -377,7 +380,7 @@
       top: 7vh !important;
       width: 95vw !important;
       left: 2.5vw !important;
-      grid-template-rows: 15% 30% 30%;
+      grid-template-rows: 10% 70% 20%;
       height: 75vh !important;
       .box-title {
         font-size: 2rem;
@@ -586,7 +589,7 @@
   //Begin Exercise
   .container {
     .exerciseChoices {
-      grid-template-rows: 15% 30% 30%;
+      grid-template-rows: 10% 70% 20% !important;
       height: 75%;
       .box-title {
         font-size: 2rem;
@@ -596,6 +599,9 @@
         &-pre {
           .exercise-text {
             font-size: 0.9rem;
+          }
+          .input-boxes {
+            margin-top: 0 !important;
           }
         }
       }
@@ -613,10 +619,23 @@
           grid-template-columns: 50% 50%;
           input {
             width: 90%;
-            height: 75%;
+            height: 70% !important;
           }
           p {
-            font-size: 1rem;
+            font-size: 0.75rem !important;
+          }
+        }
+      }
+      .endButton {
+        width: 100% !important;
+        left: 0 !important;
+      }
+    }
+    .resultBox {
+      .questionBox {
+        .resultTriplets {
+          p {
+            font-size: 0.65rem !important;
           }
         }
       }
@@ -625,7 +644,7 @@
   //AddWords
   .container {
     .add-words {
-      grid-template-rows: 15% 30% 30%;
+      grid-template-rows: 10% 70% 20%;
       height: 75%;
       .box-title {
         font-size: 2rem;

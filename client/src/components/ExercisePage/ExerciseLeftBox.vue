@@ -348,6 +348,7 @@ export default {
     left: 7.5%;
   }
   .exercise {
+    overflow: auto;
     position: relative;
     top: 0rem;
     padding: 1.5rem;
@@ -440,6 +441,10 @@ export default {
   }
 }
 .questions {
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #00e7ff;
+  box-sizing: border-box;
+  border-radius: 10px;
   position: absolute;
   z-index: 7;
   top: 10vh;
@@ -540,11 +545,15 @@ export default {
   display: grid;
   grid-template-rows: 80% 20%;
   grid-template-columns: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #00e7ff;
+  box-sizing: border-box;
+  border-radius: 10px;
   .questionBox {
     overflow: auto;
     display: grid;
     grid-template-columns: 100%;
-    grid-auto-rows: minmax(10vh, max-content);
+    grid-auto-rows: minmax(10vh);
     .resultTriplets {
       border-bottom: 0.3px solid rgba(0, 0, 0, 0.5);
       display: grid;
