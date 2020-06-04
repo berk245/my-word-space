@@ -24,7 +24,7 @@ export default {
   } */
 }
 #app {
-  /* position: relative; */
+  position: relative;
   overflow: hidden;
   width: 100%;
   min-height: 100vh;

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="box box-left">
+    <div class="box box-left exerciseChoices" v-bind:class="{hide : onExercise}">
       <h2 class="box-title">Exercise</h2>
       <div class="exercise exercise-pre" v-if="!onExercise">
         <p class="exercise-text">
@@ -45,23 +45,9 @@
           </select>
         </div>
       </div>
-      <div class="exercise exercise-post" v-if="onExercise">
-        <h4>You got this!</h4>
-        <p class="exercise-text">
-          Answer the questions and click
-          <span class="boldy">'Done!'</span>
-          to see your results.
-        </p>
-        <ul>
-          <li>Notebook: {{ reqExercise.notebook }}</li>
-          <li>Amount: {{ reqExercise.amount }}</li>
-          <li>Type: {{ reqExercise.type }}</li>
-        </ul>
-      </div>
-
       <button v-if="!onExercise" class="main-button" @click="beginExercise">Start</button>
     </div>
-    <div class="box box-right" v-if="onExercise">
+    <div class="box box-right questions" v-if="onExercise&& !resultBox">
       <div class="questionBox">
         <div
           class="wordAndInput"
@@ -78,7 +64,7 @@
       </div>
       <button class="endButton" @click="checkResults">Check Results</button>
     </div>
-    <div class="box box-results" v-if="resultBox">
+    <div class="box box-results resultBox" v-if="resultBox">
       <div v-if="!currentExercise.allCorrect" class="questionBox">
         <div class="resultTriplets">
           <p>Question</p>
@@ -293,7 +279,6 @@ export default {
       this.onExercise = true;
     },
     checkResults() {
-      this.onExercise = false;
       this.resultBox = true;
       let questions = this.currentExercise.exerciseWords;
       let answers = this.currentExercise.userAnswers;
@@ -337,191 +322,58 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.box {
+<style scoped lang="scss">
+.exerciseChoices {
+  width: 35%;
+  position: absolute;
+  left: 8rem;
+  top: 10vh;
+  height: 85vh;
+  display: grid;
+  grid-template-areas:
+    "title title title"
+    "ex ex ex"
+    "but but but";
+  grid-template-rows: 10% 60% 30%;
   background: rgba(255, 255, 255, 0.95);
   border: 2px solid #00e7ff;
   box-sizing: border-box;
   border-radius: 10px;
-  z-index: 6;
-  &-left {
-    position: absolute;
-    left: 10%;
-    top: 10vh;
-    height: 85vh;
-    width: 20vw;
-    display: grid;
-    grid-template-areas:
-      "title title title"
-      "ex ex ex"
-      "ex ex ex"
-      "ex ex ex"
-      "ex ex ex"
-      "but but but";
-    .go-back {
-      position: fixed;
-      top: 7.5%;
-      left: 2.5%;
-      z-index: 15 !important;
-
-      &:hover {
-        cursor: pointer;
-        opacity: 0.8;
-      }
-      img {
-        width: 1.8rem;
-        height: 1.8rem;
-      }
-    }
-    .box-title {
-      grid-area: title;
-      position: relative;
-      font-family: Dosis;
-      font-size: 2rem;
-      top: 2.5vh;
-      left: 7.5%;
-    }
-    .exercise {
-      position: relative;
-      top: 0rem;
-      padding: 1.5rem;
-      grid-area: ex;
-      font-family: Raleway;
-      font-size: 1.1rem;
-
-      .guest-text {
-        font-size: 0.8rem;
-        font-weight: bolder;
-        text-align: left;
-      }
-      &-text {
-        text-align: justify;
-      }
-      &-pre {
-        text-align: center;
-        .input-boxes {
-          margin-top: 2.5rem;
-          display: grid;
-          left: 2.5%;
-          grid-template-columns: 100%;
-          grid-auto-rows: 50%;
-          grid-gap: 0.5rem;
-          .inputBox {
-            z-index: 6;
-            width: 100%;
-            height: 3rem;
-            background: #ffffff;
-            border: 2px solid #ffce00;
-            box-sizing: border-box;
-            border-radius: 10px;
-            font-family: Raleway;
-            color: black;
-            font-weight: bold;
-            font-size: 0.8rem;
-            padding: 0.3rem;
-            &:focus {
-              outline: none;
-              &::placeholder {
-                color: white;
-              }
-            }
-          }
-        }
-        ::placeholder {
-          color: black;
-        }
-      }
-      &-post {
-        h4 {
-          position: relative;
-          top: -2rem;
-        }
-        ul {
-          position: relative;
-          top: 2rem;
-          li {
-            margin-bottom: 0.7rem;
-          }
-        }
-        .boldy {
-          font-weight: bolder;
-        }
-      }
-    }
-    .main-button {
-      grid-area: but;
-      border-radius: 10px;
-      bottom: 3vh;
-      left: 7.5%;
-      cursor: pointer;
-      z-index: 6;
-      position: absolute;
-      width: 85%;
-      height: 3.3rem;
-      background-color: #000c36;
-      border: 2px solid #d9edf6;
-      box-sizing: border-box;
-      border-radius: 10px;
-      font-family: Raleway;
-      color: #d9edf6;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 1.4rem;
-      padding: 0.2rem;
-      text-align: center;
-      &:hover {
-        border: #ffce00 solid 2px;
-      }
-    }
+  .box-title {
+    grid-area: title;
+    position: relative;
+    font-family: Dosis;
+    font-size: 2rem;
+    top: 2.5vh;
+    left: 7.5%;
   }
-
-  &-right {
-    position: absolute;
-    z-index: 7;
-    top: 10vh;
-    left: 33%;
-    height: 85vh;
-    width: 65vw;
-    display: grid;
-    grid-template-areas:
-      "questionBox"
-      "endButton";
-    grid-template-rows: 95% 5%;
-    .questionBox {
-      overflow: auto;
-      width: 100%;
-      height: 90%;
-      position: relative;
-      margin-top: 1rem;
-      grid-area: questionBox;
-      font-family: Raleway;
-      font-size: 1rem;
-      display: grid;
-      grid-template-columns: 100%;
-      grid-template-rows: repeat(20, min-content);
-      grid-gap: 1.5rem;
-      // align-items: center;
-
-      .wordAndInput {
-        border-bottom: 0.3px solid rgba(0, 0, 0, 0.5);
+  .exercise {
+    position: relative;
+    top: 0rem;
+    padding: 1.5rem;
+    grid-area: ex;
+    font-family: Raleway;
+    font-size: 1.1rem;
+    .guest-text {
+      font-size: 0.8rem;
+      font-weight: bolder;
+      text-align: left;
+    }
+    &-text {
+      text-align: justify;
+    }
+    &-pre {
+      text-align: center;
+      .input-boxes {
+        margin-top: 2.5rem;
         display: grid;
-        grid-template-columns: 50% 50%;
-        text-align: center;
-
-        p {
-          position: relative;
-          justify-self: center;
-          width: auto;
-          align-self: center;
-          font-size: 1rem;
-          font-weight: 600;
-          margin-bottom: 1rem;
-        }
-        input {
-          position: relative;
-          margin-bottom: 1rem;
-          left: 0%;
-          width: 80%;
+        left: 2.5%;
+        grid-template-columns: 100%;
+        grid-auto-rows: 50%;
+        grid-gap: 0.5rem;
+        .inputBox {
+          z-index: 6;
+          width: 100%;
           height: 3rem;
           background: #ffffff;
           border: 2px solid #ffce00;
@@ -530,8 +382,8 @@ export default {
           font-family: Raleway;
           color: black;
           font-weight: bold;
-          font-size: 1rem;
-          padding: 0.5rem;
+          font-size: 0.8rem;
+          padding: 0.3rem;
           &:focus {
             outline: none;
             &::placeholder {
@@ -540,102 +392,205 @@ export default {
           }
         }
       }
+      ::placeholder {
+        color: black;
+      }
     }
-    .endButton {
-      grid-area: endButton;
-      border-radius: 10px;
-      bottom: 1vh;
-      left: 30%;
-      cursor: pointer;
-      z-index: 6;
-      position: absolute;
-      width: 40%;
-      height: 2.5rem;
-      background-color: #000c36;
-      border: 2px solid #d9edf6;
-      box-sizing: border-box;
-      border-radius: 10px;
-      font-family: Raleway;
-      color: #d9edf6;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 1.4rem;
-      padding: 0.2rem;
-      text-align: center;
-      &:hover {
-        border: #ffce00 solid 2px;
+    &-post {
+      h4 {
+        position: relative;
+        top: -2rem;
+      }
+      ul {
+        position: relative;
+        top: 2rem;
+        li {
+          margin-bottom: 0.7rem;
+        }
+      }
+      .boldy {
+        font-weight: bolder;
       }
     }
   }
-  &-results {
+  .main-button {
+    grid-area: but;
+    border-radius: 10px;
+    bottom: 3vh;
+    left: 7.5%;
+    cursor: pointer;
+    z-index: 6;
     position: absolute;
-    z-index: 7;
-    top: 10vh;
-    left: 33%;
-    height: 85vh;
-    width: 65vw;
+    width: 85%;
+    height: 3.3rem;
+    background-color: #000c36;
+    border: 2px solid #d9edf6;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-family: Raleway;
+    color: #d9edf6;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.4rem;
+    padding: 0.2rem;
+    text-align: center;
+    &:hover {
+      border: #ffce00 solid 2px;
+    }
+  }
+}
+.questions {
+  position: absolute;
+  z-index: 7;
+  top: 10vh;
+  left: 8rem;
+  height: 85vh;
+  width: 85vw;
+  display: grid;
+  grid-template-areas:
+    "questionBox"
+    "endButton";
+  grid-template-rows: 95% 5%;
+  .questionBox {
+    overflow: auto;
+    width: 100%;
+    height: 90%;
+    position: relative;
+    margin-top: 1rem;
+    grid-area: questionBox;
+    font-family: Raleway;
+    font-size: 1rem;
     display: grid;
-    grid-template-areas:
-      "questionBox"
-      "endButton";
-    grid-template-rows: 95% 5%;
-    .questionBox {
-      overflow: auto;
-      width: 100%;
-      height: 90%;
-      position: relative;
-      margin-top: 1rem;
-      grid-area: questionBox;
-      font-family: Raleway;
-      font-size: 1rem;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(20, min-content);
+    grid-gap: 1.5rem;
+    .wordAndInput {
+      border-bottom: 0.3px solid rgba(0, 0, 0, 0.5);
       display: grid;
-      grid-template-columns: 100%;
-      grid-template-rows: repeat(20, min-content);
-      grid-gap: 1.5rem;
-      // align-items: center;
+      grid-template-columns: 50% 50%;
+      text-align: center;
 
-      .resultTriplets {
-        border-bottom: 0.3px solid rgba(0, 0, 0, 0.5);
-        display: grid;
-        grid-template-columns: 30% 30% 30%;
-        text-align: center;
-
-        p {
-          position: relative;
-          justify-self: center;
-          width: auto;
-          align-self: center;
-          font-size: 1rem;
-          font-weight: 600;
-          margin-bottom: 1rem;
+      p {
+        position: relative;
+        justify-self: center;
+        width: auto;
+        align-self: center;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      input {
+        position: relative;
+        margin-bottom: 1rem;
+        left: 0%;
+        width: 90%;
+        height: 3rem;
+        background: #ffffff;
+        border: 2px solid #ffce00;
+        box-sizing: border-box;
+        border-radius: 10px;
+        font-family: Raleway;
+        color: black;
+        font-weight: bold;
+        font-size: 1rem;
+        padding: 0.5rem;
+        &:focus {
+          outline: none;
+          &::placeholder {
+            color: white;
+          }
         }
       }
     }
-    .endButton {
-      grid-area: endButton;
-      border-radius: 10px;
-      bottom: 1vh;
-      left: 30%;
-      cursor: pointer;
-      z-index: 6;
-      position: absolute;
-      width: 40%;
-      height: 2.5rem;
-      background-color: #000c36;
-      border: 2px solid #d9edf6;
-      box-sizing: border-box;
-      border-radius: 10px;
-      font-family: Raleway;
-      color: #d9edf6;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 1.4rem;
-      padding: 0.2rem;
+  }
+  .endButton {
+    grid-area: endButton;
+    border-radius: 10px;
+    bottom: 1vh;
+    left: 30%;
+    cursor: pointer;
+    z-index: 6;
+    position: absolute;
+    width: 40%;
+    height: 2.5rem;
+    background-color: #000c36;
+    border: 2px solid #d9edf6;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-family: Raleway;
+    color: #d9edf6;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.4rem;
+    padding: 0.2rem;
+    text-align: center;
+    &:hover {
+      border: #ffce00 solid 2px;
+    }
+  }
+}
+
+.resultBox {
+  overflow: auto;
+  position: absolute;
+  top: 10vh;
+  height: 85vh;
+  width: 85vw;
+  left: 8rem;
+  display: grid;
+  grid-template-rows: 80% 20%;
+  grid-template-columns: 100%;
+  .questionBox {
+    overflow: auto;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-auto-rows: minmax(10vh, max-content);
+    .resultTriplets {
+      border-bottom: 0.3px solid rgba(0, 0, 0, 0.5);
+      display: grid;
+      grid-template-columns: 30% 40% 30%;
+      grid-auto-rows: 100%;
       text-align: center;
-      &:hover {
-        border: #ffce00 solid 2px;
+
+      p {
+        font-family: Raleway;
+        position: relative;
+        justify-self: center;
+        width: auto;
+        align-self: center;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
       }
     }
   }
+}
+.endButton {
+  grid-area: endButton;
+  border-radius: 10px;
+  bottom: 1vh;
+  left: 30%;
+  cursor: pointer;
+  z-index: 6;
+  position: absolute;
+  width: 40%;
+  height: 2.5rem;
+  background-color: #000c36;
+  border: 2px solid #d9edf6;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-family: Raleway;
+  color: #d9edf6;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.4rem;
+  padding: 0.2rem;
+  text-align: center;
+  &:hover {
+    border: #ffce00 solid 2px;
+  }
+}
+.hide {
+  display: none;
 }
 </style>

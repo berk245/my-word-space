@@ -51,6 +51,14 @@
       &-words {
         grid-column: 2 / -1;
       }
+      &-exercise {
+        #chart {
+          margin-left: -1.5rem;
+          .text {
+            margin-left: 0.5rem;
+          }
+        }
+      }
     }
   }
   .title-text {
@@ -168,6 +176,7 @@
       }
     }
     .box-right {
+      position: absolute;
       width: 95%;
       height: 50%;
       left: 2.5%;
@@ -269,21 +278,21 @@
       }
       .updateForm {
         position: relative;
-        top: 0%;
-        left: -5%;
-        width: 95vw;
-        height: 15vh;
-        display: grid;
-        grid-template-columns: 100%;
-        grid-template-rows: 30% 30% 30% 10%;
-        grid-gap: 0rem;
+        top: 20%;
+        left: 0%;
+        width: 100%;
+        height: 10vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         text-align: left;
         .updateBox {
-          height: 1.5rem !important;
           text-align: center;
+          flex-basis: 40%;
         }
         .updateSelect {
-          height: 1.5rem;
+          flex-basis: 15%;
+
           border: 2px solid #ffde09;
           border-radius: 10px;
           justify-self: center;
@@ -292,12 +301,99 @@
           font-weight: 600;
         }
         button {
+          flex-basis: 25%;
           width: 3rem;
-          height: 1.5rem;
-          margin-top: 0.1rem;
+          height: 2.2rem;
+          margin-top: 0rem;
           font-size: 0.8rem;
           justify-self: left;
         }
+      }
+    }
+  }
+  //Exercise Words
+  .container {
+    .exerciseChoices {
+      position: absolute;
+      top: 7vh !important;
+      width: 95vw !important;
+      left: 2.5vw !important;
+      grid-template-rows: 15% 30% 30%;
+      height: 75vh !important;
+      .box-title {
+        font-size: 2rem;
+        margin-bottom: 0;
+      }
+      .exercise {
+        &-pre {
+          .exercise-text {
+            font-size: 0.9rem;
+          }
+        }
+      }
+
+      .main-button {
+        bottom: 1rem;
+        height: 3rem;
+      }
+    }
+    .hide {
+      display: none;
+    }
+    .questions {
+      top: 7vh !important;
+      width: 95vw !important;
+      height: 75% !important;
+      left: 2.5vw !important;
+      .questionBox {
+        .wordAndInput {
+          grid-template-columns: 50% 50%;
+          grid-gap: 0.5rem;
+          input {
+            width: 90% !important;
+            height: 75%;
+          }
+          p {
+            font-size: 1rem;
+          }
+        }
+      }
+
+      .endButton {
+        left: 20%;
+        width: 60%;
+      }
+    }
+    .resultBox {
+      top: 7vh !important;
+      width: 95vw !important;
+      height: 75% !important;
+      left: 2.5vw !important;
+    }
+  }
+  //Add Words
+  .container {
+    .add-words {
+      top: 7vh !important;
+      width: 95vw !important;
+      left: 2.5vw !important;
+      grid-template-rows: 15% 30% 30%;
+      height: 75vh !important;
+      .box-title {
+        font-size: 2rem;
+        margin-bottom: 0;
+      }
+      .exercise {
+        &-pre {
+          .exercise-text {
+            font-size: 0.9rem;
+          }
+        }
+      }
+
+      .main-button {
+        bottom: 1rem;
+        height: 3rem;
       }
     }
   }
@@ -316,23 +412,24 @@
       }
     }
   }
+  //Dashboard
   .box-container {
     top: 10vh;
     display: grid;
     left: 5%;
     width: 90vw;
     height: 72.5vh;
-    grid-template-columns: 100%;
-    grid-template-rows: 25% 75%;
+    grid-template-columns: 45% 55%;
+    grid-template-rows: 20% 80%;
     grid-gap: 0.5rem;
     .box {
       background: rgba(255, 255, 255, 0.95);
       border: 2px solid #00e7ff;
       box-sizing: border-box;
       border-radius: 10px;
-
+      &-top {
+      }
       &-words {
-        display: none;
       }
     }
   }
@@ -398,6 +495,9 @@
           width: 40vw;
           font-size: 5vw;
           top: 120%;
+          a {
+            font-size: 2vh;
+          }
         }
       }
     }
@@ -440,12 +540,13 @@
   //Notebooks Page
   .container {
     .box-left {
-      height: 28.5vh;
+      height: 27.5vh;
       width: 95%;
       left: 2.5%;
       grid-template-rows: 20% 30% 30%;
+
       .box-title {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         left: 1rem;
         margin-bottom: 0.75rem;
       }
@@ -460,7 +561,7 @@
             }
           }
           .exercise-text {
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             margin-bottom: 0.5rem;
           }
         }
@@ -476,7 +577,72 @@
     .box-right {
       width: 95%;
       left: 2.5%;
-      height: 52.5%;
+      height: 50%;
+      .shrink {
+        height: 5vh;
+      }
+    }
+  }
+  //Begin Exercise
+  .container {
+    .exerciseChoices {
+      grid-template-rows: 15% 30% 30%;
+      height: 75%;
+      .box-title {
+        font-size: 2rem;
+        margin-bottom: 0;
+      }
+      .exercise {
+        &-pre {
+          .exercise-text {
+            font-size: 0.9rem;
+          }
+        }
+      }
+
+      .main-button {
+        bottom: 1rem;
+        height: 3rem;
+      }
+    }
+    .questions {
+      top: 5%;
+      height: 80%;
+      .questionBox {
+        .wordAndInput {
+          grid-template-columns: 50% 50%;
+          input {
+            width: 90%;
+            height: 75%;
+          }
+          p {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+  //AddWords
+  .container {
+    .add-words {
+      grid-template-rows: 15% 30% 30%;
+      height: 75%;
+      .box-title {
+        font-size: 2rem;
+        margin-bottom: 0;
+      }
+      .exercise {
+        &-pre {
+          .exercise-text {
+            font-size: 0.9rem;
+          }
+        }
+      }
+
+      .main-button {
+        bottom: 1rem;
+        height: 3rem;
+      }
     }
   }
 }

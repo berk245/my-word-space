@@ -17,7 +17,6 @@
 
 <script>
 import { mapState } from "vuex";
-import exerciseBlock from "../components/ExercisePage/ExerciseBlock";
 import leftBox from "../components/ExercisePage/ExerciseLeftBox";
 import navbar from "../components/Navbar";
 import sideIcons from "../components/SideIcons";
@@ -30,7 +29,6 @@ export default {
   },
   components: {
     navbar,
-    exerciseBlock,
     leftBox,
     sideIcons
   },
@@ -77,7 +75,7 @@ export default {
     width: 78px;
     height: 73px;
     top: 20vh;
-    left: 35vw;
+    left: 65vw;
     background-image: url("../assets/images/backgrounds/Moon.png");
     background-size: 100%;
     background-repeat: no-repeat;

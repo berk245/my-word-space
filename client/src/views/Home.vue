@@ -65,7 +65,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .bg {
   width: 100%;
   height: 100%;
@@ -86,7 +86,6 @@ export default {
     height: 120px;
     top: 5vh;
     right: 85vw;
-
     background-image: url("../assets/images/backgrounds/Moon.png");
   }
   &-spaceship {
@@ -170,7 +169,7 @@ export default {
         font-family: Raleway;
         font-style: normal;
         font-weight: 400;
-        font-size: 2vw;
+        font-size: 2.5vh;
         color: #d9edf6;
         z-index: 6;
         &:hover {

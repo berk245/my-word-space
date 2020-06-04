@@ -9,7 +9,7 @@
     </div>
     <side-icons></side-icons>
     <navbar class="navbar"></navbar>
-    <div class="box box-left">
+    <div class="box box-left add-words">
       <div class="goo-back" @click="takeMeOut">
         <img src="../assets/images/BackButton.png" alt="Back Button" />
       </div>
@@ -143,7 +143,7 @@ export default {
     width: 78px;
     height: 73px;
     top: 20vh;
-    left: 35vw;
+    left: 65vw;
     background-image: url("../assets/images/backgrounds/Moon.png");
     background-size: 100%;
     background-repeat: no-repeat;
@@ -186,10 +186,10 @@ export default {
   border-radius: 10px;
   &-left {
     position: absolute;
-    left: 10%;
+    left: 8rem;
     top: 10vh;
     height: 85vh;
-    width: 20vw;
+    width: 40vw;
     display: grid;
     grid-template-areas:
       "title title title"

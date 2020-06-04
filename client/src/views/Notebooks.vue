@@ -27,7 +27,7 @@
       </div>
       <button class="main-button" @click="addNewNotebook">Add Notebook</button>
     </div>
-    <div class="box box-right">
+    <div class="box box-right" v-bind:class="{ shrink : !notebookSelected }">
       <div class="questionBox">
         <p v-if="!user.notebooks">Add a notebook to see its content here</p>
         <div v-else>
@@ -76,11 +76,7 @@
                   :placeholder="wordToUpdate.translation"
                 />
                 <select class="updateSelect" name="updateTypeSelector" v-model="updatedWord.type">
-                  <option value disabled selected hidden>
-                    {{
-                    wordToUpdate.type
-                    }}
-                  </option>
+                  <option value disabled selected hidden>{{ wordToUpdate.type }}</option>
                   <option value="noun">Noun</option>
                   <option value="verb">Verb</option>
                   <option value="sentence">Sentence or Phrase</option>
@@ -93,28 +89,6 @@
             </div>
           </div>
         </div>
-        <!-- <div v-if="notebookSelected && toEdit">
-          <div v-for="(wordData, type) in user.notebooks[chosenNotebook]" :key="wordData._id">
-            <div class="wordAndInput" v-for="(word,index) in wordData" :key="index">
-              <input type="text" v-model="updatedWord.original" :placeholder="word.original" />
-              <input type="text" v-model="updatedWord.translation" :placeholder="word.translation" />
-              <select class="inputBox" name="typeSelector" v-model="updatedWord.type">
-                <option value disabled selected hidden>{{type}}</option>
-                <option value="random">Random</option>
-                <option value="noun">Noun</option>
-                <option value="verb">Verb</option>
-                <option value="sentence">Sentence or Phrase</option>
-                <option value="adjective">Adjective</option>
-                <option value="preposition">Preposition</option>
-                <option value="other">Other</option>
-              </select>
-              <div class="editAndDelete">
-                <button @click="editMe({updatedWord, index})">Done</button>
-                <button @click="deleteMe({chosenNotebook,type, index})">Delete</button>
-              </div>
-            </div>
-          </div>
-        </div>-->
       </div>
     </div>
   </div>
@@ -235,7 +209,7 @@ export default {
     background-image: url("../assets/images/backgrounds/EarthBigg.png");
     background-repeat: no-repeat;
     background-size: 100%;
-    z-index: 5;
+    z-index: 0;
   }
 
   &-planet {
@@ -254,7 +228,7 @@ export default {
   border-radius: 10px;
   &-left {
     position: absolute;
-    left: 15vw;
+    left: 8rem;
     top: 10%;
     height: 85vh;
     width: 22.5vw;
@@ -365,12 +339,13 @@ export default {
   }
 
   &-right {
-    position: absolute;
+    overflow: auto;
+    position: relative;
     z-index: 7;
     top: 10vh;
-    left: 38%;
+    left: 40%;
     height: 85vh;
-    width: 60vw;
+    width: 58vw;
     display: grid;
     grid-template-areas:
       "questionBox"
@@ -505,33 +480,34 @@ export default {
     .updateForm {
       position: relative;
       top: 0%;
-      left: -5%;
-      width: 70vw;
+      width: 100%;
+      grid-column: 1/-1;
       display: grid;
       grid-template-areas: "edit1 edit2 option button";
-      grid-template-columns: 30% 30% 20% 10%;
+      grid-template-columns: 35% 35% 15% 15%;
       grid-gap: 0rem;
       text-align: left;
       .updateBox {
-        height: 2.2rem !important;
-        width: 40%;
+        height: 2rem !important;
+        width: 100% !important;
+        left: 0 !important;
         text-align: center;
       }
       .updateSelect {
-        height: 2.2rem;
+        height: 2rem;
         border: 2px solid #ffde09;
         border-radius: 10px;
         justify-self: center;
         font-family: Raleway;
         font-size: 0.9rem;
         font-weight: 600;
+        width: 100%;
       }
       button {
         width: 100%;
-        height: 2.2rem;
+        height: 2rem;
         margin-top: 0.1rem;
-        font-size: 0.8rem;
-        justify-self: left;
+        font-size: 0.75rem;
       }
     }
   }
