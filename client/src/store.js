@@ -190,7 +190,7 @@ export default new Vuex.Store({
           data: { newNotebook }
         })
           .then(resp => {
-            if (resp.status == 205) {
+            if (resp.status == 205) { //Expired Token for some reason
               localStorage.removeItem("auth-token");
               localStorage.removeItem("user");
               localStorage.removeItem("user-status");

@@ -60,8 +60,6 @@
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
 import router from "../router";
-import Login from "../components/Login";
-import Signup from "../components/SignUp";
 import Navbar from "../components/Navbar";
 import Chart from "../components/Chart";
 import SideIcons from "../components/SideIcons";
@@ -71,14 +69,9 @@ export default {
     return {};
   },
   components: {
-    Login,
-    Signup,
     Navbar,
     Chart,
     SideIcons
-  },
-  methods: {
-    ...mapActions(["login", "signup"])
   },
   computed: {
     ...mapState([
