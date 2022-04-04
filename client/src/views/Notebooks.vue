@@ -291,7 +291,7 @@ export default {
       color: #d9edf6;
       font-style: normal;
       font-weight: bold;
-      font-size: 2vw;
+      font-size: 1.5rem;
       padding: 0.2rem;
       text-align: center;
       &:hover {
@@ -304,6 +304,7 @@ export default {
     overflow: auto;
     position: relative;
     z-index: 7;
+    padding: 0.5rem 1rem;
     top: 10vh;
     left: 40%;
     height: 85vh;

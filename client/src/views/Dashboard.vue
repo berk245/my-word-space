@@ -105,11 +105,11 @@ export default {
 }
 
 .box-container {
-  width: 90vw;
-  height: 80vh;
+  width: 85%;
+  height: 85vh;
   top: 10vh;
   position: relative;
-  left: 10vw;
+  left: 15rem;
   display: grid;
   grid-template-columns: 35% 65%;
   grid-template-rows: 20% 80%;
