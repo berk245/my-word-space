@@ -1,27 +1,22 @@
 <template>
   <div class="container">
     <navbar class="nav-dash"></navbar>
-    <div class="bg">
-      <div class="bg-stars"></div>
-      <div class="bg-moon"></div>
-      <div class="bg-planet"></div>
-      <div class="title"></div>
-    </div>
+    <Background />
     <side-icons></side-icons>
     <div class="box-container">
       <div class="box box-top">
         <div v-if="user.firstTime">
           <h2 class="text title-welcome">Welcome aboard {{ user.name }}!</h2>
           <p class="text welcome-text">
-            This is your dashboard. You can create ‘Wordbooks’, add new words and
-            practice the words you have added. You can use the button on with to
-            navigate in your space anytime!
+            This is your dashboard. You can create ‘Wordbooks’, add new words
+            and practice the words you have added. You can use the button on
+            with to navigate in your space anytime!
           </p>
         </div>
         <div v-else>
           <h2 class="text title-text">Welcome back {{ user.name }}!</h2>
           <p class="text box-text">
-            Last time you were here was {{ user.logins[1]}}. Create notebooks,
+            Last time you were here was {{ user.logins[1] }}. Create notebooks,
             add words and practice. Are you ready to get to work?
           </p>
         </div>
@@ -29,24 +24,32 @@
       <div class="box box-exercise">
         <h2 class="title2 title-text">Your Performance</h2>
         <div v-if="user.performanceData.firstTime">
-          <p class="box-text text">Here you'll find your statistics when you start exercising :)</p>
+          <p class="box-text text">
+            Here you'll find your statistics when you start exercising :)
+          </p>
         </div>
         <div v-if="!user.performanceData.firstTime" class="chart">
-          <p class="text box-text">Total Questions Answered: {{user.performanceData.wordsSeen}}</p>
+          <p class="text box-text">
+            Total Questions Answered: {{ user.performanceData.wordsSeen }}
+          </p>
           <p class="text box-text">Performance Chart:</p>
           <chart></chart>
         </div>
         <div v-if="!user.performanceData.firstTime" class="stats">
-          <p class="text box-text">Exercises Started: {{user.performanceData.exercisesStarted}}</p>
-          <p class="text box-text">Exercises Completed: {{user.performanceData.exercisesCompleted}}</p>
+          <p class="text box-text">
+            Exercises Started: {{ user.performanceData.exercisesStarted }}
+          </p>
+          <p class="text box-text">
+            Exercises Completed: {{ user.performanceData.exercisesCompleted }}
+          </p>
         </div>
       </div>
       <div class="box box-words">
         <h2 class="title3 title-text">Recent Words</h2>
         <div v-if="user.recentWords" class="list">
           <div class="list-row" v-for="word in user.recentWords" :key="word.x">
-            <p class="text box-text">{{word.original}}</p>
-            <p class="text box-text">{{word.translation}}</p>
+            <p class="text box-text">{{ word.original }}</p>
+            <p class="text box-text">{{ word.translation }}</p>
           </div>
         </div>
         <div class="list" v-else>
@@ -65,6 +68,7 @@ import Signup from "../components/SignUp";
 import Navbar from "../components/Navbar";
 import Chart from "../components/Chart";
 import SideIcons from "../components/SideIcons";
+import Background from "../components/Background.vue";
 
 export default {
   data() {
@@ -75,7 +79,8 @@ export default {
     Signup,
     Navbar,
     Chart,
-    SideIcons
+    SideIcons,
+    Background
   },
   methods: {
     ...mapActions(["login", "signup"])
@@ -92,26 +97,19 @@ export default {
 };
 </script>
 
-
-
 <style scoped lang="scss">
 .nav-dash[data-v-22ba47ca] {
   .go-back {
     visibility: hidden;
   }
 }
-.bg {
-  &-moon {
-    visibility: hidden;
-  }
-}
 
 .box-container {
-  width: 80vw;
+  width: 90vw;
   height: 80vh;
   top: 10vh;
   position: relative;
-  left: 15vw;
+  left: 10vw;
   display: grid;
   grid-template-columns: 35% 65%;
   grid-template-rows: 20% 80%;

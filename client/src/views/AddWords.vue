@@ -1,18 +1,14 @@
 <template>
   <div class="container">
-    <div class="bg">
-      <div class="bg-stars"></div>
-      <div class="bg-moon"></div>
-      <div class="bg-spaceship"></div>
-      <div class="bg-earth"></div>
-      <div class="bg-planet"></div>
-    </div>
+    <Background />
     <side-icons></side-icons>
     <navbar class="navbar"></navbar>
     <div class="box box-left add-words">
       <h2 class="box-title">Add Words</h2>
       <div class="exercise exercise-pre">
-        <p class="exercise-text">Add a new word to one of your notebooks to practice them later!</p>
+        <p class="exercise-text">
+          Add a new word to one of your notebooks to practice them later!
+        </p>
         <div class="input-boxxes">
           <select
             class="inputBox"
@@ -25,7 +21,8 @@
               v-for="(book, bookName) in user.notebooks"
               :key="bookName"
               :value="bookName"
-            >{{ bookName }}</option>
+              >{{ bookName }}</option
+            >
           </select>
           <input
             class="inputBox"
@@ -63,6 +60,7 @@ import navbar from "../components/Navbar";
 import sideIcons from "../components/SideIcons";
 import router from "vue-router";
 import { mapState, mapActions } from "vuex";
+import Background from "../components/Background.vue";
 export default {
   data() {
     return {
@@ -78,7 +76,8 @@ export default {
   },
   components: {
     navbar,
-    sideIcons
+    sideIcons,
+    Background
   },
   methods: {
     ...mapActions(["addWords"]),
@@ -122,59 +121,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.bg {
-  width: 100%;
-  height: auto;
-  position: relative;
-  &-stars {
-    position: absolute;
-    width: 964px;
-    height: 784px;
-    left: 60vw;
-    top: -15vh;
-    background-image: url("../assets/images/backgrounds/Stars3.png");
-    background-repeat: no-repeat;
-  }
-  &-moon {
-    position: absolute;
-    width: 78px;
-    height: 73px;
-    top: 20vh;
-    left: 65vw;
-    background-image: url("../assets/images/backgrounds/Moon.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-  }
-  &-spaceship {
-    position: absolute;
-    width: 30px;
-    height: 34.13px;
-    top: 63vh;
-    left: 26vw;
-    background-image: url("../assets/images/backgrounds/Spaceship.png");
-    background-size: 100%;
-  }
-  &-earth {
-    position: absolute;
-    width: 550px;
-    height: 550px;
-    left: 22vw;
-    top: 32h;
-    background-image: url("../assets/images/backgrounds/EarthBigg.png");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    z-index: 0;
-  }
-
-  &-planet {
-    position: absolute;
-    width: 226px;
-    height: 129px;
-    left: 90vw;
-    top: 85vh;
-    background-image: url("../assets/images/backgrounds/Planet.png");
-  }
-}
 .box {
   z-index: 7;
   background: rgba(255, 255, 255, 0.95);
@@ -183,10 +129,10 @@ export default {
   border-radius: 10px;
   &-left {
     position: absolute;
-    left: 8rem;
+    left: 15rem;
     top: 10vh;
     height: 85vh;
-    width: 40vw;
+    width: 25vw;
     display: grid;
     grid-template-areas:
       "title title title"

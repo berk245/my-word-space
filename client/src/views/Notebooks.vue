@@ -1,12 +1,6 @@
 <template>
   <div class="container">
-    <div class="bg">
-      <div class="bg-stars"></div>
-      <div class="bg-moon"></div>
-      <div class="bg-spaceship"></div>
-      <div class="bg-earth"></div>
-      <div class="bg-planet"></div>
-    </div>
+    <Background />
     <side-icons></side-icons>
     <navbar></navbar>
     <div class="box box-left">
@@ -27,7 +21,7 @@
       </div>
       <button class="main-button" @click="addNewNotebook">Add Notebook</button>
     </div>
-    <div class="box box-right" v-bind:class="{ shrink : !notebookSelected }">
+    <div class="box box-right" v-bind:class="{ shrink: !notebookSelected }">
       <div class="questionBox">
         <p v-if="!user.notebooks">Add a notebook to see its content here</p>
         <div v-else>
@@ -42,13 +36,21 @@
               v-for="(book, bookName) in user.notebooks"
               :key="bookName"
               :value="bookName"
-            >{{ bookName }}</option>
+              >{{ bookName }}</option
+            >
           </select>
           <button @click="notebookSelected = true">Get Words</button>
         </div>
         <div v-if="notebookSelected">
-          <div v-for="(wordData, type) in user.notebooks[chosenNotebook].words" :key="wordData._id">
-            <div class="wordAndInput" v-for="(word, index) in wordData" :key="word.translation">
+          <div
+            v-for="(wordData, type) in user.notebooks[chosenNotebook].words"
+            :key="wordData._id"
+          >
+            <div
+              class="wordAndInput"
+              v-for="(word, index) in wordData"
+              :key="word.translation"
+            >
               <p>{{ word.original }}</p>
               <p>{{ word.translation }}</p>
               <p>{{ type }}</p>
@@ -60,9 +62,14 @@
                 <button
                   v-if="!toEdit"
                   @click="deleteMe({ chosenNotebook, type, index, word })"
-                >Delete</button>
+                >
+                  Delete
+                </button>
               </div>
-              <div class="updateForm" v-if="toEdit && wordToUpdate.original == word.original">
+              <div
+                class="updateForm"
+                v-if="toEdit && wordToUpdate.original == word.original"
+              >
                 <input
                   class="updateBox"
                   type="text"
@@ -75,8 +82,14 @@
                   v-model="updatedWord.translation"
                   :placeholder="wordToUpdate.translation"
                 />
-                <select class="updateSelect" name="updateTypeSelector" v-model="updatedWord.type">
-                  <option value disabled selected hidden>{{ wordToUpdate.type }}</option>
+                <select
+                  class="updateSelect"
+                  name="updateTypeSelector"
+                  v-model="updatedWord.type"
+                >
+                  <option value disabled selected hidden>{{
+                    wordToUpdate.type
+                  }}</option>
                   <option value="noun">Noun</option>
                   <option value="verb">Verb</option>
                   <option value="sentence">Sentence or Phrase</option>
@@ -98,6 +111,7 @@
 import { mapState, mapActions } from "vuex";
 import navbar from "../components/Navbar";
 import sideIcons from "../components/SideIcons";
+import Background from "../components/Background.vue";
 export default {
   name: "Exercise",
   data() {
@@ -116,7 +130,8 @@ export default {
   },
   components: {
     navbar,
-    sideIcons
+    sideIcons,
+    Background
   },
   methods: {
     ...mapActions(["addNotebook", "deleteWord", "updateWord"]),
@@ -168,59 +183,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.bg {
-  width: 100%;
-  height: auto;
-  position: relative;
-  &-stars {
-    position: absolute;
-    width: 964px;
-    height: 784px;
-    left: 60vw;
-    top: -15vh;
-    background-image: url("../assets/images/backgrounds/Stars3.png");
-    background-repeat: no-repeat;
-  }
-  &-moon {
-    position: absolute;
-    width: 78px;
-    height: 73px;
-    top: 20vh;
-    left: 35vw;
-    background-image: url("../assets/images/backgrounds/Moon.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-  }
-  &-spaceship {
-    position: absolute;
-    width: 30px;
-    height: 34.13px;
-    top: 63vh;
-    left: 26vw;
-    background-image: url("../assets/images/backgrounds/Spaceship.png");
-    background-size: 100%;
-  }
-  &-earth {
-    position: absolute;
-    width: 550px;
-    height: 550px;
-    left: 22vw;
-    top: 32h;
-    background-image: url("../assets/images/backgrounds/EarthBigg.png");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    z-index: 0;
-  }
-
-  &-planet {
-    position: absolute;
-    width: 226px;
-    height: 129px;
-    left: 90vw;
-    top: 85vh;
-    background-image: url("../assets/images/backgrounds/Planet.png");
-  }
-}
 .box {
   background: rgba(255, 255, 255, 0.95);
   border: 2px solid #00e7ff;
@@ -228,10 +190,10 @@ export default {
   border-radius: 10px;
   &-left {
     position: absolute;
-    left: 8rem;
+    left: 15rem;
     top: 10%;
     height: 85vh;
-    width: 22.5vw;
+    width: 25vw;
     display: grid;
     grid-template-areas:
       "title title title"
@@ -352,11 +314,11 @@ export default {
       "endButton";
     grid-template-rows: 95% 5%;
     .questionBox {
-      text-align: center;
       .inputBox {
         z-index: 6;
-        width: 50%;
-        height: 2.5rem;
+        width: 65%;
+        margin-right: 2%;
+        height: 3rem;
         background: #ffffff;
         border: 2px solid #ffce00;
         box-sizing: border-box;
@@ -374,7 +336,7 @@ export default {
         }
       }
       button {
-        height: 2.5rem;
+        height: 3rem;
         width: 30%;
         background: #ffffff;
         border: 2px solid #ffce00;
@@ -403,10 +365,10 @@ export default {
       // align-items: center;
 
       .wordAndInput {
-        border-bottom: 0.3px solid rgba(0, 0, 0, 0.5);
+        border-bottom: 0.3px solid rgba(0, 0, 0, 0.15);
         display: grid;
-        grid-template-columns: 30% 30% 25% 10%;
-        text-align: center;
+        padding: 0.5rem 1rem;
+        grid-template-columns: 25% 25% 25% 25%;
 
         .editAndDelete {
           display: flex;
@@ -414,6 +376,7 @@ export default {
           button {
             width: 100%;
             font-size: 0.7rem;
+            margin-right: 0.5rem;
             border: solid 1px #ffce00;
             &:hover {
               border: solid 2px #ffce00;
@@ -422,11 +385,9 @@ export default {
         }
         p {
           position: relative;
-          justify-self: center;
           width: auto;
           align-self: center;
-          font-size: 1rem;
-          font-weight: 600;
+          font-size: 0.9rem;
         }
         input {
           position: relative;
@@ -489,7 +450,6 @@ export default {
       text-align: left;
       .updateBox {
         height: 2rem !important;
-        width: 100% !important;
         left: 0 !important;
         text-align: center;
       }

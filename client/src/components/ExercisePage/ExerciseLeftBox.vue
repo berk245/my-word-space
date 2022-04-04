@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <div class="box box-left exerciseChoices" v-bind:class="{hide : onExercise}">
+    <div
+      class="box box-left exerciseChoices"
+      v-bind:class="{ hide: onExercise }"
+    >
       <h2 class="box-title">Exercise</h2>
       <div class="exercise exercise-pre" v-if="!onExercise">
         <p class="exercise-text">
@@ -8,10 +11,10 @@
           and type of the words you want to practice.
         </p>
         <br />
-        <p
-          class="guest-text"
-          v-if="user.name == 'Guest'"
-        >Hello Guest User, the correct answer is the number next to the word. (noun6 = 6). Thank you for testing :)</p>
+        <p class="guest-text" v-if="user.name == 'Guest'">
+          Hello Guest User, the correct answer is the number next to the word.
+          (noun6 = 6). Thank you for testing :)
+        </p>
         <div class="input-boxes">
           <select
             class="inputBox"
@@ -25,7 +28,8 @@
               v-for="(book, bookName) in user.notebooks"
               :key="bookName"
               :value="bookName"
-            >{{ bookName }}</option>
+              >{{ bookName }}</option
+            >
           </select>
           <input
             class="inputBox"
@@ -33,7 +37,11 @@
             placeholder="How many words?"
             v-model="reqExercise.amount"
           />
-          <select class="inputBox" name="typeSelector" v-model="reqExercise.type">
+          <select
+            class="inputBox"
+            name="typeSelector"
+            v-model="reqExercise.type"
+          >
             <option value disabled selected hidden>Choose your Type</option>
             <option value="random">Random</option>
             <option value="noun">Noun</option>
@@ -45,9 +53,11 @@
           </select>
         </div>
       </div>
-      <button v-if="!onExercise" class="main-button" @click="beginExercise">Start</button>
+      <button v-if="!onExercise" class="main-button" @click="beginExercise">
+        Start
+      </button>
     </div>
-    <div class="box box-right questions" v-if="onExercise&& !resultBox">
+    <div class="box box-right questions" v-if="onExercise && !resultBox">
       <div class="questionBox">
         <div
           class="wordAndInput"
@@ -324,9 +334,9 @@ export default {
 
 <style scoped lang="scss">
 .exerciseChoices {
-  width: 35%;
+  width: 25%;
   position: absolute;
-  left: 8rem;
+  left: 15rem;
   top: 10vh;
   height: 85vh;
   display: grid;
@@ -448,7 +458,7 @@ export default {
   position: absolute;
   z-index: 7;
   top: 10vh;
-  left: 8rem;
+  left: 15rem;
   height: 85vh;
   width: 85vw;
   display: grid;
@@ -541,7 +551,7 @@ export default {
   top: 10vh;
   height: 85vh;
   width: 85vw;
-  left: 8rem;
+  left: 15rem;
   display: grid;
   grid-template-rows: 80% 20%;
   grid-template-columns: 100%;

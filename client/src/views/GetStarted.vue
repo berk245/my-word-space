@@ -1,11 +1,7 @@
 <template>
   <div class="container">
+    <Background />
     <div class="bg">
-      <div class="bg-stars"></div>
-      <div class="bg-moon"></div>
-      <div class="bg-spaceship"></div>
-      <div class="bg-earth"></div>
-      <div class="bg-planet"></div>
       <div class="title">
         <h1 class="main-title">my word space</h1>
         <div class="logOrSign">
@@ -22,6 +18,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import router from "../router";
 import Login from "../components/Login";
 import Signup from "../components/SignUp";
+import Background from "../components/Background.vue";
 
 export default {
   data() {
@@ -31,7 +28,8 @@ export default {
   },
   components: {
     Login,
-    Signup
+    Signup,
+    Background
   },
   methods: {
     ...mapActions(["login", "signup"])
