@@ -1,7 +1,11 @@
 <template>
   <div class="box-icons">
     <router-link class="link-icon" to="/exercise">
-      <img class="dumb" src="../assets/images/dumbbell1.png" alt="Link to Exercise Page" />
+      <img
+        class="dumb"
+        src="../assets/images/dumbbell1.png"
+        alt="Link to Exercise Page"
+      />
       <p class="dp">Practice</p>
     </router-link>
     <router-link class="link-icon" to="/notebooks">
@@ -27,14 +31,16 @@ export default {};
 .box-icons {
   position: absolute;
   width: 10vw;
-  height: 83vh;
+  height: 85vh;
   top: 10vh;
-  left: -1vw;
   display: grid;
   grid-auto-rows: 20%;
   grid-gap: 2.2rem;
+  left: 1rem;
   justify-items: center;
   align-items: center;
+  background: rgba(#003296, 0.9);
+  border-radius: 5px;
   .link-icon {
     text-decoration: none;
     width: 7.5rem;
