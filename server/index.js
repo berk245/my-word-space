@@ -11,7 +11,7 @@ const app = express();
 
 //Connect to Auth DB
 mongoose.connect(
-  "mongodb+srv://newUser:123new@cluster0-oixaf.gcp.mongodb.net/deutschApp?retryWrites=true&w=majority",
+  "mongodb://newUser:o1yqGPTR23i1dWj9@cluster0-shard-00-00.oixaf.gcp.mongodb.net:27017,cluster0-shard-00-01.oixaf.gcp.mongodb.net:27017,cluster0-shard-00-02.oixaf.gcp.mongodb.net:27017/deutschApp?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority",
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => console.log("connected to DB")
 );
