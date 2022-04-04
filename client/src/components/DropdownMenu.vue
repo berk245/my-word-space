@@ -14,8 +14,7 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
-import router from "../../src/router";
-import sideMenu from "./SideMenu";
+import router from "../router";
 
 export default {
   data() {

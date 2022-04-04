@@ -4,19 +4,22 @@
       <p class="title-right">my word space</p>
       <img
         class="user-icon"
-        @click="showSidemenu"
+        @click="showDropdownMenu"
         src="../assets/images/BackButton.png"
         alt="Back Button"
       />
     </div>
-    <sideMenu v-bind:class="{showIt: !closing, hideIt: closing}" v-if="showSide"></sideMenu>
+    <DropdownMenu
+      v-bind:class="{ showIt: !closing, hideIt: closing }"
+      v-if="showSide"
+    ></DropdownMenu>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
 import router from "../router";
-import sideMenu from "./SideMenu";
+import DropdownMenu from "./DropdownMenu";
 
 export default {
   data() {
@@ -26,7 +29,7 @@ export default {
     };
   },
   methods: {
-    showSidemenu() {
+    showDropdownMenu() {
       if (!this.showSide) {
         this.showSide = true;
       } else {
@@ -51,7 +54,7 @@ export default {
     ])
   },
   components: {
-    sideMenu
+    DropdownMenu
   }
 };
 </script>
