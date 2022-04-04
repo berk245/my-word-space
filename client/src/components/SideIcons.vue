@@ -1,12 +1,12 @@
 <template>
-  <div class="box-icons">
-    <router-link class="link-icon" to="/exercise">
+  <div class="icons-container">
+    <router-link class="practice-link" to="/exercise">
       <img
-        class="dumb"
+        class="icon"
         src="../assets/images/dumbbell1.png"
         alt="Link to Exercise Page"
       />
-      <p class="dp">Practice</p>
+      <p class="practice-link-text">Practice</p>
     </router-link>
     <router-link class="link-icon" to="/notebooks">
       <img src="../assets/images/open-book1.png" alt="Link to Notebooks Page" />
@@ -28,7 +28,7 @@ export default {};
 </script>
 
 <style lang="scss">
-.box-icons {
+.icons-container {
   position: absolute;
   width: 10vw;
   height: 85vh;
@@ -41,6 +41,32 @@ export default {};
   align-items: center;
   background: rgba(#003296, 0.9);
   border-radius: 5px;
+  .practice-link {
+    text-decoration: none;
+    width: 7.5rem;
+    height: 7.5rem;
+    //border-radius: 100px;
+    //background: rgba(#031c4f, 0.8);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.95);
+    &icon {
+      width: 50%;
+      height: 55%;
+      top: 0.5rem;
+      left: 0rem;
+    }
+    &-text {
+      top: 0.8rem;
+      position: relative;
+      font-family: Raleway;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    &:hover {
+      border-bottom: 2px solid #00e7ff;
+    }
+  }
+
   .link-icon {
     text-decoration: none;
     width: 7.5rem;
@@ -57,15 +83,7 @@ export default {};
       left: 0rem;
       color: white;
     }
-    .dumb {
-      width: 50%;
-      height: 55%;
-      top: 0.5rem;
-      left: 0rem;
-    }
-    .dp {
-      top: 0.8rem;
-    }
+
     p {
       position: relative;
       top: 2.4rem;
@@ -74,7 +92,7 @@ export default {};
       font-weight: 600;
     }
     &:hover {
-      background: rgba(#003296, 0.8);
+      border-bottom: 2px solid #00e7ff;
     }
   }
 }
