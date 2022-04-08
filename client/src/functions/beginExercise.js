@@ -45,6 +45,66 @@ function createWordPool(exerciseParameters, user) {
       }
     }
   }
+
+  let wordPool = [];
+
+  //Notebook is all
+  if (chosenBook == "all") {
+    //Create an array with notebook keys to iterate on object with notebooks[keys[i]]
+    let notebookNames = Object.keys(user.notebooks);
+
+    //Words are random
+    if (chosenType == "random") {
+      for (let i = 0; i < notebookNames.length; i++) {
+        let words = user.notebooks[notebookNames[i]].words;
+        Object.values(words).map(words => {
+          wordPool.push(...words);
+        });
+      }
+    }
+    //Specific Word Type Selected
+    else {
+      for (let i = 0; i < notebookNames.length; i++) {
+        wordPool.push(...user.notebooks[notebookNames[i]].words[chosenType]);
+      }
+    }
+  }
+  //Specific Notebook
+  else {
+    //random Words
+    let userNotebook = user.notebooks[chosenBook].words;
+    console.log(userNotebook)
+    if (chosenType == "random") {
+      Object.values(userNotebook).map(words => {
+        wordPool.push(...words);
+      });
+    }
+    //Specific Word Type Selected
+    else {
+      wordPool.push(...userNotebook[chosenType]);
+    }
+  }
+  let indexSet = new Set([]);
+  //Until the exercise amount is reached, fill it with random indexes ranged till filtered array length
+  let range = wordPool.length;
+  while (exerciseParameters.amount > indexSet.size) {
+    let randomInt = randomNumberGen(range - 1);
+    indexSet.add(randomInt);
+  }
+  let result = [];
+  //Turn the set into an array
+  let indexes = Array.from(indexSet.values());
+  //Iterate through each index, get that indexed element from filteredArray, assign it to questions array
+  for (let i = 0; i < indexes.length; i++) {
+    result.push(wordPool[indexes[i]]);
+  }
+
+  return result;
 }
+
+function randomNumberGen(range) {
+    let randomNumber = Math.floor(Math.random() * Math.floor(range));
+    return randomNumber;
+  }
 
 module.exports = createWordPool;

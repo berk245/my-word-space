@@ -106,7 +106,7 @@
 <script>
 import router from "vue-router";
 import { mapState, mapActions } from "vuex";
-import createWordPool from '../../functions/beginExercise.js'
+// const createWordPool= require( '../../functions/beginExercise.js')
 export default {
   data() {
     return {
@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     ...mapActions(["exerciseStart", "exerciseDone"]),
-    getExerciseWords: createWordPool, 
+    getExerciseWords: () => {return true}, 
     resetAll() {
       this.onExercise = false;
       this.resultBox = false;
