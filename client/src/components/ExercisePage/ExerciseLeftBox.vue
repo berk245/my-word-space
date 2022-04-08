@@ -56,7 +56,7 @@
       <button v-if="!onExercise" class="main-button" @click="()=>  this.currentExercise.exerciseWords = beginExercise(reqExercise)">
         Start
       </button>
-       <button v-if="!onExercise" class="main-button" @click="()=>  getExerciseWords(user)">
+       <button v-if="!onExercise" class="main-button" @click="()=>  getExerciseWords(reqExercise, user)">
         WordPool
       </button>
     </div>

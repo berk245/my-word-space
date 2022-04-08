@@ -8,6 +8,7 @@ const createGenericArray = () => {
 
 let mockDB = {
     name: 'Generic User',
+    totalWordCount: 2000,
     notebooks: {
         Notebook100: {
             wordCount: 200,
