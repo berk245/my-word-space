@@ -56,6 +56,9 @@
       <button v-if="!onExercise" class="main-button" @click="()=>  this.currentExercise.exerciseWords = beginExercise(reqExercise)">
         Start
       </button>
+       <button v-if="!onExercise" class="main-button" @click="()=>  newMeth(reqExercise)">
+        WordPool
+      </button>
     </div>
     <div class="box box-right questions" v-if="onExercise && !resultBox">
       <div class="questionBox">
@@ -103,6 +106,7 @@
 <script>
 import router from "vue-router";
 import { mapState, mapActions } from "vuex";
+import createWordPool from '../../functions/beginExercise.js'
 export default {
   data() {
     return {
@@ -124,6 +128,7 @@ export default {
   },
   methods: {
     ...mapActions(["exerciseStart", "exerciseDone"]),
+    newMeth: createWordPool, 
     resetAll() {
       this.onExercise = false;
       this.resultBox = false;
