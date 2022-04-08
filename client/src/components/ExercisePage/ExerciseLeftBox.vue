@@ -56,7 +56,7 @@
       <button v-if="!onExercise" class="main-button" @click="()=>  this.currentExercise.exerciseWords = beginExercise(reqExercise)">
         Start
       </button>
-       <button v-if="!onExercise" class="main-button" @click="()=>  newMeth(reqExercise)">
+       <button v-if="!onExercise" class="main-button" @click="()=>  getExerciseWords(user)">
         WordPool
       </button>
     </div>
@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     ...mapActions(["exerciseStart", "exerciseDone"]),
-    newMeth: createWordPool, 
+    getExerciseWords: createWordPool, 
     resetAll() {
       this.onExercise = false;
       this.resultBox = false;

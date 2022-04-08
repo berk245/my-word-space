@@ -2,10 +2,21 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      ".*\\.(vue)$": "vue-jest"
+    }
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "jest"
   },
   "dependencies": {
     "apexcharts": "^3.23.1",
@@ -23,11 +34,14 @@
     "@vue/cli-plugin-eslint": "^3.12.1",
     "@vue/cli-service": "^3.12.1",
     "@vue/eslint-config-standard": "^4.0.0",
+    "@vue/test-utils": "^2.0.0-rc.19",
     "babel-eslint": "^10.1.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "jest": "^27.5.1",
     "sass": "^1.50.0",
     "sass-loader": "^10",
+    "vue-jest": "^3.0.7",
     "vue-template-compiler": "^2.6.14"
   }
 }

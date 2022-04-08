@@ -1,3 +1,6 @@
-export default function createWordPool(params) {
+function createWordPool(params) {
     console.log(params)
+    return 1
 }
+
+module.exports = createWordPool
