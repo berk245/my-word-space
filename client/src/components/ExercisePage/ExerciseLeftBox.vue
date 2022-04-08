@@ -53,7 +53,7 @@
           </select>
         </div>
       </div>
-      <button v-if="!onExercise" class="main-button" @click="beginExercise(reqExercise)">
+      <button v-if="!onExercise" class="main-button" @click="()=>  this.currentExercise.exerciseWords = beginExercise(reqExercise)">
         Start
       </button>
     </div>
@@ -280,13 +280,15 @@ export default {
         let randomInt = this.randomNumberGen(range - 1);
         indexSet.add(randomInt);
       }
+      let result = []
       //Turn the set into an array
       let indexes = Array.from(indexSet.values());
       //Iterate through each index, get that indexed element from filteredArray, assign it to questions array
       for (let i = 0; i < indexes.length; i++) {
-        this.currentExercise.exerciseWords.push(wordPool[indexes[i]]);
+       result.push(wordPool[indexes[i]]);
       }
       this.onExercise = true;
+      return result
     },
 
     checkResults() {
