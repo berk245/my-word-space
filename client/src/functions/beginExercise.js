@@ -1,11 +1,6 @@
 function createWordPool(exerciseParameters, user) {
-  console.log(user);
+  if (hasEmptyParameterFields(exerciseParameters)) return false;
 
-  for (var key in exerciseParameters) {
-    if (exerciseParameters[key] == "") {
-      return false;
-    }
-  }
   //all fields are filled
   let chosenBook = exerciseParameters.notebook;
   let chosenType = exerciseParameters.type;
@@ -73,7 +68,6 @@ function createWordPool(exerciseParameters, user) {
   else {
     //random Words
     let userNotebook = user.notebooks[chosenBook].words;
-    console.log(userNotebook)
     if (chosenType == "random") {
       Object.values(userNotebook).map(words => {
         wordPool.push(...words);
@@ -103,8 +97,17 @@ function createWordPool(exerciseParameters, user) {
 }
 
 function randomNumberGen(range) {
-    let randomNumber = Math.floor(Math.random() * Math.floor(range));
-    return randomNumber;
+  let randomNumber = Math.floor(Math.random() * Math.floor(range));
+  return randomNumber;
+}
+
+const hasEmptyParameterFields = exerciseParameters => {
+  for (var key in exerciseParameters) {
+    if (exerciseParameters[key] == "") {
+      return true;
+    }
   }
+  return false
+};
 
 module.exports = createWordPool;
