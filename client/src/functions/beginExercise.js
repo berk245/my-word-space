@@ -103,11 +103,9 @@ function randomNumberGen(range) {
 
 const hasEmptyParameterFields = exerciseParameters => {
   for (var key in exerciseParameters) {
-    if (exerciseParameters[key] == "") {
-      return true;
-    }
+    if (!exerciseParameters[key]) return true;
   }
-  return false
+  return false;
 };
 
 module.exports = createWordPool;

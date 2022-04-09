@@ -57,7 +57,7 @@ let wordPool = {
 }
 
 
-test("should return false when an invalid object is passed as parameter.", () => {
+test.only("should return false when an invalid object is passed as parameter.", () => {
   expect(beginExercise(errorTestParams.invalidParameter, mockDB)).toBe(false);
 });
 
