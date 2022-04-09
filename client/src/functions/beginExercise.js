@@ -71,39 +71,44 @@ const hasEmptyParameterFields = exerciseParameters => {
 
 const notEnoughWordsAvailable = (exerciseParameters, user) => {
   let { notebook, type, amount } = exerciseParameters;
-  if (notebook != "all") {
-    //check word type = if it's random check total word count, else check word count of respective type
-    if (type == "random") {
-      if (amount >= user.notebooks[notebook].wordCount) {
-        console.log("You don't have enough words in selected notebok ");
-        return true;
-      }
+  let result;
+  if (notebook != "all")
+    result = checkWordCountForSpecificNotebook(type, notebook, amount, user);
+  else result = checkWordCountForAllNotebooks(type, amount, user);
+  return !result;
+};
+
+const checkWordCountForSpecificNotebook = (type, notebook, amount, user) => {
+  if (type == "random") {
+    if (amount >= user.notebooks[notebook].wordCount) {
+      console.log("You don't have enough words in selected notebok ");
+      return false;
     }
-    //a specific word type chosen
-    else {
-      if (amount >= user.notebooks[notebook].words[type].length) {
-        console.log("You don't have enough words in selected notebok ");
-        return true;
-      }
-    }
-  } else if (book == "all") {
-    if (type == "random") {
-      if (amount >= user.totalWordCount) {
-        console.log("You don't have enough words in selected notebok ");
-        return true;
-      }
-    } else {
-      let totalChosenType = 0;
-      for (var key in user.notebooks) {
-        totalChosenType += user.notebooks[key].words[type].length;
-      }
-      if (amount > totalChosenType) {
-        console.log("You don't have enough words in selected notebok ");
-        return true;
-      }
+  } else {
+    if (amount >= user.notebooks[notebook].words[type].length) {
+      console.log("You don't have enough words in selected notebok ");
+      return false;
     }
   }
-  return false;
+  return true;
+};
+const checkWordCountForAllNotebooks = (type, amount, user) => {
+  if (type == "random") {
+    if (amount >= user.totalWordCount) {
+      console.log("You don't have enough words in selected notebok ");
+      return false;
+    }
+  } else {
+    let totalChosenType = 0;
+    for (var key in user.notebooks) {
+      totalChosenType += user.notebooks[key].words[type].length;
+    }
+    if (amount > totalChosenType) {
+      console.log("You don't have enough words in selected notebok ");
+      return false;
+    }
+  }
+  return true;
 };
 
 module.exports = createWordPool;
