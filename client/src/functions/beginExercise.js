@@ -1,7 +1,8 @@
 function createWordPool(exerciseParameters, user) {
   if (hasEmptyParameterFields(exerciseParameters)) return false;
   if (notEnoughWordsAvailable(exerciseParameters, user)) return false;
-
+  let chosenBook = exerciseParameters.notebook;
+  let chosenType = exerciseParameters.type;
   let wordPool = [];
 
   //Notebook is all
@@ -72,43 +73,68 @@ const hasEmptyParameterFields = exerciseParameters => {
 const notEnoughWordsAvailable = (exerciseParameters, user) => {
   let { notebook, type, amount } = exerciseParameters;
   let result;
-  if (notebook != "all")
-    result = checkWordCountForSpecificNotebook(type, notebook, amount, user);
-  else result = checkWordCountForAllNotebooks(type, amount, user);
+  let checker = new WordAmountCounter(user, exerciseParameters);
+  if (notebook != "all") result = checker.specificNotebook();
+  else result = checker.allNotebooks();
   return !result;
 };
 
-const checkWordCountForSpecificNotebook = (type, notebook, amount, user) => {
-  if (type == "random") {
-    if (amount >= user.notebooks[notebook].wordCount) {
-      console.log("You don't have enough words in selected notebok ");
-      return false;
-    }
-  } else {
-    if (amount >= user.notebooks[notebook].words[type].length) {
-      console.log("You don't have enough words in selected notebok ");
-      return false;
-    }
+class WordAmountCounter {
+  constructor(user, exerciseParams) {
+    this.user = user;
+    this.amount = exerciseParams.amount;
+    this.notebook = exerciseParams.notebook;
+    this.type = exerciseParams.type;
   }
-  return true;
-};
-const checkWordCountForAllNotebooks = (type, amount, user) => {
-  if (type == "random") {
-    if (amount >= user.totalWordCount) {
-      console.log("You don't have enough words in selected notebok ");
-      return false;
-    }
-  } else {
-    let totalChosenType = 0;
-    for (var key in user.notebooks) {
-      totalChosenType += user.notebooks[key].words[type].length;
-    }
-    if (amount > totalChosenType) {
-      console.log("You don't have enough words in selected notebok ");
-      return false;
-    }
-  }
-  return true;
-};
 
+  specificNotebook() {
+    let result = true;
+    if (this.type == "random") result = this.specificNotebookAllTypes();
+    else result = this.specificNotebookSpecificType();
+    return result;
+  }
+  specificNotebookAllTypes() {
+    if (this.amount >= this.user.notebooks[this.notebook].wordCount) {
+      console.log("You don't have enough words in selected notebok ");
+      return false;
+    }
+    return true;
+  }
+  specificNotebookSpecificType() {
+    if (
+      this.amount >= this.user.notebooks[this.notebook].words[this.type].length
+    ) {
+      console.log("You don't have enough words in selected notebok ");
+      return false;
+    }
+    return true;
+  }
+
+  allNotebooks() {
+    let result = true;
+    if (this.type == "random") result = this.allNotebooksAllTypes();
+    else result = this.allNotebooksSpecificType()
+
+    return result;
+  }
+
+  allNotebooksAllTypes() {
+    if (this.amount >= this.user.totalWordCount) {
+      console.log("You don't have enough words in selected notebok ");
+      return false;
+    }
+    return true;
+  }
+  allNotebooksSpecificType() {
+    let totalChosenType = 0;
+    for (var key in this.user.notebooks) {
+      totalChosenType += this.user.notebooks[key].words[this.type].length;
+    }
+    if (this.amount > totalChosenType) {
+      console.log("You don't have enough words in selected notebok ");
+      return false;
+    }
+    return true;
+  }
+}
 module.exports = createWordPool;
