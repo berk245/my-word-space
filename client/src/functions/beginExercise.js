@@ -1,44 +1,15 @@
-function createWordPool(exerciseParameters, user) {
+function beginExercise(exerciseParameters, user) {
   if (hasEmptyParameterFields(exerciseParameters)) return false;
   if (notEnoughWordsAvailable(exerciseParameters, user)) return false;
+
   let chosenBook = exerciseParameters.notebook;
-  let chosenType = exerciseParameters.type;
-  let wordPool = [];
+  let wordPool = getWordPool(user, exerciseParameters);
 
   //Notebook is all
   if (chosenBook == "all") {
-    //Create an array with notebook keys to iterate on object with notebooks[keys[i]]
-    let notebookNames = Object.keys(user.notebooks);
-
-    //Words are random
-    if (chosenType == "random") {
-      for (let i = 0; i < notebookNames.length; i++) {
-        let words = user.notebooks[notebookNames[i]].words;
-        Object.values(words).map(words => {
-          wordPool.push(...words);
-        });
-      }
-    }
-    //Specific Word Type Selected
-    else {
-      for (let i = 0; i < notebookNames.length; i++) {
-        wordPool.push(...user.notebooks[notebookNames[i]].words[chosenType]);
-      }
-    }
   }
   //Specific Notebook
   else {
-    //random Words
-    let userNotebook = user.notebooks[chosenBook].words;
-    if (chosenType == "random") {
-      Object.values(userNotebook).map(words => {
-        wordPool.push(...words);
-      });
-    }
-    //Specific Word Type Selected
-    else {
-      wordPool.push(...userNotebook[chosenType]);
-    }
   }
   let indexSet = new Set([]);
   //Until the exercise amount is reached, fill it with random indexes ranged till filtered array length
@@ -79,6 +50,14 @@ const notEnoughWordsAvailable = (exerciseParameters, user) => {
   return !result;
 };
 
+const getWordPool = (user, exerciseParams) => {
+  let creator = new WordpoolCreator(user, exerciseParams);
+  let { notebook } = exerciseParams;
+
+  if (notebook == "all") return creator.allNotebooks();
+  else return creator.specificNotebook();
+};
+
 class WordAmountCounter {
   constructor(user, exerciseParams) {
     this.user = user;
@@ -109,15 +88,13 @@ class WordAmountCounter {
     }
     return true;
   }
-
   allNotebooks() {
     let result = true;
     if (this.type == "random") result = this.allNotebooksAllTypes();
-    else result = this.allNotebooksSpecificType()
+    else result = this.allNotebooksSpecificType();
 
     return result;
   }
-
   allNotebooksAllTypes() {
     if (this.amount >= this.user.totalWordCount) {
       console.log("You don't have enough words in selected notebok ");
@@ -137,4 +114,51 @@ class WordAmountCounter {
     return true;
   }
 }
-module.exports = createWordPool;
+
+class WordpoolCreator {
+  constructor(user, exerciseParams) {
+    this.user = user;
+    this.amount = exerciseParams.amount;
+    this.notebook = exerciseParams.notebook;
+    this.type = exerciseParams.type;
+  }
+
+  allNotebooks() {
+    let result = [];
+    //Create an array with notebook keys to iterate on object with notebooks[keys[i]]
+    let notebookNames = Object.keys(this.user.notebooks);
+
+    //Words are random
+    if (this.type == "random") {
+      for (let i = 0; i < notebookNames.length; i++) {
+        let words = this.user.notebooks[notebookNames[i]].words;
+        Object.values(words).map(words => {
+          result.push(...words);
+        });
+      }
+    }
+    //Specific Word Type Selected
+    else {
+      for (let i = 0; i < notebookNames.length; i++) {
+        result.push(...this.user.notebooks[notebookNames[i]].words[this.type]);
+      }
+    }
+    return result;
+  }
+  specificNotebook() {
+    let result = [];
+    //random Words
+    let userNotebook = this.user.notebooks[this.notebook].words;
+    if (this.type == "random") {
+      Object.values(userNotebook).map(words => {
+        result.push(...words);
+      });
+    }
+    //Specific Word Type Selected
+    else {
+      result.push(...userNotebook[this.type]);
+    }
+    return result;
+  }
+}
+module.exports = beginExercise;
