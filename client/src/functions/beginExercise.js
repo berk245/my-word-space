@@ -1,35 +1,22 @@
-function beginExercise(exerciseParameters, user) {
+function getExerciseWords(exerciseParameters, user) {
   if (hasEmptyParameterFields(exerciseParameters)) return false;
   if (notEnoughWordsAvailable(exerciseParameters, user)) return false;
 
-  let chosenBook = exerciseParameters.notebook;
   let wordPool = getWordPool(user, exerciseParameters);
+  let uniqueIndexes = getIndexes(wordPool, exerciseParameters.amount);
 
-  //Notebook is all
-  if (chosenBook == "all") {
-  }
-  //Specific Notebook
-  else {
-  }
-  let indexSet = new Set([]);
-  //Until the exercise amount is reached, fill it with random indexes ranged till filtered array length
-  let range = wordPool.length;
-  while (exerciseParameters.amount > indexSet.size) {
-    let randomInt = randomNumberGen(range - 1);
-    indexSet.add(randomInt);
-  }
+  return createExerciseWords(wordPool, uniqueIndexes);
+}
+
+const createExerciseWords = (wordPool, indexes) => {
   let result = [];
-  //Turn the set into an array
-  let indexes = Array.from(indexSet.values());
-  //Iterate through each index, get that indexed element from filteredArray, assign it to questions array
   for (let i = 0; i < indexes.length; i++) {
     result.push(wordPool[indexes[i]]);
   }
-
   return result;
-}
+};
 
-function randomNumberGen(range) {
+function randomNumberGenerator(range) {
   let randomNumber = Math.floor(Math.random() * Math.floor(range));
   return randomNumber;
 }
@@ -56,6 +43,16 @@ const getWordPool = (user, exerciseParams) => {
 
   if (notebook == "all") return creator.allNotebooks();
   else return creator.specificNotebook();
+};
+getIndexes = (wordPool, requestedWordAmount) => {
+  let indexSet = new Set([]);
+  let range = wordPool.length;
+
+  while (requestedWordAmount > indexSet.size) {
+    indexSet.add(randomNumberGenerator(range - 1));
+  }
+
+  return Array.from(indexSet.values());
 };
 
 class WordAmountCounter {
@@ -161,4 +158,4 @@ class WordpoolCreator {
     return result;
   }
 }
-module.exports = beginExercise;
+module.exports = getExerciseWords;
