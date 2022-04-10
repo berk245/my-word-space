@@ -1,6 +1,6 @@
-function getExerciseWords(exerciseParameters, user) {
-  if (hasEmptyParameterFields(exerciseParameters)) return false;
-  if (notEnoughWordsAvailable(exerciseParameters, user)) return false;
+function getExerciseWords(user, exerciseParameters) {
+  if (hasEmptyParameterFields(exerciseParameters)) return handleError('fields')
+  if (notEnoughWordsAvailable(exerciseParameters, user)) return handleError('words');
 
   let wordPool = getWordPool(user, exerciseParameters);
   let uniqueIndexes = getIndexes(wordPool, exerciseParameters.amount);
@@ -44,7 +44,7 @@ const getWordPool = (user, exerciseParams) => {
   if (notebook == "all") return creator.allNotebooks();
   else return creator.specificNotebook();
 };
-getIndexes = (wordPool, requestedWordAmount) => {
+const getIndexes = (wordPool, requestedWordAmount) => {
   let indexSet = new Set([]);
   let range = wordPool.length;
 
@@ -54,7 +54,12 @@ getIndexes = (wordPool, requestedWordAmount) => {
 
   return Array.from(indexSet.values());
 };
-
+const handleError = (errorType) => {
+  return ({
+    error: true,
+    message: errorType == 'fields' ? 'Please fill all fields' : 'Not enough words'
+  })
+}
 class WordAmountCounter {
   constructor(user, exerciseParams) {
     this.user = user;
@@ -158,4 +163,5 @@ class WordpoolCreator {
     return result;
   }
 }
-module.exports = getExerciseWords;
+export default getExerciseWords;
+// module.exports = getExerciseWords;
