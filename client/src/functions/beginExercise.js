@@ -57,7 +57,7 @@ const getIndexes = (wordPool, requestedWordAmount) => {
 const handleError = (errorType) => {
   return ({
     error: true,
-    message: errorType == 'fields' ? 'Please fill all fields' : 'Not enough words'
+    errorMessage: errorType == 'fields' ? 'Please fill all fields' : 'Not enough words'
   })
 }
 class WordAmountCounter {

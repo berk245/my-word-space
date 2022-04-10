@@ -150,12 +150,20 @@ export default {
         this.getCurrentUser(),
         this.reqExercise
       );
-      console.log(exerciseWords);
-      console.log("Here we go!");
+      if (exerciseWords.error) {
+        this.errorMessage = exerciseWords.errorMessage;
+        return;
+      }
+      this.currentExercise.exerciseWords = exerciseWords;
+      this.createUserAnswers();
+      this.onExercise = true
     },
 
     getCurrentUser() {
       return JSON.parse(localStorage.getItem("user"));
+    },
+    createUserAnswers() {
+      this.currentExercise.userAnswers = Array.from(''.repeat(this.reqExercise.amount))
     },
     checkResults() {
       this.resultBox = true;
