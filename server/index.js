@@ -9,12 +9,12 @@ dotenv.config();
 
 const app = express();
 
-//Connect to Auth DB
 mongoose.connect(
   "mongodb://newUser:o1yqGPTR23i1dWj9@cluster0-shard-00-00.oixaf.gcp.mongodb.net:27017,cluster0-shard-00-01.oixaf.gcp.mongodb.net:27017,cluster0-shard-00-02.oixaf.gcp.mongodb.net:27017/deutschApp?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority",
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => console.log("connected to DB")
 );
+
 
 //midware
 app.use(bodyParser.json());
