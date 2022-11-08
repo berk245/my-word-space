@@ -125,9 +125,7 @@ const randomNumberGenerator = (range) =>  {
 
   const hasEmptyParameterFields = exerciseParameters => {
     for (var key in exerciseParameters) {
-      if (exerciseParameters[key] == "") {
-        return true;
-      }
+        if (!exerciseParameters[key]) return true;
     }
     return false
   };
