@@ -1,7 +1,7 @@
 // export default (user, exerciseParameters) => {
 module.exports = (user, exerciseParameters) => {
-  if (hasEmptyParameterFields(exerciseParameters)) return false;
-  if(notEnoughWordsAvailable(user, exerciseParameters)) return false
+  if (hasEmptyParameterFields(exerciseParameters)) return createErrorResponse('fields');
+  if(notEnoughWordsAvailable(user, exerciseParameters)) return createErrorResponse('words')
   let result = [];
 
 
@@ -120,4 +120,11 @@ const notEnoughWordsAvailable = (user, exerciseParameters) => {
   }
   return false;
 };
+
+const createErrorResponse = (errorType) => {
+    return ({
+      error: true,
+      message: errorType == 'fields' ? 'Please fill all fields' : 'Not enough words'
+    })
+  }
 
