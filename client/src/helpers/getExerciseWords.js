@@ -1,15 +1,9 @@
 // export default (user, exerciseParameters) => {
     module.exports = (user, exerciseParameters) => {
-    
+    if(hasEmptyParameterFields(exerciseParameters)) return false
     let result = []
 
-    for (var key in exerciseParameters) {
-        //Empty fields
-        if (exerciseParameters[key] == "") {
-          alert("Please do not leave input areas empty.");
-          return;
-        }
-      }
+   
       //all fields are filled
       let chosenBook = exerciseParameters.notebook;
       let chosenType = exerciseParameters.type;
@@ -128,3 +122,12 @@ const randomNumberGenerator = (range) =>  {
     let randomNumber = Math.floor(Math.random() * Math.floor(range));
     return randomNumber;
   }
+
+  const hasEmptyParameterFields = exerciseParameters => {
+    for (var key in exerciseParameters) {
+      if (exerciseParameters[key] == "") {
+        return true;
+      }
+    }
+    return false
+  };
