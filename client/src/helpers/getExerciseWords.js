@@ -86,22 +86,8 @@ const hasEmptyParameterFields = exerciseParameters => {
 
 const notEnoughWordsAvailable = (user, exerciseParameters) => {
   let { notebook, type, amount } = exerciseParameters;
-  if (notebook != "all") {
-    //check word type = if it's random check total word count, else check word count of respective type
-    if (type == "random") {
-      if (amount >= user.notebooks[notebook].wordCount) {
-        console.log("You don't have enough words in selected notebok ");
-        return true;
-      }
-    }
-    //a specific word type chosen
-    else {
-      if (amount >= user.notebooks[notebook].words[type].length) {
-        console.log("You don't have enough words in selected notebok ");
-        return true;
-      }
-    }
-  } else if (book == "all") {
+  if (notebook != "all") return checkWordCountForSpecificNotebook(exerciseParameters, user)
+  else if (book == "all") {
     if (type == "random") {
       if (amount >= user.totalWordCount) {
         console.log("You don't have enough words in selected notebok ");
@@ -120,6 +106,23 @@ const notEnoughWordsAvailable = (user, exerciseParameters) => {
   }
   return false;
 };
+
+const checkWordCountForSpecificNotebook = ({type, notebook, amount}, user) => {
+    //check word type = if it's random check total word count, else check word count of respective type
+    if (type == "random") {
+        if (amount >= user.notebooks[notebook].wordCount) {
+          console.log("You don't have enough words in selected notebok ");
+          return true;
+        }
+      }
+      //a specific word type chosen
+      else {
+        if (amount >= user.notebooks[notebook].words[type].length) {
+          console.log("You don't have enough words in selected notebok ");
+          return true;
+        }
+      }
+}
 
 const createErrorResponse = (errorType) => {
     return ({
