@@ -6,52 +6,9 @@ module.exports = (user, exerciseParameters) => {
 
 
   //create a pool of words to randomly choose from
-  let wordPool = [];
+  let wordPool = getWordpool(user, exerciseParameters);
 
-  //Notebook is all
-  if (chosenBook == "all") {
-    //Create an array with notebook keys to iterate on object with notebooks[keys[i]]
-    let notebookNames = Object.keys(user.notebooks);
-
-    //Words are random
-    if (chosenType == "random") {
-      for (let i = 0; i < notebookNames.length; i++) {
-        wordPool.push(
-          ...user.notebooks[notebookNames[i]].words.noun,
-          ...user.notebooks[notebookNames[i]].words.verb,
-          ...user.notebooks[notebookNames[i]].words.adjective,
-          ...user.notebooks[notebookNames[i]].words.sentence,
-          ...user.notebooks[notebookNames[i]].words.preposition,
-          ...user.notebooks[notebookNames[i]].words.other
-        );
-      }
-    }
-    //Specific Word Type Selected
-    else {
-      for (let i = 0; i < notebookNames.length; i++) {
-        wordPool.push(...user.notebooks[notebookNames[i]].words[chosenType]);
-      }
-    }
-  }
-  //Specific Notebook
-  else {
-    let userNotebook = user.notebooks[chosenBook].words;
-    //random Words
-    if (chosenType == "random") {
-      wordPool.push(
-        ...userNotebook.noun,
-        ...userNotebook.verb,
-        ...userNotebook.adjective,
-        ...userNotebook.sentence,
-        ...userNotebook.preposition,
-        ...userNotebook.other
-      );
-    }
-    //Specific Word Type Selected
-    else {
-      wordPool.push(...userNotebook[chosenType]);
-    }
-  }
+  
 
   //Wordpool is Succesfully Created, check if the chosen amount equals the total number of words in DB
 
@@ -155,4 +112,53 @@ const createErrorResponse = (errorType) => {
       message: errorType == 'fields' ? 'Please fill all fields' : 'Not enough words'
     })
   }
+const getWordpool = (user, exerciseParameters) => {
+  let result = []
+  let chosenType = exerciseParameters.type;
+  let chosenNotebook = exerciseParameters.notebook
+   //Notebook is all
+   if (chosenNotebook == "all") {
+    //Create an array with notebook keys to iterate on object with notebooks[keys[i]]
+    let notebookNames = Object.keys(user.notebooks);
 
+    //Words are random
+    if (chosenType == "random") {
+      for (let i = 0; i < notebookNames.length; i++) {
+        result.push(
+          ...user.notebooks[notebookNames[i]].words.noun,
+          ...user.notebooks[notebookNames[i]].words.verb,
+          ...user.notebooks[notebookNames[i]].words.adjective,
+          ...user.notebooks[notebookNames[i]].words.sentence,
+          ...user.notebooks[notebookNames[i]].words.preposition,
+          ...user.notebooks[notebookNames[i]].words.other
+        );
+      }
+    }
+    //Specific Word Type Selected
+    else {
+      for (let i = 0; i < notebookNames.length; i++) {
+        result.push(...user.notebooks[notebookNames[i]].words[chosenType]);
+      }
+    }
+  }
+  //Specific Notebook
+  else {
+    let userNotebook = user.notebooks[chosenNotebook].words;
+    //random Words
+    if (chosenType == "random") {
+      result.push(
+        ...userNotebook.noun,
+        ...userNotebook.verb,
+        ...userNotebook.adjective,
+        ...userNotebook.sentence,
+        ...userNotebook.preposition,
+        ...userNotebook.other
+      );
+    }
+    //Specific Word Type Selected
+    else {
+      result.push(...userNotebook[chosenType]);
+    }
+  }
+  return result;
+}
