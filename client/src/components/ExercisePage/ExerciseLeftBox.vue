@@ -53,7 +53,7 @@
           </select>
         </div>
       </div>
-      <button v-if="!onExercise" class="main-button" @click="beginExercise(this.reqExercise)">
+      <button v-if="!onExercise" class="main-button" @click="beginExercise(reqExercise)">
         Start
       </button>
     </div>
@@ -140,22 +140,22 @@ export default {
       return randomNumber;
     },
     beginExercise(exerciseParameters) {
-      for (var key in this.reqExercise) {
+      for (var key in exerciseParameters) {
         //Empty fields
-        if (this.reqExercise[key] == "") {
+        if (exerciseParameters[key] == "") {
           alert("Please do not leave input areas empty.");
           return;
         }
       }
       //all fields are filled
-      let chosenBook = this.reqExercise.notebook;
-      let chosenType = this.reqExercise.type;
+      let chosenBook = exerciseParameters.notebook;
+      let chosenType = exerciseParameters.type;
       //a specific notebook chosen
       if (chosenBook != "all") {
         //check word type = if it's random check total word count, else check word count of respective type
         if (chosenType == "random") {
           if (
-            this.reqExercise.amount >= this.user.notebooks[chosenBook].wordCount
+            exerciseParameters.amount >= this.user.notebooks[chosenBook].wordCount
           ) {
             this.errorMessage =
               "You don't have enough words in " +
@@ -169,7 +169,7 @@ export default {
         //a specific word type chosen
         else {
           if (
-            this.reqExercise.amount >=
+            exerciseParameters.amount >=
             this.user.notebooks[chosenBook].words[chosenType].length
           ) {
             this.errorMessage =
@@ -186,7 +186,7 @@ export default {
         }
       } else if (chosenBook == "all") {
         if (chosenType == "random") {
-          if (this.reqExercise.amount >= this.user.totalWordCount) {
+          if (exerciseParameters.amount >= this.user.totalWordCount) {
             this.errorMessage =
               "You don't have enough words in your database. You can choose up to " +
               this.user.totalWordCount +
@@ -200,7 +200,7 @@ export default {
           for (var key in userNotebooks) {
             totalChosenType += userNotebooks[key].words[chosenType].length;
           }
-          if (this.reqExercise.amount > totalChosenType) {
+          if (exerciseParameters.amount > totalChosenType) {
             this.errorMessage =
               "You don't have enough " +
               chosenType +
@@ -213,10 +213,10 @@ export default {
         }
       }
       // reqExercise passed all the checks
-      this.exerciseStart(this.reqExercise.amount);
+      this.exerciseStart(exerciseParameters.amount);
 
       //populate userAnswers array to model the inputs
-      for (let j = 0; j < this.reqExercise.amount; j++) {
+      for (let j = 0; j < exerciseParameters.amount; j++) {
         this.currentExercise.userAnswers.push("");
       }
 
@@ -276,7 +276,7 @@ export default {
       let indexSet = new Set([]);
       //Until the exercise amount is reached, fill it with random indexes ranged till filtered array length
       let range = wordPool.length;
-      while (this.reqExercise.amount > indexSet.size) {
+      while (exerciseParameters.amount > indexSet.size) {
         let randomInt = this.randomNumberGen(range - 1);
         indexSet.add(randomInt);
       }
@@ -305,7 +305,7 @@ export default {
           wrongs.push(newWrong);
         }
       }
-      let corrects = this.reqExercise.amount - wrongs.length;
+      let corrects = exerciseParameters.amount - wrongs.length;
       this.exerciseDone(corrects);
     },
     takeMeOut() {
