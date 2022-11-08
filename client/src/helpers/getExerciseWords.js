@@ -1,7 +1,7 @@
 // export default (user, exerciseParameters) => {
 module.exports = (user, exerciseParameters) => {
   if (hasEmptyParameterFields(exerciseParameters)) return createErrorResponse('fields');
-  if(notEnoughWordsAvailable(user, exerciseParameters)) return createErrorResponse('words')
+  if(!userHasEnoughWords(user, exerciseParameters)) return createErrorResponse('words')
   let result = [];
 
 
@@ -84,48 +84,71 @@ const hasEmptyParameterFields = exerciseParameters => {
   return false;
 };
 
-const notEnoughWordsAvailable = (user, exerciseParameters) => {
+const userHasEnoughWords = (user, exerciseParameters) => {
   let { notebook } = exerciseParameters;
-  if (notebook != "all") return checkWordCountForSpecificNotebook(exerciseParameters, user)
-  else if (notebook == "all") return checkWordCountForAllNotebooks(exerciseParameters, user)
-  return false;
+  let wordAmountValidator = new WordAmountCounter(user, exerciseParameters)
+  if (notebook === "all") return wordAmountValidator.allNotebooks()
+  else return wordAmountValidator.specificNotebook() 
 };
 
-const checkWordCountForSpecificNotebook = ({type, notebook, amount}, user) => {
-    //check word type = if it's random check total word count, else check word count of respective type
-    if (type == "random") {
-        if (amount >= user.notebooks[notebook].wordCount) {
-          console.log("You don't have enough words in selected notebok ");
-          return true;
-        }
+class WordAmountCounter {
+    constructor(user, exerciseParams) {
+      this.user = user;
+      this.amount = exerciseParams.amount;
+      this.notebook = exerciseParams.notebook;
+      this.type = exerciseParams.type;
+    }
+  
+    specificNotebook() {
+      let result = true;
+      if (this.type == "random") result = this.specificNotebookAllTypes();
+      else result = this.specificNotebookSpecificType();
+      return result;
+    }
+    specificNotebookAllTypes() {
+      if (this.amount >= this.user.notebooks[this.notebook].wordCount) {
+        console.log("You don't have enough words in selected notebok ");
+        return false;
       }
-      //a specific word type chosen
-      else {
-        if (amount >= user.notebooks[notebook].words[type].length) {
-          console.log("You don't have enough words in selected notebok ");
-          return true;
-        }
+      return true;
+    }
+    specificNotebookSpecificType() {
+      if (
+        this.amount >= this.user.notebooks[this.notebook].words[this.type].length
+      ) {
+        console.log("You don't have enough words in selected notebok ");
+        return false;
       }
-}
-
-const checkWordCountForAllNotebooks = ({type, amount}, user) => {
-        if (type == "random") {
-          if (amount >= user.totalWordCount) {
-            console.log("You don't have enough words in selected notebok ");
-            return true;
-          }
-        } else {
-          let totalChosenType = 0;
-          for (var key in user.notebooks) {
-            totalChosenType += user.notebooks[key].words[type].length;
-          }
-          if (amount > totalChosenType) {
-            console.log("You don't have enough words in selected notebok ");
-            return true;
-          }
-        }
-}
-
+      return true;
+    }
+  
+    allNotebooks() {
+      let result = true;
+      if (this.type == "random") result = this.allNotebooksAllTypes();
+      else result = this.allNotebooksSpecificType()
+  
+      return result;
+    }
+  
+    allNotebooksAllTypes() {
+      if (this.amount >= this.user.totalWordCount) {
+        console.log("You don't have enough words in selected notebok ");
+        return false;
+      }
+      return true;
+    }
+    allNotebooksSpecificType() {
+      let totalChosenType = 0;
+      for (var key in this.user.notebooks) {
+        totalChosenType += this.user.notebooks[key].words[this.type].length;
+      }
+      if (this.amount > totalChosenType) {
+        console.log("You don't have enough words in selected notebok ");
+        return false;
+      }
+      return true;
+    }
+  }
 const createErrorResponse = (errorType) => {
     return ({
       error: true,
