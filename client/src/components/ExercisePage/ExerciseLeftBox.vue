@@ -103,6 +103,7 @@
 <script>
 import router from "vue-router";
 import { mapState, mapActions } from "vuex";
+import getExerciseWords from '../../helpers/getExerciseWords'
 export default {
   data() {
     return {
@@ -124,6 +125,7 @@ export default {
   },
   methods: {
     ...mapActions(["exerciseStart", "exerciseDone"]),
+    getExerciseWords: getExerciseWords,
     resetAll() {
       this.onExercise = false;
       this.resultBox = false;
