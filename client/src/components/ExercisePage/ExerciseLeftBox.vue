@@ -53,7 +53,7 @@
           </select>
         </div>
       </div>
-      <button v-if="!onExercise" class="main-button" @click="beginExercise">
+      <button v-if="!onExercise" class="main-button" @click="beginExercise(this.reqExercise)">
         Start
       </button>
     </div>
@@ -139,7 +139,7 @@ export default {
       let randomNumber = Math.floor(Math.random() * Math.floor(range));
       return randomNumber;
     },
-    beginExercise() {
+    beginExercise(exerciseParameters) {
       for (var key in this.reqExercise) {
         //Empty fields
         if (this.reqExercise[key] == "") {
