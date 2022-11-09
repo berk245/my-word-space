@@ -293,6 +293,9 @@ export default {
     getCurrentUser(){
       return JSON.parse(localStorage.getItem("user"));
     },
+    createEmptyArrayForUserAnswers() {
+      this.currentExercise.userAnswers = Array.from(''.repeat(this.reqExercise.amount))
+    },
     checkResults() {
       this.resultBox = true;
       let questions = this.currentExercise.exerciseWords;
