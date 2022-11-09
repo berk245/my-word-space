@@ -8,6 +8,7 @@ const createGenericArray = () => {
 
 module.exports = {
   name: "Generic User",
+  totalWordCount: 2000,
   notebooks: {
     Notebook100: {
       wordCount: 200,
