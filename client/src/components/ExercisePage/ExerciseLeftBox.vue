@@ -103,7 +103,7 @@
 <script>
 import router from "vue-router";
 import { mapState, mapActions } from "vuex";
-import getExerciseWords from "../../helpers/getExerciseWords";
+import getExerciseWords from '../../helpers/getExerciseWords'
 export default {
   data() {
     return {
@@ -152,15 +152,13 @@ export default {
       }
       this.currentExercise.exerciseWords = exerciseWords;
       this.createEmptyArrayForUserAnswers();
-      this.onExercise = true;
+      this.onExercise = true
     },
-    getCurrentUser() {
+    getCurrentUser(){
       return JSON.parse(localStorage.getItem("user"));
     },
     createEmptyArrayForUserAnswers() {
-      this.currentExercise.userAnswers = Array.from(
-        "".repeat(this.reqExercise.amount)
-      );
+      this.currentExercise.userAnswers = Array.from(''.repeat(this.reqExercise.amount))
     },
     checkResults() {
       this.resultBox = true;
