@@ -8,8 +8,6 @@ module.exports = (user, exerciseParameters) => {
   //create a pool of words to randomly choose from
   let wordPool = getWordpool(user, exerciseParameters);
 
-  
-
   //Wordpool is Succesfully Created, check if the chosen amount equals the total number of words in DB
 
   //Define a set to put random indexes in
@@ -124,14 +122,10 @@ const getWordpool = (user, exerciseParameters) => {
     //Words are random
     if (chosenType == "random") {
       for (let i = 0; i < notebookNames.length; i++) {
-        result.push(
-          ...user.notebooks[notebookNames[i]].words.noun,
-          ...user.notebooks[notebookNames[i]].words.verb,
-          ...user.notebooks[notebookNames[i]].words.adjective,
-          ...user.notebooks[notebookNames[i]].words.sentence,
-          ...user.notebooks[notebookNames[i]].words.preposition,
-          ...user.notebooks[notebookNames[i]].words.other
-        );
+        let words = this.user.notebooks[notebookNames[i]].words;
+        Object.values(words).map(words => {
+          result.push(...words);
+        });
       }
     }
     //Specific Word Type Selected
@@ -146,14 +140,9 @@ const getWordpool = (user, exerciseParameters) => {
     let userNotebook = user.notebooks[chosenNotebook].words;
     //random Words
     if (chosenType == "random") {
-      result.push(
-        ...userNotebook.noun,
-        ...userNotebook.verb,
-        ...userNotebook.adjective,
-        ...userNotebook.sentence,
-        ...userNotebook.preposition,
-        ...userNotebook.other
-      );
+        Object.values(userNotebook).map(words => {
+          result.push(...words);
+        });
     }
     //Specific Word Type Selected
     else {
