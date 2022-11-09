@@ -111,16 +111,30 @@ const createErrorResponse = (errorType) => {
     })
   }
 const getWordpool = (user, exerciseParameters) => {
-  let result = []
-  let chosenType = exerciseParameters.type;
-  let chosenNotebook = exerciseParameters.notebook
-   //Notebook is all
-   if (chosenNotebook == "all") {
+  let wordpoolCreator = new WordpoolCreator(user, exerciseParameters)
+  return wordpoolCreator.create()
+}
+
+class WordpoolCreator {
+  constructor(user, exerciseParams) {
+    this.user = user;
+    this.amount = exerciseParams.amount;
+    this.notebook = exerciseParams.notebook;
+    this.type = exerciseParams.type;
+  }
+
+  create(){
+    if (this.notebook == "all") return this.allNotebooks();
+    else return this.specificNotebook();
+  }
+
+  allNotebooks() {
+    let result = [];
     //Create an array with notebook keys to iterate on object with notebooks[keys[i]]
-    let notebookNames = Object.keys(user.notebooks);
+    let notebookNames = Object.keys(this.user.notebooks);
 
     //Words are random
-    if (chosenType == "random") {
+    if (this.type == "random") {
       for (let i = 0; i < notebookNames.length; i++) {
         let words = this.user.notebooks[notebookNames[i]].words;
         Object.values(words).map(words => {
@@ -131,23 +145,24 @@ const getWordpool = (user, exerciseParameters) => {
     //Specific Word Type Selected
     else {
       for (let i = 0; i < notebookNames.length; i++) {
-        result.push(...user.notebooks[notebookNames[i]].words[chosenType]);
+        result.push(...this.user.notebooks[notebookNames[i]].words[this.type]);
       }
     }
+    return result;
   }
-  //Specific Notebook
-  else {
-    let userNotebook = user.notebooks[chosenNotebook].words;
+  specificNotebook() {
+    let result = [];
     //random Words
-    if (chosenType == "random") {
-        Object.values(userNotebook).map(words => {
-          result.push(...words);
-        });
+    let userNotebook = this.user.notebooks[this.notebook].words;
+    if (this.type == "random") {
+      Object.values(userNotebook).map(words => {
+        result.push(...words);
+      });
     }
     //Specific Word Type Selected
     else {
-      result.push(...userNotebook[chosenType]);
+      result.push(...userNotebook[this.type]);
     }
+    return result;
   }
-  return result;
 }
