@@ -290,6 +290,9 @@ export default {
       }
       this.onExercise = true;
     },
+    getCurrentUser(){
+      return JSON.parse(localStorage.getItem("user"));
+    },
     checkResults() {
       this.resultBox = true;
       let questions = this.currentExercise.exerciseWords;
