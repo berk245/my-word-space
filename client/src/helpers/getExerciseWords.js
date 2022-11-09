@@ -29,10 +29,8 @@ const hasEmptyParameterFields = exerciseParameters => {
 };
 
 const userHasEnoughWords = (user, exerciseParameters) => {
-  let { notebook } = exerciseParameters;
   let wordAmountValidator = new WordAmountCounter(user, exerciseParameters)
-  if (notebook === "all") return wordAmountValidator.allNotebooks()
-  else return wordAmountValidator.specificNotebook() 
+  return wordAmountValidator.userHasEnoughWords()
 };
 
 class WordAmountCounter {
@@ -41,6 +39,11 @@ class WordAmountCounter {
       this.amount = exerciseParams.amount;
       this.notebook = exerciseParams.notebook;
       this.type = exerciseParams.type;
+    }
+
+    userHasEnoughWords(){
+      if (this.notebook != "all")  return this.specificNotebook() 
+      else return this.allNotebooks()
     }
   
     specificNotebook() {
@@ -75,6 +78,7 @@ class WordAmountCounter {
     }
   
     allNotebooksAllTypes() {
+      console.log(this.amount, this.user.totalWordCount )
       if (this.amount >= this.user.totalWordCount) {
         console.log("You don't have enough words in selected notebok ");
         return false;
