@@ -53,7 +53,7 @@
           </select>
         </div>
       </div>
-      <button v-if="!onExercise" class="main-button" @click="beginExercise(reqExercise)">
+      <button v-if="!onExercise" class="main-button" @click="beginExercise()">
         Start
       </button>
     </div>
@@ -103,7 +103,7 @@
 <script>
 import router from "vue-router";
 import { mapState, mapActions } from "vuex";
-import getExerciseWords from '../../helpers/getExerciseWords'
+import getExerciseWords from "../../helpers/getExerciseWords";
 export default {
   data() {
     return {
@@ -141,160 +141,26 @@ export default {
       let randomNumber = Math.floor(Math.random() * Math.floor(range));
       return randomNumber;
     },
-    beginExercise(exerciseParameters) {
-      for (var key in exerciseParameters) {
-        //Empty fields
-        if (exerciseParameters[key] == "") {
-          alert("Please do not leave input areas empty.");
-          return;
-        }
+    beginExercise() {
+      let exerciseWords = getExerciseWords(
+        this.getCurrentUser(),
+        this.reqExercise
+      );
+      if (exerciseWords.error) {
+        this.errorMessage = exerciseWords.errorMessage;
+        return;
       }
-      //all fields are filled
-      let chosenBook = exerciseParameters.notebook;
-      let chosenType = exerciseParameters.type;
-      //a specific notebook chosen
-      if (chosenBook != "all") {
-        //check word type = if it's random check total word count, else check word count of respective type
-        if (chosenType == "random") {
-          if (
-            exerciseParameters.amount >= this.user.notebooks[chosenBook].wordCount
-          ) {
-            this.errorMessage =
-              "You don't have enough words in " +
-              chosenBook +
-              ". You can choose up to " +
-              this.user.notebooks[chosenBook].wordCount;
-            alert(this.errorMessage);
-            return;
-          }
-        }
-        //a specific word type chosen
-        else {
-          if (
-            exerciseParameters.amount >=
-            this.user.notebooks[chosenBook].words[chosenType].length
-          ) {
-            this.errorMessage =
-              "You don't have enough " +
-              chosenType +
-              "s in " +
-              chosenBook +
-              ". You can choose up to " +
-              this.user.notebooks[chosenBook].words[chosenType].length +
-              ".";
-            alert(this.errorMessage);
-            return;
-          }
-        }
-      } else if (chosenBook == "all") {
-        if (chosenType == "random") {
-          if (exerciseParameters.amount >= this.user.totalWordCount) {
-            this.errorMessage =
-              "You don't have enough words in your database. You can choose up to " +
-              this.user.totalWordCount +
-              " words.";
-            alert(this.errorMessage);
-            return;
-          }
-        } else {
-          let totalChosenType = 0;
-          let userNotebooks = this.user.notebooks;
-          for (var key in userNotebooks) {
-            totalChosenType += userNotebooks[key].words[chosenType].length;
-          }
-          if (exerciseParameters.amount > totalChosenType) {
-            this.errorMessage =
-              "You don't have enough " +
-              chosenType +
-              "s in your notebooks. You can choose up to " +
-              totalChosenType +
-              ".";
-            alert(this.errorMessage);
-            return;
-          }
-        }
-      }
-      // reqExercise passed all the checks
-      this.exerciseStart(exerciseParameters.amount);
-
-      //populate userAnswers array to model the inputs
-      for (let j = 0; j < exerciseParameters.amount; j++) {
-        this.currentExercise.userAnswers.push("");
-      }
-
-      //create a pool of words to randomly choose from
-      let wordPool = [];
-
-      //Notebook is all
-      if (chosenBook == "all") {
-        //Create an array with notebook keys to iterate on object with notebooks[keys[i]]
-        let notebookNames = Object.keys(this.user.notebooks);
-
-        //Words are random
-        if (chosenType == "random") {
-          for (let i = 0; i < notebookNames.length; i++) {
-            wordPool.push(
-              ...this.user.notebooks[notebookNames[i]].words.noun,
-              ...this.user.notebooks[notebookNames[i]].words.verb,
-              ...this.user.notebooks[notebookNames[i]].words.adjective,
-              ...this.user.notebooks[notebookNames[i]].words.sentence,
-              ...this.user.notebooks[notebookNames[i]].words.preposition,
-              ...this.user.notebooks[notebookNames[i]].words.other
-            );
-          }
-        }
-        //Specific Word Type Selected
-        else {
-          for (let i = 0; i < notebookNames.length; i++) {
-            wordPool.push(
-              ...this.user.notebooks[notebookNames[i]].words[chosenType]
-            );
-          }
-        }
-      }
-      //Specific Notebook
-      else {
-        let userNotebook = this.user.notebooks[chosenBook].words;
-        //random Words
-        if (chosenType == "random") {
-          wordPool.push(
-            ...userNotebook.noun,
-            ...userNotebook.verb,
-            ...userNotebook.adjective,
-            ...userNotebook.sentence,
-            ...userNotebook.preposition,
-            ...userNotebook.other
-          );
-        }
-        //Specific Word Type Selected
-        else {
-          wordPool.push(...userNotebook[chosenType]);
-        }
-      }
-
-      //Wordpool is Succesfully Created, check if the chosen amount equals the total number of words in DB
-
-      //Define a set to put random indexes in
-      let indexSet = new Set([]);
-      //Until the exercise amount is reached, fill it with random indexes ranged till filtered array length
-      let range = wordPool.length;
-      while (exerciseParameters.amount > indexSet.size) {
-        let randomInt = this.randomNumberGen(range - 1);
-        indexSet.add(randomInt);
-      }
-      //Turn the set into an array
-      let indexes = Array.from(indexSet.values());
-      //Iterate through each index, get that indexed element from filteredArray, assign it to questions array
-      for (let i = 0; i < indexes.length; i++) {
-        this.currentExercise.exerciseWords.push(wordPool[indexes[i]]);
-      }
+      this.currentExercise.exerciseWords = exerciseWords;
+      this.createEmptyArrayForUserAnswers();
       this.onExercise = true;
     },
-    getCurrentUser(){
+    getCurrentUser() {
       return JSON.parse(localStorage.getItem("user"));
     },
     createEmptyArrayForUserAnswers() {
-      this.currentExercise.userAnswers = Array.from(''.repeat(this.reqExercise.amount))
+      this.currentExercise.userAnswers = Array.from(
+        "".repeat(this.reqExercise.amount)
+      );
     },
     checkResults() {
       this.resultBox = true;
