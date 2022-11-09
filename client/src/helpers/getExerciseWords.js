@@ -7,22 +7,11 @@ module.exports = (user, exerciseParameters) => {
 
   //create a pool of words to randomly choose from
   let wordPool = getWordpool(user, exerciseParameters);
+  let uniqueIndexes = getIndexes(wordPool, exerciseParameters.amount)
 
-  //Wordpool is Succesfully Created, check if the chosen amount equals the total number of words in DB
-
-  //Define a set to put random indexes in
-  let indexSet = new Set([]);
-  //Until the exercise amount is reached, fill it with random indexes ranged till filtered array length
-  let range = wordPool.length;
-  while (exerciseParameters.amount > indexSet.size) {
-    let randomInt = randomNumberGenerator(range - 1);
-    indexSet.add(randomInt);
-  }
-  //Turn the set into an array
-  let indexes = Array.from(indexSet.values());
   //Iterate through each index, get that indexed element from filteredArray, assign it to questions array
-  for (let i = 0; i < indexes.length; i++) {
-    result.push(wordPool[indexes[i]]);
+  for (let i = 0; i < uniqueIndexes.length; i++) {
+    result.push(wordPool[uniqueIndexes[i]]);
   }
   return result;
 };
@@ -166,3 +155,14 @@ class WordpoolCreator {
     return result;
   }
 }
+
+const getIndexes = (wordPool, requestedWordAmount) => {
+  let indexSet = new Set([]);
+  let range = wordPool.length;
+
+  while (requestedWordAmount > indexSet.size) {
+    indexSet.add(randomNumberGenerator(range - 1));
+  }
+
+  return Array.from(indexSet.values());
+};
