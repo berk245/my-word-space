@@ -63,10 +63,7 @@ class WordAmountCounter {
     for (var key in this.user.notebooks) {
       totalChosenType += this.user.notebooks[key].words[this.type].length;
     }
-    if (this.amount > totalChosenType) {
-      return false;
-    }
-    return true;
+    return (this.amount < totalChosenType) 
   }
 }
 const getWordpool = (user, exerciseParameters) => {
