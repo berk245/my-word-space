@@ -1,6 +1,6 @@
 // export default (user, exerciseParameters) => {
 module.exports = (user, exerciseParameters) => {
-  if (hasEmptyParameterFields(exerciseParameters)) return createErrorResponse('fields');
+  if (requestHasEmptyParameterFields(exerciseParameters)) return createErrorResponse('fields');
   if(!userHasEnoughWords(user, exerciseParameters)) return createErrorResponse('words')
   let result = [];
 
@@ -21,7 +21,7 @@ const randomNumberGenerator = range => {
   return randomNumber;
 };
 
-const hasEmptyParameterFields = exerciseParameters => {
+const requestHasEmptyParameterFields = exerciseParameters => {
   for (var key in exerciseParameters) {
     if (!exerciseParameters[key]) return true;
   }
