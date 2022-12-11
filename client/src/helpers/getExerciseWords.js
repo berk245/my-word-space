@@ -92,23 +92,22 @@ class WordpoolCreator {
 
   allNotebooks() {
     let result = [];
-    //Create an array with notebook keys to iterate on object with notebooks[keys[i]]
-    let notebookNames = Object.keys(this.user.notebooks);
+    let userNotebooks = Object.values(this.user.notebooks);
 
-    //Words are random
     if (this.type == "random") {
-      for (let i = 0; i < notebookNames.length; i++) {
-        let words = this.user.notebooks[notebookNames[i]].words;
-        Object.values(words).map(words => {
-          result.push(...words);
-        });
-      }
+      userNotebooks.map(userNotebook => {
+        /*This part is confusing due to the poor database design/table names.
+        userNotebook.words should be userNotebook.types, followed by words in that type
+        */
+        Object.values(userNotebook.words).map(typeWords => {
+          result.push(...typeWords)
+        })
+      })
     }
-    //Specific Word Type Selected
     else {
-      for (let i = 0; i < notebookNames.length; i++) {
-        result.push(...this.user.notebooks[notebookNames[i]].words[this.type]);
-      }
+      userNotebooks.map(userNotebook => {
+        result.push(...userNotebook.words[this.type])
+      })
     }
     return result;
   }
