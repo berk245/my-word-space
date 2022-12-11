@@ -10,9 +10,9 @@ module.exports = (user, exerciseParameters) => {
   let uniqueIndexes = getIndexes(wordPool, exerciseParameters.amount)
 
   //Iterate through each index, get that indexed element from filteredArray, assign it to questions array
-  for (let i = 0; i < uniqueIndexes.length; i++) {
-    result.push(wordPool[uniqueIndexes[i]]);
-  }
+  uniqueIndexes.map(uniqueIndex => {
+    result.push(wordPool[uniqueIndex])
+  })
   return result;
 };
 
