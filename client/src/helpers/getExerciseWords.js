@@ -87,8 +87,7 @@ class WordpoolCreator {
   }
 
   create() {
-    if (this.notebook == "all") return this.allNotebooks();
-    else return this.specificNotebook();
+    return (this.notebook == "all") ? this.allNotebooks() : this.specificNotebook();
   }
 
   allNotebooks() {
