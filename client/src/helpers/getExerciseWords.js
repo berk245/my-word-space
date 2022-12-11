@@ -4,13 +4,11 @@ module.exports = (user, exerciseParameters) => {
     return createErrorResponse("fields");
   if (!userHasEnoughWords(user, exerciseParameters))
     return createErrorResponse("words");
-  let result = [];
-
-  //create a pool of words to randomly choose from
+  
   let wordPool = getWordpool(user, exerciseParameters);
   let uniqueIndexes = getIndexes(wordPool, exerciseParameters.amount);
 
-  //Iterate through each index, get that indexed element from filteredArray, assign it to questions array
+  let result = [];
   uniqueIndexes.map(uniqueIndex => {
     result.push(wordPool[uniqueIndex]);
   });
@@ -87,7 +85,9 @@ class WordpoolCreator {
   }
 
   create() {
-    return (this.notebook == "all") ? this.allNotebooks() : this.specificNotebook();
+    return this.notebook == "all"
+      ? this.allNotebooks()
+      : this.specificNotebook();
   }
 
   allNotebooks() {
@@ -96,32 +96,28 @@ class WordpoolCreator {
 
     if (this.type == "random") {
       userNotebooks.map(userNotebook => {
-        /*This part is confusing due to the poor database design/table names.
+        /*This part is confusing due to the poor database design and bad table names.
         userNotebook.words should be userNotebook.types, followed by words in that type
         */
         Object.values(userNotebook.words).map(typeWords => {
-          result.push(...typeWords)
-        })
-      })
-    }
-    else {
+          result.push(...typeWords);
+        });
+      });
+    } else {
       userNotebooks.map(userNotebook => {
-        result.push(...userNotebook.words[this.type])
-      })
+        result.push(...userNotebook.words[this.type]);
+      });
     }
     return result;
   }
   specificNotebook() {
     let result = [];
-    //random Words
     let userNotebook = this.user.notebooks[this.notebook].words;
     if (this.type == "random") {
       Object.values(userNotebook).map(words => {
         result.push(...words);
       });
-    }
-    //Specific Word Type Selected
-    else {
+    } else {
       result.push(...userNotebook[this.type]);
     }
     return result;

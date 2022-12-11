@@ -32,7 +32,7 @@ let errorParameters = {
   }
 };
 
-let wordPool = {
+let validParameters = {
   allRandom: {
     amount: 10,
     notebook: "all",
@@ -85,28 +85,28 @@ test("should return false when a user has less total words then requested amount
 });
 
 test("should return a array of unique words with the right size when all books and types are chosen.", () => {
-  let result = getExerciseWords(mockUser, wordPool.allRandom);
+  let result = getExerciseWords(mockUser, validParameters.allRandom);
   let arrayToSet = new Set(result);
 
   expect(result).toHaveLength(10);
   expect(arrayToSet.size).toBe(10);
 });
 test("should return a array of unique words with the right size when all notebooks and a specific type is chosen.", () => {
-  let result = getExerciseWords(mockUser, wordPool.allNotebooksSpecificType);
+  let result = getExerciseWords(mockUser, validParameters.allNotebooksSpecificType);
   let arrayToSet = new Set(result);
 
   expect(result).toHaveLength(10);
   expect(arrayToSet.size).toBe(10);
 });
 test("should return a array of unique words with the right size when a notebook choosen with all types.", () => {
-  let result = getExerciseWords(mockUser, wordPool.specificNotebookAllTypes);
+  let result = getExerciseWords(mockUser, validParameters.specificNotebookAllTypes);
   let arrayToSet = new Set(result);
 
   expect(result).toHaveLength(10);
   expect(arrayToSet.size).toBe(10);
 });
 test("should return a array of unique words with the right size when a specific notebook is chosen with a specific type.", () => {
-  let result = getExerciseWords(mockUser, wordPool.specificNotebookAndType);
+  let result = getExerciseWords(mockUser, validParameters.specificNotebookAndType);
   let arrayToSet = new Set(result);
 
   expect(result).toHaveLength(10);
