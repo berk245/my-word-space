@@ -60,9 +60,9 @@ class WordAmountCounter {
   }
   allNotebooksSpecificType() {
     let totalChosenType = 0;
-    for (var key in this.user.notebooks) {
-      totalChosenType += this.user.notebooks[key].words[this.type].length;
-    }
+    Object.values(this.user.notebooks).map(userNotebook => {
+      totalChosenType += userNotebook.words[this.type].length;
+    })
     return (this.amount < totalChosenType) 
   }
 }
