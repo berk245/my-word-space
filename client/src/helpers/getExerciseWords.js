@@ -1,113 +1,102 @@
 // export default (user, exerciseParameters) => {
 module.exports = (user, exerciseParameters) => {
-  if (requestHasEmptyParameterFields(exerciseParameters)) return createErrorResponse('fields');
-  if(!userHasEnoughWords(user, exerciseParameters)) return createErrorResponse('words')
+  if (requestHasEmptyParameterFields(exerciseParameters))
+    return createErrorResponse("fields");
+  if (!userHasEnoughWords(user, exerciseParameters))
+    return createErrorResponse("words");
   let result = [];
-
 
   //create a pool of words to randomly choose from
   let wordPool = getWordpool(user, exerciseParameters);
-  let uniqueIndexes = getIndexes(wordPool, exerciseParameters.amount)
+  let uniqueIndexes = getIndexes(wordPool, exerciseParameters.amount);
 
   //Iterate through each index, get that indexed element from filteredArray, assign it to questions array
   uniqueIndexes.map(uniqueIndex => {
-    result.push(wordPool[uniqueIndex])
-  })
+    result.push(wordPool[uniqueIndex]);
+  });
   return result;
 };
-
-const randomNumberGenerator = range => {
-  let randomNumber = Math.floor(Math.random() * Math.floor(range));
-  return randomNumber;
-};
-
 const requestHasEmptyParameterFields = exerciseParameters => {
   for (var key in exerciseParameters) {
     if (!exerciseParameters[key]) return true;
   }
   return false;
 };
-
-const userHasEnoughWords = (user, exerciseParameters) => {
-  let wordAmountValidator = new WordAmountCounter(user, exerciseParameters)
-  return wordAmountValidator.userHasEnoughWords()
+const createErrorResponse = errorType => {
+  return {
+    error: true,
+    message:
+      errorType == "fields" ? "Please fill all fields" : "Not enough words"
+  };
 };
-
+const userHasEnoughWords = (user, exerciseParameters) => {
+  let wordAmountValidator = new WordAmountCounter(user, exerciseParameters);
+  return wordAmountValidator.userHasEnoughWords();
+};
 class WordAmountCounter {
-    constructor(user, exerciseParams) {
-      this.user = user;
-      this.amount = exerciseParams.amount;
-      this.notebook = exerciseParams.notebook;
-      this.type = exerciseParams.type;
-    }
+  constructor(user, exerciseParams) {
+    this.user = user;
+    this.amount = exerciseParams.amount;
+    this.notebook = exerciseParams.notebook;
+    this.type = exerciseParams.type;
+  }
+  userHasEnoughWords() {
+    if (this.notebook != "all") return this.specificNotebook();
+    else return this.allNotebooks();
+  }
+  specificNotebook() {
+    let result = true;
+    if (this.type == "random") result = this.specificNotebookAllTypes();
+    else result = this.specificNotebookSpecificType();
+    return result;
+  }
+  allNotebooks() {
+    let result = true;
+    if (this.type == "random") result = this.allNotebooksAllTypes();
+    else result = this.allNotebooksSpecificType();
 
-    userHasEnoughWords(){
-      if (this.notebook != "all")  return this.specificNotebook() 
-      else return this.allNotebooks()
-    }
-  
-    specificNotebook() {
-      let result = true;
-      if (this.type == "random") result = this.specificNotebookAllTypes();
-      else result = this.specificNotebookSpecificType();
-      return result;
-    }
-    specificNotebookAllTypes() {
-      if (this.amount >= this.user.notebooks[this.notebook].wordCount) {
-        console.log("You don't have enough words in selected notebok ");
-        return false;
-      }
-      return true;
-    }
-    specificNotebookSpecificType() {
-      if (
-        this.amount >= this.user.notebooks[this.notebook].words[this.type].length
-      ) {
-        console.log("You don't have enough words in selected notebok ");
-        return false;
-      }
-      return true;
-    }
-  
-    allNotebooks() {
-      let result = true;
-      if (this.type == "random") result = this.allNotebooksAllTypes();
-      else result = this.allNotebooksSpecificType()
-  
-      return result;
-    }
-  
-    allNotebooksAllTypes() {
-      console.log(this.amount, this.user.totalWordCount )
-      if (this.amount >= this.user.totalWordCount) {
-        console.log("You don't have enough words in selected notebok ");
-        return false;
-      }
-      return true;
-    }
-    allNotebooksSpecificType() {
-      let totalChosenType = 0;
-      for (var key in this.user.notebooks) {
-        totalChosenType += this.user.notebooks[key].words[this.type].length;
-      }
-      if (this.amount > totalChosenType) {
-        console.log("You don't have enough words in selected notebok ");
-        return false;
-      }
-      return true;
-    }
+    return result;
   }
-const createErrorResponse = (errorType) => {
-    return ({
-      error: true,
-      message: errorType == 'fields' ? 'Please fill all fields' : 'Not enough words'
-    })
+  specificNotebookAllTypes() {
+    if (this.amount >= this.user.notebooks[this.notebook].wordCount) {
+      console.log("You don't have enough words in selected notebok ");
+      return false;
+    }
+    return true;
   }
-const getWordpool = (user, exerciseParameters) => {
-  let wordpoolCreator = new WordpoolCreator(user, exerciseParameters)
-  return wordpoolCreator.create()
+  specificNotebookSpecificType() {
+    if (
+      this.amount >= this.user.notebooks[this.notebook].words[this.type].length
+    ) {
+      console.log("You don't have enough words in selected notebok ");
+      return false;
+    }
+    return true;
+  }
+  allNotebooksAllTypes() {
+    console.log(this.amount, this.user.totalWordCount);
+    if (this.amount >= this.user.totalWordCount) {
+      console.log("You don't have enough words in selected notebok ");
+      return false;
+    }
+    return true;
+  }
+  allNotebooksSpecificType() {
+    let totalChosenType = 0;
+    for (var key in this.user.notebooks) {
+      totalChosenType += this.user.notebooks[key].words[this.type].length;
+    }
+    if (this.amount > totalChosenType) {
+      console.log("You don't have enough words in selected notebok ");
+      return false;
+    }
+    return true;
+  }
 }
-
+const getWordpool = (user, exerciseParameters) => {
+  let wordpoolCreator = new WordpoolCreator(user, exerciseParameters);
+  return wordpoolCreator.create();
+};
 class WordpoolCreator {
   constructor(user, exerciseParams) {
     this.user = user;
@@ -116,7 +105,7 @@ class WordpoolCreator {
     this.type = exerciseParams.type;
   }
 
-  create(){
+  create() {
     if (this.notebook == "all") return this.allNotebooks();
     else return this.specificNotebook();
   }
@@ -159,7 +148,6 @@ class WordpoolCreator {
     return result;
   }
 }
-
 const getIndexes = (wordPool, requestedWordAmount) => {
   let indexSet = new Set([]);
   let range = wordPool.length;
@@ -169,4 +157,8 @@ const getIndexes = (wordPool, requestedWordAmount) => {
   }
 
   return Array.from(indexSet.values());
+};
+const randomNumberGenerator = range => {
+  let randomNumber = Math.floor(Math.random() * Math.floor(range));
+  return randomNumber;
 };
