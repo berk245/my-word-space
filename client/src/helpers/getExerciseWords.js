@@ -34,36 +34,44 @@ const userHasEnoughWords = (user, exerciseParameters) => {
   return validator.validate();
 };
 class WordAmountValidator {
-  constructor(user, exerciseParams) {
+  constructor(user, { amount, notebook, type }) {
     this.user = user;
-    this.amount = exerciseParams.amount;
-    this.notebook = exerciseParams.notebook;
-    this.type = exerciseParams.type;
+    this.amount = amount;
+    this.notebook = notebook;
+    this.type = type;
   }
   validate() {
-    return this.notebook == 'all' ?  this.checkAllNotebooks() :  this.checkSpecificNotebook()
+    return this.notebook == "all"
+      ? this.checkAllNotebooks()
+      : this.checkSpecificNotebook();
   }
   checkSpecificNotebook() {
-    return (this.type == "random" ? this.specificNotebookAllTypes() : this.specificNotebookSpecificType())
+    return this.type == "random"
+      ? this.specificNotebookAllTypes()
+      : this.specificNotebookSpecificType();
   }
   checkAllNotebooks() {
-    return (this.type == "random" ? this.allNotebooksAllTypes() : this.allNotebooksSpecificType())
+    return this.type == "random"
+      ? this.allNotebooksAllTypes()
+      : this.allNotebooksSpecificType();
   }
   specificNotebookAllTypes() {
-    return this.amount <= this.user.notebooks[this.notebook].wordCount
+    return this.amount <= this.user.notebooks[this.notebook].wordCount;
   }
   specificNotebookSpecificType() {
-    return this.amount <= this.user.notebooks[this.notebook].words[this.type].length
+    return (
+      this.amount <= this.user.notebooks[this.notebook].words[this.type].length
+    );
   }
   allNotebooksAllTypes() {
-    return this.amount <= this.user.totalWordCount
+    return this.amount <= this.user.totalWordCount;
   }
   allNotebooksSpecificType() {
     let totalChosenType = 0;
     Object.values(this.user.notebooks).map(userNotebook => {
       totalChosenType += userNotebook.words[this.type].length;
-    })
-    return (this.amount < totalChosenType) 
+    });
+    return this.amount < totalChosenType;
   }
 }
 const getWordpool = (user, exerciseParameters) => {
@@ -71,11 +79,11 @@ const getWordpool = (user, exerciseParameters) => {
   return wordpoolCreator.create();
 };
 class WordpoolCreator {
-  constructor(user, exerciseParams) {
+  constructor(user, { amount, notebook, type }) {
     this.user = user;
-    this.amount = exerciseParams.amount;
-    this.notebook = exerciseParams.notebook;
-    this.type = exerciseParams.type;
+    this.amount = amount;
+    this.notebook = notebook;
+    this.type = type;
   }
 
   create() {
