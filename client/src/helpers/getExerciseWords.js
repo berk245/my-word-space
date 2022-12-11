@@ -44,37 +44,19 @@ class WordAmountCounter {
     return this.notebook == 'all' ?  this.allNotebooks() :  this.specificNotebook()
   }
   specificNotebook() {
-    let result = true;
-    if (this.type == "random") result = this.specificNotebookAllTypes();
-    else result = this.specificNotebookSpecificType();
-    return result;
+    return (this.type == "random" ? this.specificNotebookAllTypes() : this.specificNotebookSpecificType())
   }
   allNotebooks() {
-    let result = true;
-    if (this.type == "random") result = this.allNotebooksAllTypes();
-    else result = this.allNotebooksSpecificType();
-
-    return result;
+    return (this.type == "random" ? this.allNotebooksAllTypes() : this.allNotebooksSpecificType())
   }
   specificNotebookAllTypes() {
-    if (this.amount >= this.user.notebooks[this.notebook].wordCount) {
-      return false;
-    }
-    return true;
+    return this.amount <= this.user.notebooks[this.notebook].wordCount
   }
   specificNotebookSpecificType() {
-    if (
-      this.amount >= this.user.notebooks[this.notebook].words[this.type].length
-    ) {
-      return false;
-    }
-    return true;
+    return this.amount <= this.user.notebooks[this.notebook].words[this.type].length
   }
   allNotebooksAllTypes() {
-    if (this.amount >= this.user.totalWordCount) {
-      return false;
-    }
-    return true;
+    return this.amount <= this.user.totalWordCount
   }
   allNotebooksSpecificType() {
     let totalChosenType = 0;
