@@ -30,23 +30,23 @@ const createErrorResponse = errorType => {
   };
 };
 const userHasEnoughWords = (user, exerciseParameters) => {
-  let wordAmountValidator = new WordAmountCounter(user, exerciseParameters);
-  return wordAmountValidator.userHasEnoughWords();
+  let validator = new WordAmountValidator(user, exerciseParameters);
+  return validator.validate();
 };
-class WordAmountCounter {
+class WordAmountValidator {
   constructor(user, exerciseParams) {
     this.user = user;
     this.amount = exerciseParams.amount;
     this.notebook = exerciseParams.notebook;
     this.type = exerciseParams.type;
   }
-  userHasEnoughWords() {
-    return this.notebook == 'all' ?  this.allNotebooks() :  this.specificNotebook()
+  validate() {
+    return this.notebook == 'all' ?  this.checkAllNotebooks() :  this.checkSpecificNotebook()
   }
-  specificNotebook() {
+  checkSpecificNotebook() {
     return (this.type == "random" ? this.specificNotebookAllTypes() : this.specificNotebookSpecificType())
   }
-  allNotebooks() {
+  checkAllNotebooks() {
     return (this.type == "random" ? this.allNotebooksAllTypes() : this.allNotebooksSpecificType())
   }
   specificNotebookAllTypes() {
