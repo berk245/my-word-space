@@ -41,8 +41,7 @@ class WordAmountCounter {
     this.type = exerciseParams.type;
   }
   userHasEnoughWords() {
-    if (this.notebook != "all") return this.specificNotebook();
-    else return this.allNotebooks();
+    return this.notebook == 'all' ?  this.allNotebooks() :  this.specificNotebook()
   }
   specificNotebook() {
     let result = true;
