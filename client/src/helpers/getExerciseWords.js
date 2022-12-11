@@ -59,7 +59,6 @@ class WordAmountCounter {
   }
   specificNotebookAllTypes() {
     if (this.amount >= this.user.notebooks[this.notebook].wordCount) {
-      console.log("You don't have enough words in selected notebok ");
       return false;
     }
     return true;
@@ -68,15 +67,12 @@ class WordAmountCounter {
     if (
       this.amount >= this.user.notebooks[this.notebook].words[this.type].length
     ) {
-      console.log("You don't have enough words in selected notebok ");
       return false;
     }
     return true;
   }
   allNotebooksAllTypes() {
-    console.log(this.amount, this.user.totalWordCount);
     if (this.amount >= this.user.totalWordCount) {
-      console.log("You don't have enough words in selected notebok ");
       return false;
     }
     return true;
@@ -87,7 +83,6 @@ class WordAmountCounter {
       totalChosenType += this.user.notebooks[key].words[this.type].length;
     }
     if (this.amount > totalChosenType) {
-      console.log("You don't have enough words in selected notebok ");
       return false;
     }
     return true;
